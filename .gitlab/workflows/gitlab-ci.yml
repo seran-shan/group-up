@@ -17,9 +17,6 @@ stages: # List of stages for jobs, and their order of execution
   - build
   - deploy
 
-before_script:
-  - npm i -g firebase-tools
-
 build-job: # This job runs in the build stage, which runs first.
   stage: build
   script:
@@ -31,6 +28,7 @@ deploy-job: # This job runs in the deploy stage.
   image: node
   script:
     - npm install
+    - npm i -g firebase-tools
     - firebase deploy
   only: 
     - refs:
