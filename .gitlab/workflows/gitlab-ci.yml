@@ -1,4 +1,4 @@
- This file is a template, and might need editing before it works on your project.
+# This file is a template, and might need editing before it works on your project.
 # To contribute improvements to CI/CD templates, please follow the Development guide at:
 # https://docs.gitlab.com/ee/development/cicd/templates.html
 # This specific template is located at:
@@ -30,8 +30,5 @@ deploy-job: # This job runs in the deploy stage.
     - npm install
     - npm i -g firebase-tools
     - firebase deploy
-  only: 
-    - refs:
-      - feat/#10-Hosting+CD
-    changes: 
-      - src/
+  only:
+    - main
