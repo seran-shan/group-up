@@ -12,7 +12,8 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', '@typescript-eslint', 'unused-imports'],
+
   rules: {
     'comma-dangle': [2, 'always-multiline'],
     'object-shorthand': [
@@ -60,6 +61,17 @@ module.exports = {
         requireReturn: false,
         requireParamDescription: false,
         requireReturnDescription: false,
+      },
+    ],
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
       },
     ],
 
