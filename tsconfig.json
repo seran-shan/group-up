@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "__tests__/App.test.ts", "__tests__/playwright/App.test.ts", "__tests__/jest/App.test.ts", "tests/App.test.ts"  ]
 }
