@@ -15,13 +15,19 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>
+      {' '}
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
@@ -35,7 +41,7 @@ export default function SignUp() {
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
-      password: data.get('password'),
+      password: data.get('passwords'),
     });
   };
 
@@ -57,7 +63,12 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -103,7 +114,9 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>

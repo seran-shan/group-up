@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb'],
+  extends: ['plugin:react/recommended', 'airbnb', 'plugin:import/typescript'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -12,8 +12,31 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', '@typescript-eslint', 'unused-imports'],
+
   rules: {
+    'no-await-in-loop': 0,
+    'no-return-await': 0,
+    'react/function-component-definition': 0,
+    'no-use-before-define': 0,
+    'react/jsx-props-no-spreading': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
+
     'comma-dangle': [2, 'always-multiline'],
     'object-shorthand': [
       2,
@@ -46,13 +69,7 @@ module.exports = {
     'no-plusplus': 1,
     'no-param-reassign': 1,
     'no-unreachable-loop': 1, // TODO: enable
-    'no-restricted-syntax': [
-      2,
-      {
-        selector: 'ObjectPattern',
-        message: 'Object destructuring is not compatible with Node v4',
-      },
-    ],
+
     strict: [2, 'safe'],
     'valid-jsdoc': [
       2,
@@ -62,6 +79,19 @@ module.exports = {
         requireReturnDescription: false,
       },
     ],
+    '@typescript-eslint/no-unused-vars': 'error',
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
+    ],
+    'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/anchor-has-content': 'off',
 
     'eslint-plugin/consistent-output': 0,
     'eslint-plugin/require-meta-schema': 0,
