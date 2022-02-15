@@ -1,11 +1,14 @@
 import React from 'react';
-import firebase from 'firebase/app';
+import { User } from '@firebase/auth';
 
-export interface IFirebaseContext {
-  firebase: firebase.FirebaseApp;
-  authProviders: string[];
+export interface IAuthContext {
+  user: User | null;
+  signup: (email: string, password: string) => void;
 }
 
-const AuthContext = React.createContext({} as any);
+const AuthContext = React.createContext<IAuthContext>({
+  user: null,
+  signup: () => {},
+});
 
 export default AuthContext;

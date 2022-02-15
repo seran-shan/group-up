@@ -45,15 +45,17 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
 
     try {
-      await signup(data.get('email'), data.get('password')).then(
-        await addDoc(collection(db, 'Users'), {
-          // groupName: data.get('groupName'),
-          // description: data.get('description'),
-          // numOfMember: data.get('numOfMember'),
-          // ageLimit: data.get('ageLimit'),
-          // activityDate: data.get('activityDate'),
-        }),
+      await signup(
+        data.get('email').toString(),
+        data.get('password').toString(),
       );
+      await addDoc(collection(db, 'Users'), {
+        // groupName: data.get('groupName'),
+        // description: data.get('description'),
+        // numOfMember: data.get('numOfMember'),
+        // ageLimit: data.get('ageLimit'),
+        // activityDate: data.get('activityDate'),
+      });
     } catch (err) {
       alert(err);
     }
@@ -116,6 +118,7 @@ export default function SignUp() {
                   fullWidth
                   id="email"
                   label="Email Address"
+                  type="text"
                   name="email"
                   autoComplete="email"
                 />

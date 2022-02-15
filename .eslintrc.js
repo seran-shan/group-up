@@ -96,5 +96,6 @@ module.exports = {
     'eslint-plugin/consistent-output': 0,
     'eslint-plugin/require-meta-schema': 0,
     'eslint-plugin/require-meta-type': 0,
+    'react/jsx-no-constructed-context-values': 0,
   },
 };
