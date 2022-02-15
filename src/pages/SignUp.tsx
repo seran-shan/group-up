@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../services/Firebase';
 
 function Copyright(props: any) {
   return (
@@ -35,14 +37,25 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('passwords'),
-    });
+    try {
+      // eslint no-console: "error"
+      console.log({
+        email: data.get('email'),
+        password: data.get('password'),
+      });
+      await addDoc(collection(db, 'Users'), {
+        // groupName: data.get('groupName'),
+        // description: data.get('description'),
+        // numOfMember: data.get('numOfMember'),
+        // ageLimit: data.get('ageLimit'),
+        // activityDate: data.get('activityDate'),
+      });
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
