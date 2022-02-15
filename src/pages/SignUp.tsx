@@ -13,8 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { addDoc, collection } from '@firebase/firestore';
-import { database } from '../services/Firebase';
 import { useAuth } from '../provider/AuthProvider';
+import { db } from '../services/Firebase';
 
 function Copyright(props: any) {
   return (
@@ -27,8 +27,10 @@ function Copyright(props: any) {
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}.
+      </Link>
+      {' '}
+      {new Date().getFullYear()}
+      .
     </Typography>
   );
 }
@@ -44,13 +46,16 @@ export default function SignUp() {
 
     try {
       await signup(data.get('email'), data.get('password')).then(
-        await addDoc(collection(database, 'Users'), {
-          title: 'hello',
-          description: 'description',
-        })
+        await addDoc(collection(db, 'Users'), {
+          // groupName: data.get('groupName'),
+          // description: data.get('description'),
+          // numOfMember: data.get('numOfMember'),
+          // ageLimit: data.get('ageLimit'),
+          // activityDate: data.get('activityDate'),
+        }),
       );
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
   };
 

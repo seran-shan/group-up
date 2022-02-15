@@ -3,12 +3,12 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from '@firebase/firestore';
 import { getAuth } from '@firebase/auth';
 
-import 'firebase/compat/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseApp = initializeApp({
   apiKey: 'AIzaSyCiChYFR33lDnUaziQvfYE8XkrtSorSoeo',
   authDomain: 'groupup-gr27.firebaseapp.com',
@@ -20,7 +20,7 @@ const firebaseApp = initializeApp({
 });
 
 // Initialize Firebase
-export const database = getFirestore(firebaseApp);
 export const auth = getAuth(firebaseApp);
 
+export const db = getFirestore(firebaseApp);
 export default firebaseApp;
