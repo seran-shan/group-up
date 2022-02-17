@@ -48,4 +48,4 @@ deploy-job: # This job runs in the deploy stage.
     - npm i -g firebase-tools
     - firebase deploy
   only:
-    - main
+    - dev
