@@ -3,63 +3,48 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+
+import { useForm } from 'react-hook-form';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { addDoc, collection } from '@firebase/firestore';
 import { useAuth } from '../provider/AuthProvider';
 import { db } from '../services/Firebase';
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>
-      {' '}
-      {new Date().getFullYear()}
-      .
-    </Typography>
-  );
-}
-
 const theme = createTheme();
 
 export default function SignUp() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   const { signup } = useAuth();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    try {
-      await signup(
-        data.get('email').toString(),
-        data.get('password').toString(),
-      );
-      await addDoc(collection(db, 'Users'), {
-        // groupName: data.get('groupName'),
-        // description: data.get('description'),
-        // numOfMember: data.get('numOfMember'),
-        // ageLimit: data.get('ageLimit'),
-        // activityDate: data.get('activityDate'),
-      });
-    } catch (err) {
-      alert(err);
-    }
-  };
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+  //try {
+  //await signup(data, 'password');
+  //await addDoc(collection(db, 'Users'), {
+  // groupName: data.get('groupName'),
+  // description: data.get('description'),
+  // numOfMember: data.get('numOfMember'),
+  // ageLimit: data.get('ageLimit'),
+  // activityDate: data.get('activityDate'),
+  //});
+  //} catch (err) {
+  //alert(err);
+  //}
+  //});
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,22 +69,17 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <form onSubmit={onSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  {...register('firstName')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -108,8 +88,8 @@ export default function SignUp() {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
                   autoComplete="family-name"
+                  {...register('lastName')}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -119,27 +99,30 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   type="text"
-                  name="email"
                   autoComplete="email"
+                  {...register('email')}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
                   label="Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  {...register('password')}
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                <TextField
+                  required
+                  fullWidth
+                  label="Confirm Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  {...register('confirmPassword')}
                 />
               </Grid>
             </Grid>
@@ -153,14 +136,13 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
-          </Box>
+          </form>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

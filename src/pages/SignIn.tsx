@@ -24,10 +24,8 @@ function Copyright(props: any) {
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>
-      {' '}
-      {new Date().getFullYear()}
-      .
+      </Link>{' '}
+      {new Date().getFullYear()}.
     </Typography>
   );
 }
@@ -108,7 +106,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   Don&apos;t have an account? Sign Up
                 </Link>
               </Grid>
