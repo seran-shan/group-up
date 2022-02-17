@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import SignUp from '../../pages/SignUp';
+import GroupsOverview from '../../pages/GroupsOverview';
 
 export const example = (x: number, y: number) => x + y;
 
 function App() {
   return (
     <div className="App">
-      <SignUp />
+      <GroupsOverview />
     </div>
   );
 }
