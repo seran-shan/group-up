@@ -14,8 +14,9 @@ import { useForm } from 'react-hook-form';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { addDoc, collection } from '@firebase/firestore';
-import { useAuth } from '../provider/AuthProvider';
-import { db } from '../services/Firebase';
+import { useAuth } from '../../provider/AuthProvider';
+import { db } from '../../services/Firebase';
+import Divider from '@mui/material/Divider';
 
 const theme = createTheme();
 
@@ -23,7 +24,6 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -58,20 +58,29 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar
+          <Box
             sx={{
-              m: 1,
-              bgcolor: 'secondary.main',
+              dispaly: 'flex',
+              flexDirection: 'column',
+
+              marginBottom: '60px',
             }}
           >
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{ marginBottom: '23px', fontWeight: 700, fontSize: 25 }}
+            >
+              Sign up
+            </Typography>
+            <Typography sx={{ fontSize: 11, width: 244 }}>
+              Join GroupUp to meet new people and experience new things
+            </Typography>
+          </Box>
+
           <form onSubmit={onSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   required
@@ -82,7 +91,7 @@ export default function SignUp() {
                   {...register('firstName')}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -103,6 +112,19 @@ export default function SignUp() {
                   {...register('email')}
                 />
               </Grid>
+            </Grid>
+
+            <Box
+              sx={{
+                backgroundColor: '#ffffff',
+                width: '134px',
+                height: '32px',
+                borderBottom: 'solid 0.2px #000',
+                margin: 'auto',
+                marginBottom: '32px',
+              }}
+            ></Box>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   required
