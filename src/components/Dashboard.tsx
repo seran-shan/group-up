@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import React from 'react';
 import { useAuth } from '../provider/AuthProvider';
 
 const Dashboard = () => {
@@ -11,7 +12,7 @@ const Dashboard = () => {
     <div>
       <p>Dashboard</p>
       <p>{user?.email}</p>
-      <button onClick={handleLogout}>Log out</button>
+      <Button onClick={handleLogout}>Log out</Button>
     </div>
   );
 };

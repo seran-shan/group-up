@@ -1,50 +1,40 @@
 import React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import { useForm } from 'react-hook-form';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { addDoc, collection } from '@firebase/firestore';
-import { useAuth } from '../../provider/AuthProvider';
-import { db } from '../../services/Firebase';
-import Divider from '@mui/material/Divider';
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
-  const { signup } = useAuth();
+  // const { signup } = useAuth();
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
   });
-  //try {
-  //await signup(data, 'password');
-  //await addDoc(collection(db, 'Users'), {
+  // try {
+  // await signup(data, 'password');
+  // await addDoc(collection(db, 'Users'), {
   // groupName: data.get('groupName'),
   // description: data.get('description'),
   // numOfMember: data.get('numOfMember'),
   // ageLimit: data.get('ageLimit'),
   // activityDate: data.get('activityDate'),
-  //});
-  //} catch (err) {
-  //alert(err);
-  //}
-  //});
+  // });
+  // } catch (err) {
+  // alert(err);
+  // }
+  // });
 
   return (
     <ThemeProvider theme={theme}>
@@ -123,7 +113,7 @@ export default function SignUp() {
                 margin: 'auto',
                 marginBottom: '32px',
               }}
-            ></Box>
+            />
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField

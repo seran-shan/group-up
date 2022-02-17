@@ -15,8 +15,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
   };
 
-  const signup = (email: string, password: string) =>
-    createUserWithEmailAndPassword(auth, email, password);
+  const signup = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
