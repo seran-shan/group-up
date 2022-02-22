@@ -1,8 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import {
-  getFirestore, doc, getDoc, setDoc,
-} from '@firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc } from '@firebase/firestore';
 import { getAuth } from '@firebase/auth';
 import { Group } from '../types/group';
 
@@ -32,7 +30,7 @@ export const createUser = async (
   name: string,
   age: number,
   id: string,
-  date: string | unknown,
+  date: string | unknown
 ) => {
   await setDoc(doc(db, 'Users', id), {
     name,
