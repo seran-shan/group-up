@@ -10,6 +10,7 @@ export interface IAuthContext {
     date: string | unknown
   ) => void;
   signout: () => void;
+  login: (email: string, password: string) => void;
 }
 
 const AuthContext = React.createContext<IAuthContext>({
