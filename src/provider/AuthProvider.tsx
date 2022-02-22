@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signOut, User } from '@firebase/auth';
-import { auth } from '../services/Firebase';
+import { auth, createUser } from '../services/Firebase';
 import AuthContext, { IAuthContext } from '../context/AuthContext';
 
 export const useAuth = () => useContext<IAuthContext>(AuthContext);
@@ -15,7 +15,15 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
   };
 
-  const signup = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
+  const signup = async (
+    email: string,
+    password: string,
+    name: string,
+    date: string | unknown,
+  ) => {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    await createUser(name, 18, res.user.uid, date);
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: User | null) => {

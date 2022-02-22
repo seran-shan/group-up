@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
-import {
-  Routes, BrowserRouter, Route,
-} from 'react-router-dom';
+import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import SignUpView from '../../pages/SignUpView';
 import SignIn from '../../pages/SignIn';
 import NoUserRoute from '../routes/NoUserRoute';

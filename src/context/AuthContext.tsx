@@ -3,7 +3,12 @@ import { User } from '@firebase/auth';
 
 export interface IAuthContext {
   user: User | null;
-  signup: (email: string, password: string) => void;
+  signup: (
+    email: string,
+    password: string,
+    name: string,
+    date: string | unknown
+  ) => void;
   signout: () => void;
 }
 

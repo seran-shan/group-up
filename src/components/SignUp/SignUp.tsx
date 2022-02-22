@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -8,33 +8,32 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+
 import { useForm } from 'react-hook-form';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useAuth } from '../../provider/AuthProvider';
+import FormTextField from '../molecules/FormTextField';
+import FormDatePicker from '../molecules/FormDatePicker';
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
 
-  // const { signup } = useAuth();
+  const [date, setDate] = useState<string | unknown | null>(null);
+  const { signup } = useAuth();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async () => {
+    await signup(
+      getValues('email'),
+      getValues('password'),
+      getValues('firstName'),
+      date,
+    );
   });
-  // try {
-  // await signup(data, 'password');
-  // await addDoc(collection(db, 'Users'), {
-  // groupName: data.get('groupName'),
-  // description: data.get('description'),
-  // numOfMember: data.get('numOfMember'),
-  // ageLimit: data.get('ageLimit'),
-  // activityDate: data.get('activityDate'),
-  // });
-  // } catch (err) {
-  // alert(err);
-  // }
-  // });
 
   return (
     <ThemeProvider theme={theme}>
@@ -59,11 +58,24 @@ export default function SignUp() {
             <Typography
               component="h1"
               variant="h5"
-              sx={{ marginBottom: '23px', fontWeight: 700, fontSize: 25 }}
+              sx={{
+                fontWeight: 750,
+                fontSize: 25,
+                color: '#125A2E',
+                gridColumnStart: 2,
+                marginBottom: '23px',
+              }}
             >
               Sign up
             </Typography>
-            <Typography sx={{ fontSize: 11, width: 244 }}>
+
+            <Typography
+              sx={{
+                fontSize: 12,
+                width: 244,
+                color: '#16713A',
+              }}
+            >
               Join GroupUp to meet new people and experience new things
             </Typography>
           </Box>
@@ -71,7 +83,7 @@ export default function SignUp() {
           <form onSubmit={onSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={6} sm={6}>
-                <TextField
+                <FormTextField
                   autoComplete="given-name"
                   required
                   fullWidth
@@ -82,7 +94,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={6} sm={6}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   id="lastName"
@@ -92,7 +104,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   id="email"
@@ -102,21 +114,36 @@ export default function SignUp() {
                   {...register('email')}
                 />
               </Grid>
-            </Grid>
 
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                sx={{ width: '100%' }}
+              >
+                <Grid item xs={12}>
+                  <FormDatePicker
+                    label="Birth Year"
+                    value={date}
+                    onChange={(newValue) => {
+                      setDate(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </Grid>
+              </LocalizationProvider>
+            </Grid>
             <Box
               sx={{
                 backgroundColor: '#ffffff',
                 width: '134px',
                 height: '32px',
-                borderBottom: 'solid 0.2px #000',
+                borderBottom: 'solid 0.2px #BFBFBF',
                 margin: 'auto',
                 marginBottom: '32px',
               }}
             />
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   label="Password"
@@ -127,12 +154,12 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   label="Confirm Password"
                   type="password"
-                  id="password"
+                  id="newPassword"
                   autoComplete="new-password"
                   {...register('confirmPassword')}
                 />
@@ -142,13 +169,13 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor: '#125A2E' }}
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link href="/signin" variant="body2" sx={{ color: '#16713A' }}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
