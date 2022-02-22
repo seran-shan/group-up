@@ -4,6 +4,7 @@ import {
   getFirestore, doc, getDoc, setDoc,
 } from '@firebase/firestore';
 import { getAuth } from '@firebase/auth';
+import { Group } from '../types/group';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -48,4 +49,14 @@ export const getUserByID = async (id: string) => {
     return user;
   }
   alert('User does not exist');
+};
+
+export const getGroupByID = async (id: string) => {
+  const ref = doc(db, 'Groups', id);
+  const data = await getDoc(ref);
+  if (data.exists()) {
+    const group = data.data();
+    return group as Group;
+  }
+  alert('Group does not exist');
 };
