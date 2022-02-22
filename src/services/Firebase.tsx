@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc } from '@firebase/firestore';
+import { getFirestore, doc, getDoc, collection } from '@firebase/firestore';
 import { getAuth } from '@firebase/auth';
 import { Group } from '../types/group';
 
@@ -45,3 +45,11 @@ export const getGroupByID = async (id: string) => {
   }
   alert('Group does not exist');
 };
+
+export const getGroups = async () => {
+  const ref = doc(collection(db, 'Groups'))
+  const data = await getDoc(ref)
+  if (data.exists()) {
+    return data
+  }
+}
