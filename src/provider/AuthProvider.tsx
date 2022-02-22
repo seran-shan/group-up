@@ -1,9 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  createUserWithEmailAndPassword,
-  signOut,
-  User,
-} from '@firebase/auth';
+import { createUserWithEmailAndPassword, signOut, User } from '@firebase/auth';
 import { auth, createUser } from '../services/Firebase';
 import AuthContext, { IAuthContext } from '../context/AuthContext';
 
@@ -19,9 +15,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
   };
 
-  const signup = async (email: string, password: string, name: string) => {
+  const signup = async (
+    email: string,
+    password: string,
+    name: string,
+    date: string | unknown,
+  ) => {
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    await createUser(name, 18, res.user.uid);
+    await createUser(name, 18, res.user.uid, date);
   };
 
   useEffect(() => {

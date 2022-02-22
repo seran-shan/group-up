@@ -8,25 +8,30 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+
 import { useForm } from 'react-hook-form';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuth } from '../../provider/AuthProvider';
+import FormTextField from '../molecules/FormTextField';
+import FormDatePicker from '../molecules/FormDatePicker';
 
 const theme = createTheme();
 
 export default function SignUp() {
   const { register, handleSubmit, getValues } = useForm();
 
-  const [date, setDate] = useState(new Date());
-
+  const [date, setDate] = useState<string | unknown | null>(null);
   const { signup } = useAuth();
 
   const onSubmit = handleSubmit(async () => {
     await signup(
       getValues('email'),
       getValues('password'),
-      getValues('firstName')
+      getValues('firstName'),
+      date,
     );
   });
 
@@ -78,7 +83,7 @@ export default function SignUp() {
           <form onSubmit={onSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={6} sm={6}>
-                <TextField
+                <FormTextField
                   autoComplete="given-name"
                   required
                   fullWidth
@@ -89,7 +94,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={6} sm={6}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   id="lastName"
@@ -99,7 +104,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   id="email"
@@ -109,6 +114,22 @@ export default function SignUp() {
                   {...register('email')}
                 />
               </Grid>
+
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                sx={{ width: '100%' }}
+              >
+                <Grid item xs={12}>
+                  <FormDatePicker
+                    label="Birth Year"
+                    value={date}
+                    onChange={(newValue) => {
+                      setDate(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </Grid>
+              </LocalizationProvider>
             </Grid>
             <Box
               sx={{
@@ -122,7 +143,7 @@ export default function SignUp() {
             />
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   label="Password"
@@ -133,7 +154,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   label="Confirm Password"
@@ -154,7 +175,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="center">
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link href="/signin" variant="body2" sx={{ color: '#16713A' }}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

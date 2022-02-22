@@ -27,10 +27,16 @@ export const auth = getAuth(firebaseApp);
 export const db = getFirestore(firebaseApp);
 export default firebaseApp;
 
-export const createUser = async (name: string, age: number, id: string) => {
+export const createUser = async (
+  name: string,
+  age: number,
+  id: string,
+  date: string | unknown,
+) => {
   await setDoc(doc(db, 'Users', id), {
     name,
     age,
+    date,
   });
 };
 
