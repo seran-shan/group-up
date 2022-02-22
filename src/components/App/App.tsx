@@ -6,6 +6,7 @@ import SignIn from '../../pages/SignInView';
 import NoUserRoute from '../routes/NoUserRoute';
 import PrivateRoute from '../routes/PrivateRoute';
 import DashboardView from '../../pages/DashboardView';
+import GroupsOverviewPage from '../../pages/GroupsOverview';
 
 export const example = (x: number, y: number) => x + y;
 
@@ -16,6 +17,8 @@ const App = () => (
         <Route element={<NoUserRoute />}>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUpView />} />
+          <Route path="/groups" element={<GroupsOverviewPage />} />
+
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<DashboardView />} />
