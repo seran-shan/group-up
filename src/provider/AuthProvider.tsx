@@ -25,6 +25,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     await createUser(name, 18, res.user.uid, date);
   };
 
+  const login = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       setLoading(false);
@@ -37,6 +39,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     user: currentUser,
     signup,
     signout,
+    login,
   };
 
   return (
