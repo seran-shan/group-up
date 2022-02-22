@@ -20,7 +20,7 @@ export default function SignIn() {
 
   const { login } = useAuth();
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async () => {
     await login(getValues('email'), getValues('password'));
   });
   // try {
@@ -60,12 +60,14 @@ export default function SignIn() {
             <Typography
               component="h1"
               variant="h5"
-              sx={{ marginBottom: '23px', fontWeight: 700, fontSize: 25, color: "#136031" }}
+              sx={{
+                marginBottom: '23px', fontWeight: 700, fontSize: 25, color: '#136031',
+              }}
             >
               Welcome back!
             </Typography>
-            <Typography sx={{ fontSize: 11, width: 244, color: "#16713A" }}>
-            Join GroupUp to meet new people and have experience new things
+            <Typography sx={{ fontSize: 11, width: 244, color: '#16713A' }}>
+              Join GroupUp to meet new people and have experience new things
             </Typography>
           </Box>
 
@@ -97,18 +99,21 @@ export default function SignIn() {
               </Grid>
 
             </Grid>
-                <Button
+            <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2}}
+              sx={{ mt: 3, mb: 2 }}
             >
               Sign in
             </Button>
             <Grid container justifyContent="flex-end">
-              <Grid >
-                <Link href="/signup" variant="body2"
-                sx={{ color: "#16713A"}}>
+              <Grid>
+                <Link
+                  href="/signup"
+                  variant="body2"
+                  sx={{ color: '#16713A' }}
+                >
                   Not a user? Sign up
                 </Link>
               </Grid>
