@@ -1,15 +1,33 @@
 import React from 'react';
 import './App.css';
-import GroupsOverview from '../../pages/GroupsOverview';
+import {
+  Routes, BrowserRouter, Route,
+} from 'react-router-dom';
+import SignUpView from '../../pages/SignUpView';
+import SignIn from '../../pages/SignIn';
+import NoUserRoute from '../routes/NoUserRoute';
+import PrivateRoute from '../routes/PrivateRoute';
+import DashboardView from '../../pages/DashboardView';
+import GroupsOverviewPage from '../../pages/GroupsOverview';
 
 export const example = (x: number, y: number) => x + y;
 
-function App() {
-  return (
-    <div className="App">
-      <GroupsOverview />
-    </div>
-  );
-}
+const App = () => (
+  <div className="App">
+    <BrowserRouter>
+      <Routes>
+        <Route element={<NoUserRoute />}>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUpView />} />
+          <Route path="/groups" element={<GroupsOverviewPage />} />
+
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<DashboardView />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </div>
+);
 
 export default App;

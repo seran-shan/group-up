@@ -1,49 +1,40 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
+import React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>
-      {' '}
-      {new Date().getFullYear()}
-      .
-    </Typography>
-  );
-}
+import { useForm } from 'react-hook-form';
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('passwords'),
-    });
-  };
+  const { register, handleSubmit } = useForm();
+
+  // const { signup } = useAuth();
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+  // try {
+  // await signup(data, 'password');
+  // await addDoc(collection(db, 'Users'), {
+  // groupName: data.get('groupName'),
+  // description: data.get('description'),
+  // numOfMember: data.get('numOfMember'),
+  // ageLimit: data.get('ageLimit'),
+  // activityDate: data.get('activityDate'),
+  // });
+  // } catch (err) {
+  // alert(err);
+  // }
+  // });
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,38 +48,47 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{
+              dispaly: 'flex',
+              flexDirection: 'column',
+
+              marginBottom: '60px',
+            }}
           >
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{ marginBottom: '23px', fontWeight: 700, fontSize: 25 }}
+            >
+              Sign up
+            </Typography>
+            <Typography sx={{ fontSize: 11, width: 244 }}>
+              Join GroupUp to meet new people and experience new things
+            </Typography>
+          </Box>
+
+          <form onSubmit={onSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  {...register('firstName')}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   required
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
                   autoComplete="family-name"
+                  {...register('lastName')}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,27 +97,44 @@ export default function SignUp() {
                   fullWidth
                   id="email"
                   label="Email Address"
-                  name="email"
+                  type="text"
                   autoComplete="email"
+                  {...register('email')}
+                />
+              </Grid>
+            </Grid>
+
+            <Box
+              sx={{
+                backgroundColor: '#ffffff',
+                width: '134px',
+                height: '32px',
+                borderBottom: 'solid 0.2px #000',
+                margin: 'auto',
+                marginBottom: '32px',
+              }}
+            />
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  {...register('password')}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
+                  label="Confirm Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  {...register('confirmPassword')}
                 />
               </Grid>
             </Grid>
@@ -131,14 +148,13 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
-          </Box>
+          </form>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
