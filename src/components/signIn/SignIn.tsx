@@ -1,17 +1,15 @@
-import React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-
-import { useForm } from 'react-hook-form';
-
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useAuth } from '../../provider/AuthProvider';
+import FormTextField from '../molecules/FormTextField';
 
 const theme = createTheme();
 
@@ -50,21 +48,21 @@ export default function SignIn() {
               sx={{
                 marginBottom: '23px',
                 fontWeight: 700,
-                fontSize: 25,
+                fontSize: 35,
                 color: '#136031',
               }}
             >
               Welcome back!
             </Typography>
-            <Typography sx={{ fontSize: 11, width: 244, color: '#16713A' }}>
-              Join GroupUp to meet new people and have experience new things
+            <Typography sx={{ fontSize: 16, width: 244, color: '#16713A' }}>
+              Join GroupUp to meet new people and experience new things!
             </Typography>
           </Box>
 
           <form onSubmit={onSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   id="email"
@@ -76,7 +74,7 @@ export default function SignIn() {
               </Grid>
 
               <Grid item xs={12}>
-                <TextField
+                <FormTextField
                   required
                   fullWidth
                   label="Password"
@@ -91,11 +89,16 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: '#125A2E',
+                '&:hover': { backgroundColor: '#16813A' },
+              }}
             >
               Sign in
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid>
                 <Link href="/signup" variant="body2" sx={{ color: '#16713A' }}>
                   Not a user? Sign up

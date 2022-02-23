@@ -31,7 +31,7 @@ export default function SignUp() {
       getValues('email'),
       getValues('password'),
       getValues('firstName'),
-      date,
+      date
     );
   });
 
@@ -169,7 +169,12 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: '#125A2E' }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: '#125A2E',
+                '&:hover': { backgroundColor: '#16813A' },
+              }}
             >
               Sign Up
             </Button>
