@@ -15,15 +15,11 @@ const App = () => (
   <div className="App">
     <BrowserRouter>
       <Routes>
-        <Route element={<NoUserRoute />}>
-          <Route path="/create" element={<SignIn />} />
-          <Route path="/signup" element={<SignUpView />} />
-          <Route path="/groups" element={<GroupsOverviewPage />} />
-          <Route path="/CreateGroup" element={<CreateGroup />} />
-        </Route>
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<DashboardView />} />
-        </Route>
+        <Route path="/" element={<DashboardView />} />
+        <Route path="/groups" element={<GroupsOverviewPage />} />
+        <Route path="/CreateGroup" element={<CreateGroup />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUpView />} />
       </Routes>
     </BrowserRouter>
   </div>
