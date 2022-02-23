@@ -1,7 +1,15 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc, setDoc } from '@firebase/firestore';
-import { getAuth } from '@firebase/auth';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  query,
+  getDocs,
+} from '@firebase/firestore';
+import { getAuth, User } from '@firebase/auth';
 import { Group } from '../types/group';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -39,14 +47,47 @@ export const createUser = async (
   });
 };
 
+export const createGroups = async (
+  name: string,
+  description: string,
+  date: string,
+  age: number,
+  interests: string
+) => {
+  const docRef = doc(collection(db, 'Groups'));
+  await setDoc(docRef, {
+    name,
+    description,
+    date,
+    age,
+    interests,
+  });
+};
+
 export const getUserByID = async (id: string) => {
   const ref = doc(db, 'Users', id);
   const data = await getDoc(ref);
   if (data.exists()) {
     const user = data.data();
-    return user;
+    return user as User;
   }
   alert('User does not exist');
+};
+
+export const getAllUsers = async () => {
+  const q = query(collection(db, 'Users'));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((d) => {
+    console.log(d.id);
+  });
+};
+
+export const getAllGroups = async () => {
+  const q = query(collection(db, 'Groups'));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((d) => {
+    console.log(d.id);
+  });
 };
 
 export const getGroupByID = async (id: string) => {

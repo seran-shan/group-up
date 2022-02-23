@@ -39,13 +39,12 @@ lint-test-job: # This job also runs in the test stage.
   script:
     - npm install eslint
     - npx eslint '**/*.ts' '**/*.tsx' --fix
-
-deploy-job: # This job runs in the deploy stage.
-  stage: deploy # It only runs when *both* jobs in the test stage complete successfully.
-  image: node
-  script:
-    - npm install
-    - npm i -g firebase-tools
-    - firebase deploy
-  only:
-    - dev
+#deploy-job: # This job runs in the deploy stage.
+# stage: deploy # It only runs when *both* jobs in the test stage complete successfully.
+#image: node
+#script:
+#  - npm install
+#  - npm i -g firebase-tools
+#  - firebase deploy
+#only:
+#  - dev
