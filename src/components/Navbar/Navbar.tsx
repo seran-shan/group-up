@@ -20,8 +20,8 @@ const Navbar = () => {
     <Box>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'left',
+          display: 'grid',
+          gridTemplateColumns: '1fr 2fr 1fr',
           alignItems: 'center',
           width: '100%',
           height: '88px',
@@ -34,35 +34,42 @@ const Navbar = () => {
           <img src="logo512.png" width={60} height={60}></img>
         </Box>
         <Box
-          sx={{ display: 'flex', marginRight: '100px', marginLeft: '100px' }}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginRight: '100px',
+            marginLeft: '100px',
+          }}
         >
-          <Link sx={{ marginRight: '30px' }}>Dashboard</Link>
-          <Link sx={{ marginRight: '30px' }}>My Groups</Link>
-          <Link sx={{ marginRight: '30px' }}>Match</Link>
-          <Link sx={{ marginRight: '30px' }}>Profile</Link>
+          <Link sx={{ marginRight: '40px' }}>Dashboard</Link>
+          <Link sx={{ marginRight: '40px' }}>My Groups</Link>
+          <Link sx={{ marginRight: '40px' }}>Match</Link>
+          <Link sx={{ marginRight: '40  px' }}>Profile</Link>
         </Box>
-        <Button
-          sx={{
-            width: '40px',
-            height: '40px',
-            backgroundColor: '#000',
-            borderRadius: '50%',
-          }}
-          onClick={handleDropdown}
-        />
-        <Button
-          onClick={handleLogout}
-          variant="contained"
-          sx={{
-            height: '30px',
-            backgroundColor: '#D72638',
-            '&:hover': {
-              backgroundColor: '#AC1E2D',
-            },
-          }}
-        >
-          Log out
-        </Button>
+        <Box>
+          <Button
+            sx={{
+              width: '40px',
+              height: '60px',
+              backgroundColor: '#000',
+              borderRadius: '50%',
+            }}
+            onClick={handleDropdown}
+          />
+          <Button
+            onClick={handleLogout}
+            variant="contained"
+            sx={{
+              height: '30px',
+              backgroundColor: '#D72638',
+              '&:hover': {
+                backgroundColor: '#AC1E2D',
+              },
+            }}
+          >
+            Log out
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
