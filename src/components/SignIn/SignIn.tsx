@@ -23,6 +23,19 @@ export default function SignIn() {
   const onSubmit = handleSubmit(async () => {
     await login(getValues('email'), getValues('password'));
   });
+  // try {
+  // await signup(data, 'password');
+  // await addDoc(collection(db, 'Users'), {
+  // groupName: data.get('groupName'),
+  // description: data.get('description'),
+  // numOfMember: data.get('numOfMember'),
+  // ageLimit: data.get('ageLimit'),
+  // activityDate: data.get('activityDate'),
+  // });
+  // } catch (err) {
+  // alert(err);
+  // }
+  // });
 
   return (
     <ThemeProvider theme={theme}>
@@ -48,10 +61,7 @@ export default function SignIn() {
               component="h1"
               variant="h5"
               sx={{
-                marginBottom: '23px',
-                fontWeight: 700,
-                fontSize: 25,
-                color: '#136031',
+                marginBottom: '23px', fontWeight: 700, fontSize: 25, color: '#136031',
               }}
             >
               Welcome back!
@@ -63,6 +73,7 @@ export default function SignIn() {
 
           <form onSubmit={onSubmit}>
             <Grid container spacing={2}>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -86,6 +97,7 @@ export default function SignIn() {
                   {...register('password')}
                 />
               </Grid>
+
             </Grid>
             <Button
               type="submit"
@@ -97,7 +109,11 @@ export default function SignIn() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid>
-                <Link href="/signup" variant="body2" sx={{ color: '#16713A' }}>
+                <Link
+                  href="/signup"
+                  variant="body2"
+                  sx={{ color: '#16713A' }}
+                >
                   Not a user? Sign up
                 </Link>
               </Grid>
