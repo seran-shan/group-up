@@ -1,6 +1,9 @@
 import { Box, Button, Link } from '@mui/material';
 import { useState } from 'react';
 import { useAuth } from '../../provider/AuthProvider';
+import Avatar from '@material-ui/core/Avatar';
+
+import NavLink from '../molecules/NavLink';
 
 const Navbar = () => {
   const { user, signout } = useAuth();
@@ -39,36 +42,29 @@ const Navbar = () => {
             justifyContent: 'space-between',
             marginRight: '100px',
             marginLeft: '100px',
+            minWidth: '400px',
           }}
         >
-          <Link sx={{ marginRight: '40px' }}>Dashboard</Link>
-          <Link sx={{ marginRight: '40px' }}>My Groups</Link>
-          <Link sx={{ marginRight: '40px' }}>Match</Link>
-          <Link sx={{ marginRight: '40  px' }}>Profile</Link>
+          <NavLink href="/" sx={{ marginRight: '40px' }}>
+            Dashboard
+          </NavLink>
+          <NavLink href="/groups" sx={{ marginRight: '40px' }}>
+            My Groups
+          </NavLink>
+          <NavLink sx={{ marginRight: '40px' }}>Match</NavLink>
+          <NavLink sx={{ marginRight: '40  px' }}>Profile</NavLink>
         </Box>
-        <Box>
-          <Button
-            sx={{
-              width: '40px',
-              height: '60px',
-              backgroundColor: '#000',
-              borderRadius: '50%',
-            }}
-            onClick={handleDropdown}
-          />
-          <Button
-            onClick={handleLogout}
-            variant="contained"
-            sx={{
-              height: '30px',
-              backgroundColor: '#D72638',
-              '&:hover': {
-                backgroundColor: '#AC1E2D',
-              },
-            }}
-          >
-            Log out
-          </Button>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginRight: '150px',
+          }}
+        >
+          <NavLink>
+            {' '}
+            <Avatar />
+          </NavLink>
         </Box>
       </Box>
     </Box>

@@ -51,8 +51,8 @@ export const createGroups = async (
   name: string,
   description: string,
   date: string,
-  age: number,
-  interests: string
+  age: string,
+  interests: string[]
 ) => {
   const docRef = doc(collection(db, 'Groups'));
   await setDoc(docRef, {
