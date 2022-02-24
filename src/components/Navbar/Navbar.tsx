@@ -1,7 +1,9 @@
+import { Box } from '@mui/material';
+import { useState } from 'react';
 import React from 'react';
 
-import { Box } from '@mui/material';
 import Avatar from '@material-ui/core/Avatar';
+import { useAuth } from '../../provider/AuthProvider';
 
 import NavLink from '../molecules/NavLink';
 

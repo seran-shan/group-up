@@ -14,6 +14,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { useForm } from 'react-hook-form';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../provider/AuthProvider';
 import FormTextField from '../molecules/FormTextField';
 import FormDatePicker from '../molecules/FormDatePicker';
@@ -22,9 +23,10 @@ const theme = createTheme();
 
 export default function SignUp() {
   const { register, handleSubmit, getValues } = useForm();
-
+  const { user } = useAuth();
   const [date, setDate] = useState<string | unknown | null>(null);
   const { signup } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async () => {
     await signup(
@@ -33,6 +35,10 @@ export default function SignUp() {
       getValues('firstName'),
       date,
     );
+    if (user == null) {
+      return;
+    }
+    navigate('/');
   });
 
   return (
@@ -169,7 +175,12 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: '#125A2E' }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: '#125A2E',
+                '&:hover': { backgroundColor: '#16813A' },
+              }}
             >
               Sign Up
             </Button>
