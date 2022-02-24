@@ -14,6 +14,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { useForm } from 'react-hook-form';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../provider/AuthProvider';
 import FormTextField from '../molecules/FormTextField';
 import FormDatePicker from '../molecules/FormDatePicker';
@@ -31,8 +32,16 @@ export default function SignUp() {
   const [open, setOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  const navigate = useNavigate();
+
+  const { user } = useAuth();
+
   const onSubmit = handleSubmit(async () => {
-    if (getValues('password') !== getValues('confirmPassword')) {
+    if (getValues('password').length < 6) {
+      setErrorMsg('Password must be more than 6 characters long');
+      setOpen(true);
+      return;
+    } else if (getValues('password') !== getValues('confirmPassword')) {
       setErrorMsg('Passwords do not match');
       setOpen(true);
       return;
@@ -48,6 +57,10 @@ export default function SignUp() {
           getValues('firstName'),
           date
         );
+        if (user == null) {
+          return;
+        }
+        navigate('/');
       } catch (err) {
         setErrorMsg(
           'Something went wrong when creating the user, please check that the email is valid'
