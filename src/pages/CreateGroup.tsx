@@ -8,9 +8,19 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
-  Avatar, Checkbox, FormControlLabel, FormGroup, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Stack,
+  Avatar,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  Stack,
 } from '@mui/material';
 import { green } from '@mui/material/colors';
+import { useForm } from 'react-hook-form';
 import { getAllUsers, createGroups } from '../services/Firebase';
 
 const theme = createTheme();
@@ -28,14 +38,16 @@ const style = {
 };
 
 export default function createGroup() {
+  const { register, getValues } = useForm();
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     getAllUsers();
     createGroups(
-      data.get('group-name'),
-      data.get('description'),
-      data.get('datetime-local'),
+      getValues('groupNames'),
+      getValues('description'),
+      getValues('date'),
       age,
       interests,
     );
@@ -61,9 +73,7 @@ export default function createGroup() {
   };
 
   const handleCheckbox = (event: SelectChangeEvent) => {
-    setInterests(
-      (oldArray) => [...oldArray, event.target.value as string],
-    );
+    setInterests((oldArray) => [...oldArray, event.target.value as string]);
   };
 
   return (
@@ -97,18 +107,17 @@ export default function createGroup() {
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     autoComplete="given-name"
-                    name="group-name"
                     required
                     fullWidth
                     id="group-name"
                     label="Group name"
                     autoFocus
+                    {...register('groupName')}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="datetime-local"
-                    name="datetime-local"
                     label="Next activity"
                     type="datetime-local"
                     defaultValue="2022-02-24T10:30"
@@ -116,16 +125,17 @@ export default function createGroup() {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    {...register('date')}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     id="description"
-                    name="description"
                     label="Description"
                     multiline
                     fullWidth
                     rows={4}
+                    {...register('description')}
                   />
                 </Grid>
 
@@ -136,20 +146,60 @@ export default function createGroup() {
                 </Grid>
                 <Grid sx={{ marginRight: 12, marginLeft: 5 }}>
                   <FormGroup>
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Sports" value="Sports" />
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Music" value="Music" />
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Reading" value="Reading" />
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Cooking" value="Cooking" />
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Dancing" value="Dancing" />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Sports"
+                      value="Sports"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Music"
+                      value="Music"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Reading"
+                      value="Reading"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Cooking"
+                      value="Cooking"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Dancing"
+                      value="Dancing"
+                    />
                   </FormGroup>
                 </Grid>
                 <Grid sx={{ marginLeft: 3 }}>
                   <FormGroup>
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Pets" value="Pets" />
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Politics" value="Politics" />
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Photography" value="Photography" />
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Partying" value="Partying" />
-                    <FormControlLabel control={<Checkbox onChange={handleCheckbox} />} label="Art" value="Art" />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Pets"
+                      value="Pets"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Politics"
+                      value="Politics"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Photography"
+                      value="Photography"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Partying"
+                      value="Partying"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox onChange={handleCheckbox} />}
+                      label="Art"
+                      value="Art"
+                    />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={12}>
@@ -169,7 +219,9 @@ export default function createGroup() {
                   </Select>
                 </Grid>
               </Grid>
-              <Button onClick={handleOpen} variant="contained" color="success">ADD MEMBERS</Button>
+              <Button onClick={handleOpen} variant="contained" color="success">
+                ADD MEMBERS
+              </Button>
               <Modal
                 open={open}
                 onClose={handleClose}
@@ -177,7 +229,11 @@ export default function createGroup() {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
                     Add members to your group:
                   </Typography>
                   <Button variant="outlined" color="success">
