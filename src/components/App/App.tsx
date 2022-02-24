@@ -19,7 +19,7 @@ const App = () => (
         <Route path="/CreateGroup" element={<CreateGroup />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUpView />} />
-        <Route path="/profile" element={<SignUpView />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   </div>
