@@ -116,23 +116,16 @@ const ProfileDetail = () => {
               md={6}
               xs={12}
             >
-              <LocalizationProvider
-                dateAdapter={AdapterDateFns}
-                sx={{ width: '100%' }}
-              >
-                <Grid
-                  xs={12}
-                >
-                  <FormDatePicker
-                    label="Birthday"
-                    value={frUser?.birthday}
-                    // onChange={(newValue) => {
-                    //   setDate(newValue);
-                    // }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </Grid>
-              </LocalizationProvider>
+              <TextField
+                fullWidth
+                helperText="Please specify the first name"
+                label="First name"
+                name="firstName"
+                // onChange={(e) => setFrUser(frUser)}
+                required
+                value={frUser?.birthday}
+                variant="outlined"
+              />
             </Grid>
             <Grid
               item
