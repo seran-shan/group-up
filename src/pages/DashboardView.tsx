@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import React from 'react';
 import Dashboard from '../components/Dashboard';
 import Navbar from '../components/Navbar/Navbar';
-import SideBar from '../components/Navbar/SideBar';
 
 const DashboardView = () => (
   <Box

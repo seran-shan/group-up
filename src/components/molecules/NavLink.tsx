@@ -3,7 +3,7 @@ import { styled, Link } from '@mui/material';
 const focusedColor = '#548235';
 const NavLink = styled(
   Link,
-  {}
+  {},
 )(() => ({
   // input label when focused
   color: '#818181',

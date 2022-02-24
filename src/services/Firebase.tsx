@@ -38,7 +38,7 @@ export const createUser = async (
   name: string,
   age: number,
   id: string,
-  date: string | unknown
+  date: string | unknown,
 ) => {
   await setDoc(doc(db, 'Users', id), {
     name,
@@ -52,7 +52,7 @@ export const createGroups = async (
   description: string,
   date: string,
   age: string,
-  interests: string[]
+  interests: string[],
 ) => {
   const docRef = doc(collection(db, 'Groups'));
   await setDoc(docRef, {
