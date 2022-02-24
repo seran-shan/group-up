@@ -3,7 +3,7 @@ import { styled, TextField } from '@mui/material';
 const focusedColor = '#548235';
 const FormTextField = styled(
   TextField,
-  {},
+  {}
 )(() => ({
   // input label when focused
   '& label.Mui-focused': {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -17,23 +17,57 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuth } from '../../provider/AuthProvider';
 import FormTextField from '../molecules/FormTextField';
 import FormDatePicker from '../molecules/FormDatePicker';
+import { Alert, Collapse, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const theme = createTheme();
 
 export default function SignUp() {
   const { register, handleSubmit, getValues } = useForm();
 
+  const [minDate, setMinDate] = useState<Date>();
   const [date, setDate] = useState<string | unknown | null>(null);
   const { signup } = useAuth();
+  const [open, setOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const onSubmit = handleSubmit(async () => {
-    await signup(
-      getValues('email'),
-      getValues('password'),
-      getValues('firstName'),
-      date,
-    );
+    if (getValues('password') !== getValues('confirmPassword')) {
+      setErrorMsg('Passwords do not match');
+      setOpen(true);
+      return;
+    } else if (date == null) {
+      setErrorMsg('You must select a birth date');
+      setOpen(true);
+      return;
+    } else {
+      try {
+        await signup(
+          getValues('email'),
+          getValues('password'),
+          getValues('firstName'),
+          date
+        );
+      } catch (err) {
+        setErrorMsg(
+          'Something went wrong when creating the user, please check that the email is valid'
+        );
+        setOpen(true);
+      }
+    }
   });
+
+  const getMinDate = () => {
+    var eighteenYearsAgo = new Date();
+    eighteenYearsAgo.setTime(
+      eighteenYearsAgo.valueOf() - 18 * 365 * 24 * 60 * 60 * 1000
+    );
+    setMinDate(eighteenYearsAgo);
+  };
+
+  useEffect(() => {
+    getMinDate();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -105,11 +139,11 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormTextField
-                  required
                   fullWidth
+                  required
                   id="email"
                   label="Email Address"
-                  type="text"
+                  type="email"
                   autoComplete="email"
                   {...register('email')}
                 />
@@ -123,6 +157,7 @@ export default function SignUp() {
                   <FormDatePicker
                     label="Birth Year"
                     value={date}
+                    maxDate={minDate}
                     onChange={(newValue) => {
                       setDate(newValue);
                     }}
@@ -169,19 +204,48 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: '#125A2E' }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: '#125A2E',
+                '&:hover': { backgroundColor: '#16913A' },
+              }}
             >
               Sign Up
             </Button>
             <Grid container justifyContent="center">
               <Grid item>
-                <Link href="/signin" variant="body2" sx={{ color: '#16713A' }}>
+                <Link
+                  href="/signin"
+                  variant="body2"
+                  sx={{ color: '#16713A', textDecoration: 'none' }}
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </form>
         </Box>
+        <Collapse in={open}>
+          <Alert
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+            sx={{ mb: 2 }}
+          >
+            {errorMsg}
+          </Alert>
+        </Collapse>
       </Container>
     </ThemeProvider>
   );
