@@ -15,11 +15,11 @@ import { useForm } from 'react-hook-form';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { Alert, Collapse, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { useAuth } from '../../provider/AuthProvider';
 import FormTextField from '../molecules/FormTextField';
 import FormDatePicker from '../molecules/FormDatePicker';
-import { Alert, Collapse, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 
 const theme = createTheme();
 
@@ -40,22 +40,19 @@ export default function SignUp() {
     if (getValues('password').length < 6) {
       setErrorMsg('Password must be more than 6 characters long');
       setOpen(true);
-      return;
     } else if (getValues('password') !== getValues('confirmPassword')) {
       setErrorMsg('Passwords do not match');
       setOpen(true);
-      return;
     } else if (date == null) {
       setErrorMsg('You must select a birth date');
       setOpen(true);
-      return;
     } else {
       try {
         await signup(
           getValues('email'),
           getValues('password'),
           getValues('firstName'),
-          date
+          date,
         );
         if (user == null) {
           return;
@@ -63,7 +60,7 @@ export default function SignUp() {
         navigate('/');
       } catch (err) {
         setErrorMsg(
-          'Something went wrong when creating the user, please check that the email is valid'
+          'Something went wrong when creating the user, please check that the email is valid',
         );
         setOpen(true);
       }
@@ -71,9 +68,9 @@ export default function SignUp() {
   });
 
   const getMinDate = () => {
-    var eighteenYearsAgo = new Date();
+    const eighteenYearsAgo = new Date();
     eighteenYearsAgo.setTime(
-      eighteenYearsAgo.valueOf() - 18 * 365 * 24 * 60 * 60 * 1000
+      eighteenYearsAgo.valueOf() - 18 * 365 * 24 * 60 * 60 * 1000,
     );
     setMinDate(eighteenYearsAgo);
   };
@@ -242,7 +239,7 @@ export default function SignUp() {
         <Collapse in={open}>
           <Alert
             severity="error"
-            action={
+            action={(
               <IconButton
                 aria-label="close"
                 color="inherit"
@@ -253,7 +250,7 @@ export default function SignUp() {
               >
                 <CloseIcon fontSize="inherit" />
               </IconButton>
-            }
+            )}
             sx={{ mb: 2 }}
           >
             {errorMsg}
