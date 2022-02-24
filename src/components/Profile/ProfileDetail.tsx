@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../provider/AuthProvider';
 import {
     Box,
@@ -11,40 +11,39 @@ import {
     TextField
   } from '@mui/material';
 import { User } from '../../types/profile';
-
-const states = [
-    {
-      value: 'alabama',
-      label: 'Alabama'
-    },
-    {
-      value: 'new-york',
-      label: 'New York'
-    },
-    {
-      value: 'san-francisco',
-      label: 'San Francisco'
-    }
-  ];
+import { getUserByID } from '../../services/Firebase';
+import { LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import FormDatePicker from '../molecules/FormDatePicker';
 
 const ProfileDetail = () => {
   const { user, signout } = useAuth();
+  const [frUser, setFrUser] = useState<User>()
+  // const [date, setDate] = useState<string | unknown | null>(null);
 
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
+  useEffect(() => {
 
-  const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
-    setValues({
-      ...values,
-    //   [event.target.name]: event.target.value
+    if(user === null){
+      console.log("Filed to load user")
+        return
+    }
+    getUserByID(user.uid).then((fUser) => {
+      if (fUser == null){
+        console.log("Can't find user in firestore")
+        return
+      }
+      var parsedUser = fUser as unknown as User;
+      setFrUser(parsedUser)
     });
-  };
+  });  
+
+  // const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
+    
+  // };
+
+  // const handleSave = (event: React.FormEvent<HTMLFormElement>) => {
+    
+  // };
 
   const handleLogout = async () => {
     await signout();
@@ -57,7 +56,7 @@ const ProfileDetail = () => {
     >
       <Card>
         <CardHeader
-          subheader="The information can be edited"
+          subheader="Read only"
           title="Profile"
         />
         <Divider />
@@ -76,9 +75,9 @@ const ProfileDetail = () => {
                 helperText="Please specify the first name"
                 label="First name"
                 name="firstName"
-                // onChange={handleChange}
+                // onChange={(e) => setFrUser(frUser)}
                 required
-                value={values.firstName}
+                value={frUser?.email}
                 variant="outlined"
               />
             </Grid>
@@ -93,7 +92,7 @@ const ProfileDetail = () => {
                 name="lastName"
                 // onChange={handleChange}
                 required
-                value={values.lastName}
+                value={frUser?.lastName}
                 variant="outlined"
               />
             </Grid>
@@ -108,7 +107,7 @@ const ProfileDetail = () => {
                 name="email"
                 // onChange={handleChange}
                 required
-                value={values.email}
+                value={frUser?.email}
                 variant="outlined"
               />
             </Grid>
@@ -117,15 +116,23 @@ const ProfileDetail = () => {
               md={6}
               xs={12}
             >
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="phone"
-                // onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
-              />
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                sx={{ width: '100%' }}
+              >
+                <Grid
+                  xs={12}
+                >
+                  <FormDatePicker
+                    label="Birthday"
+                    value={frUser?.birthday}
+                    // onChange={(newValue) => {
+                    //   setDate(newValue);
+                    // }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </Grid>
+              </LocalizationProvider>
             </Grid>
             <Grid
               item
@@ -138,7 +145,7 @@ const ProfileDetail = () => {
                 name="country"
                 // onChange={handleChange}
                 required
-                value={values.country}
+                
                 variant="outlined"
               />
             </Grid>
@@ -149,29 +156,18 @@ const ProfileDetail = () => {
             >
               <TextField
                 fullWidth
-                label="Select State"
-                name="state"
+                label="Email Address"
+                name="email"
                 // onChange={handleChange}
                 required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
+                value={frUser?.email}
                 variant="outlined"
-              >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              />
             </Grid>
           </Grid>
         </CardContent>
         <Divider />
-        <Box
+        {/* <Box
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
@@ -184,7 +180,7 @@ const ProfileDetail = () => {
           >
             Save details
           </Button>
-        </Box>
+        </Box> */}
       </Card>
     </form>
   );
