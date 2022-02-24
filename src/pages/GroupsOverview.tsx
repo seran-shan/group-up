@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Chip from '@mui/material/Chip';
@@ -15,14 +15,14 @@ import Navbar from '../components/Navbar/Navbar';
 const globalGroups: Group[] = [];
 
 export default function GroupsOverviewPage() {
-  const [group, setGroup] = useState<Group>();
+  // const [group, setGroup] = useState<Group>();
   console.log(globalGroups);
 
-  const printGroup = () => {
-    const anyGroup = group as any;
-    console.log(anyGroup.id);
-    console.log(globalGroups.length);
-  };
+  //const printGroup = () => {
+  //  const anyGroup = group as any;
+  //  console.log(anyGroup.id);
+  //  console.log(globalGroups.length);
+  //};
 
   return (
     <Box sx={{ flexGrow: 2 }}>
@@ -30,8 +30,8 @@ export default function GroupsOverviewPage() {
       <Button onClick={printGroup}>print</Button>
 
       <Grid container sx={{ p: 10 }} spacing={3} justifyContent="center">
-        {globalGroups
-          && globalGroups.map((g) => (
+        {globalGroups &&
+          globalGroups.map((g) => (
             <Grid item key={g.id} xs="auto" sm="auto" md="auto">
               <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
