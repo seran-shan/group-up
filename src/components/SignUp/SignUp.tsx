@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -18,28 +18,69 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../provider/AuthProvider';
 import FormTextField from '../molecules/FormTextField';
 import FormDatePicker from '../molecules/FormDatePicker';
+import { Alert, Collapse, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const theme = createTheme();
 
 export default function SignUp() {
   const { register, handleSubmit, getValues } = useForm();
-  const { user } = useAuth();
+
+  const [minDate, setMinDate] = useState<Date>();
   const [date, setDate] = useState<string | unknown | null>(null);
   const { signup } = useAuth();
+  const [open, setOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
   const navigate = useNavigate();
 
+  const { user } = useAuth();
+
   const onSubmit = handleSubmit(async () => {
-    await signup(
-      getValues('email'),
-      getValues('password'),
-      getValues('firstName'),
-      date,
-    );
-    if (user == null) {
+    if (getValues('password').length < 6) {
+      setErrorMsg('Password must be more than 6 characters long');
+      setOpen(true);
       return;
+    } else if (getValues('password') !== getValues('confirmPassword')) {
+      setErrorMsg('Passwords do not match');
+      setOpen(true);
+      return;
+    } else if (date == null) {
+      setErrorMsg('You must select a birth date');
+      setOpen(true);
+      return;
+    } else {
+      try {
+        await signup(
+          getValues('email'),
+          getValues('password'),
+          getValues('firstName'),
+          date
+        );
+        if (user == null) {
+          return;
+        }
+        navigate('/');
+      } catch (err) {
+        setErrorMsg(
+          'Something went wrong when creating the user, please check that the email is valid'
+        );
+        setOpen(true);
+      }
     }
-    navigate('/');
   });
+
+  const getMinDate = () => {
+    var eighteenYearsAgo = new Date();
+    eighteenYearsAgo.setTime(
+      eighteenYearsAgo.valueOf() - 18 * 365 * 24 * 60 * 60 * 1000
+    );
+    setMinDate(eighteenYearsAgo);
+  };
+
+  useEffect(() => {
+    getMinDate();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -111,11 +152,11 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormTextField
-                  required
                   fullWidth
+                  required
                   id="email"
                   label="Email Address"
-                  type="text"
+                  type="email"
                   autoComplete="email"
                   {...register('email')}
                 />
@@ -129,6 +170,7 @@ export default function SignUp() {
                   <FormDatePicker
                     label="Birth Year"
                     value={date}
+                    maxDate={minDate}
                     onChange={(newValue) => {
                       setDate(newValue);
                     }}
@@ -179,20 +221,44 @@ export default function SignUp() {
                 mt: 3,
                 mb: 2,
                 backgroundColor: '#125A2E',
-                '&:hover': { backgroundColor: '#16813A' },
+                '&:hover': { backgroundColor: '#16913A' },
               }}
             >
               Sign Up
             </Button>
             <Grid container justifyContent="center">
               <Grid item>
-                <Link href="/signin" variant="body2" sx={{ color: '#16713A' }}>
+                <Link
+                  href="/signin"
+                  variant="body2"
+                  sx={{ color: '#16713A', textDecoration: 'none' }}
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </form>
         </Box>
+        <Collapse in={open}>
+          <Alert
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+            sx={{ mb: 2 }}
+          >
+            {errorMsg}
+          </Alert>
+        </Collapse>
       </Container>
     </ThemeProvider>
   );
