@@ -3,8 +3,6 @@ import './App.css';
 import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import SignUpView from '../../pages/SignUpView';
 import SignIn from '../../pages/SignInView';
-import NoUserRoute from '../routes/NoUserRoute';
-import PrivateRoute from '../routes/PrivateRoute';
 import DashboardView from '../../pages/DashboardView';
 import GroupsOverviewPage from '../../pages/GroupsOverview';
 import CreateGroup from '../../pages/CreateGroup';

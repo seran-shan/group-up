@@ -1,7 +1,7 @@
-import { Box, Button, Link } from '@mui/material';
+import { Box } from '@mui/material';
 import { useState } from 'react';
-import { useAuth } from '../../provider/AuthProvider';
 import Avatar from '@material-ui/core/Avatar';
+import { useAuth } from '../../provider/AuthProvider';
 
 import NavLink from '../molecules/NavLink';
 
@@ -34,7 +34,7 @@ const Navbar = () => {
       >
         <Box sx={{ marginLeft: '40px' }}>
           {' '}
-          <img src="logo512.png" width={60} height={60}></img>
+          <img src="logo512.png" width={60} height={60} />
         </Box>
         <Box
           sx={{

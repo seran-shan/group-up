@@ -31,7 +31,7 @@ export default function SignUp() {
       getValues('email'),
       getValues('password'),
       getValues('firstName'),
-      date
+      date,
     );
   });
 

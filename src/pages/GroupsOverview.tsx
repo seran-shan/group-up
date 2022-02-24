@@ -1,19 +1,14 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import { getGroupByID } from '../services/Firebase';
 import { Group } from '../types/group';
 import Navbar from '../components/Navbar/Navbar';
 
@@ -35,8 +30,8 @@ export default function GroupsOverviewPage() {
       <Button onClick={printGroup}>print</Button>
 
       <Grid container sx={{ p: 10 }} spacing={3} justifyContent="center">
-        {globalGroups &&
-          globalGroups.map((g) => (
+        {globalGroups
+          && globalGroups.map((g) => (
             <Grid item key={g.id} xs="auto" sm="auto" md="auto">
               <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>

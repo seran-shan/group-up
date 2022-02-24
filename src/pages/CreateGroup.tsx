@@ -20,8 +20,8 @@ import {
   Stack,
 } from '@mui/material';
 import { green } from '@mui/material/colors';
-import { getAllUsers, createGroups } from '../services/Firebase';
 import { useForm } from 'react-hook-form';
+import { getAllUsers, createGroups } from '../services/Firebase';
 
 const theme = createTheme();
 
@@ -49,7 +49,7 @@ export default function createGroup() {
       getValues('description'),
       getValues('date'),
       age,
-      interests
+      interests,
     );
     console.log({
       name: data.get('group-name'),
