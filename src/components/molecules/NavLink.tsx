@@ -1,6 +1,5 @@
 import { styled, Link } from '@mui/material';
 
-const focusedColor = '#548235';
 const NavLink = styled(
   Link,
   {},
