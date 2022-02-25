@@ -21,12 +21,21 @@ import {
 } from '@mui/material';
 import { green } from '@mui/material/colors';
 import { useForm } from 'react-hook-form';
-import { getAllUsers, createGroups } from '../services/Firebase';
+import {
+  getAllUsers,
+  createGroups,
+  findUserByEmail,
+} from '../services/Firebase';
+import FormTextField from '../components/molecules/FormTextField';
+import { useState } from 'react';
+import { User } from '../types/user';
 
 const theme = createTheme();
 
 const style = {
   position: 'absolute' as 'absolute',
+  display: 'flex',
+  flexDirection: 'column',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -42,22 +51,14 @@ export default function createGroup() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    getAllUsers();
-    createGroups(
-      getValues('groupNames'),
+    await createGroups(
+      getValues('groupName'),
       getValues('description'),
       getValues('date'),
       age,
       interests,
+      users
     );
-    console.log({
-      name: data.get('group-name'),
-      age,
-      date: data.get('datetime-local'),
-      description: data.get('description'),
-      interests,
-    });
   };
 
   const [interests, setInterests] = React.useState<string[]>([]);
@@ -68,12 +69,24 @@ export default function createGroup() {
 
   const [age, setAge] = React.useState('');
 
+  const [users, setUsers] = useState<string[]>([]);
+
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
 
   const handleCheckbox = (event: SelectChangeEvent) => {
     setInterests((oldArray) => [...oldArray, event.target.value as string]);
+  };
+
+  const handleMember = async () => {
+    await findUserByEmail(getValues('members')).then((data) => {
+      if (!data) {
+        return;
+      }
+      const res = data as unknown as User;
+      setUsers([...users, res.email]);
+    });
   };
 
   return (
@@ -101,7 +114,7 @@ export default function createGroup() {
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 3 }}
+              sx={{ mt: 3, width: '500px' }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}>
@@ -121,7 +134,6 @@ export default function createGroup() {
                     label="Next activity"
                     type="datetime-local"
                     defaultValue="2022-02-24T10:30"
-                    sx={{ width: 250 }}
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -219,9 +231,38 @@ export default function createGroup() {
                   </Select>
                 </Grid>
               </Grid>
-              <Button onClick={handleOpen} variant="contained" color="success">
-                ADD MEMBERS
+              <Button
+                onClick={handleOpen}
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 0,
+                  mb: 0,
+                  backgroundColor: '#125A2E',
+                  '&:hover': { backgroundColor: '#16913A' },
+                }}
+              >
+                Add members
               </Button>
+              <Box
+                sx={{
+                  boxShadow: '1px 1px 1px 1px #A0A0A0',
+                  marginTop: '30px',
+                  mt: 0,
+                }}
+              >
+                <Box
+                  sx={{
+                    width: '100%',
+                    height: '300px',
+                  }}
+                >
+                  <Box>
+                    <li>{users}</li>
+                  </Box>
+                </Box>
+              </Box>
+
               <Modal
                 open={open}
                 onClose={handleClose}
@@ -236,8 +277,16 @@ export default function createGroup() {
                   >
                     Add members to your group:
                   </Typography>
-                  <Button variant="outlined" color="success">
-                    ADD MEMBERS
+                  <FormTextField
+                    label="Member Email"
+                    {...register('members')}
+                  ></FormTextField>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    onClick={handleMember}
+                  >
+                    Add member
                   </Button>
                 </Box>
               </Modal>

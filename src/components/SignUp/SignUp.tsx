@@ -27,7 +27,7 @@ export default function SignUp() {
   const { register, handleSubmit, getValues } = useForm();
 
   const [minDate, setMinDate] = useState<Date>();
-  const [date, setDate] = useState<string | unknown | null>(null);
+  const [date, setDate] = useState<Date | null>(null);
   const { signup } = useAuth();
   const [open, setOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -52,7 +52,8 @@ export default function SignUp() {
           getValues('email'),
           getValues('password'),
           getValues('firstName'),
-          date,
+          getValues('lastName'),
+          date
         );
         if (user == null) {
           return;
@@ -60,7 +61,7 @@ export default function SignUp() {
         navigate('/');
       } catch (err) {
         setErrorMsg(
-          'Something went wrong when creating the user, please check that the email is valid',
+          'Something went wrong when creating the user, please check that the email is valid'
         );
         setOpen(true);
       }
@@ -70,7 +71,7 @@ export default function SignUp() {
   const getMinDate = () => {
     const eighteenYearsAgo = new Date();
     eighteenYearsAgo.setTime(
-      eighteenYearsAgo.valueOf() - 18 * 365 * 24 * 60 * 60 * 1000,
+      eighteenYearsAgo.valueOf() - 18 * 365 * 24 * 60 * 60 * 1000
     );
     setMinDate(eighteenYearsAgo);
   };
@@ -168,7 +169,7 @@ export default function SignUp() {
                     label="Birth Year"
                     value={date}
                     maxDate={minDate}
-                    onChange={(newValue) => {
+                    onChange={(newValue: any) => {
                       setDate(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} />}
@@ -239,7 +240,7 @@ export default function SignUp() {
         <Collapse in={open}>
           <Alert
             severity="error"
-            action={(
+            action={
               <IconButton
                 aria-label="close"
                 color="inherit"
@@ -250,7 +251,7 @@ export default function SignUp() {
               >
                 <CloseIcon fontSize="inherit" />
               </IconButton>
-            )}
+            }
             sx={{ mb: 2 }}
           >
             {errorMsg}

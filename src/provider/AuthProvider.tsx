@@ -23,14 +23,16 @@ export const AuthProvider: React.FC = ({ children }) => {
   const signup = async (
     email: string,
     password: string,
-    name: string,
-    date: string | unknown,
+    firstName: string,
+    lastName: string,
+    birthday: Date
   ) => {
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    await createUser(name, 18, res.user.uid, date);
+    await createUser(firstName, lastName, email, birthday, res.user.uid);
   };
 
-  const login = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
+  const login = (email: string, password: string) =>
+    signInWithEmailAndPassword(auth, email, password);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
