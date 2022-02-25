@@ -8,10 +8,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
-  Avatar,
   Checkbox,
   FormControlLabel,
   FormGroup,
+  Input,
   InputLabel,
   MenuItem,
   Modal,
@@ -19,9 +19,10 @@ import {
   SelectChangeEvent,
   Stack,
 } from '@mui/material';
-import { green } from '@mui/material/colors';
 import { useForm } from 'react-hook-form';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { getAllUsers, createGroups } from '../services/Firebase';
+import Navbar from '../components/Navbar/Navbar';
 
 const theme = createTheme();
 
@@ -43,11 +44,20 @@ export default function createGroup() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const storage = getStorage();
+    if (image) {
+      const storageRef = ref(storage, `groupFotos/${image.name}`);
+
+      uploadBytes(storageRef, image as Blob).then(() => {
+        console.log('Uploaded an image!');
+      });
+    }
+
     getAllUsers();
     createGroups(
-      getValues('groupNames'),
+      getValues('group-name'),
       getValues('description'),
-      getValues('date'),
+      getValues('datetime-local'),
       age,
       interests,
     );
@@ -57,6 +67,7 @@ export default function createGroup() {
       date: data.get('datetime-local'),
       description: data.get('description'),
       interests,
+      image,
     });
   };
 
@@ -67,6 +78,7 @@ export default function createGroup() {
   const handleClose = () => setOpen(false);
 
   const [age, setAge] = React.useState('');
+  const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -76,9 +88,14 @@ export default function createGroup() {
     setInterests((oldArray) => [...oldArray, event.target.value as string]);
   };
 
+  const handleImage = () => {
+    setImage(image);
+  };
+
   return (
     <>
       <Stack component="form" noValidate spacing={3} />
+      <Navbar />
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -90,13 +107,15 @@ export default function createGroup() {
               alignItems: 'center',
             }}
           >
-            <Avatar
-              sx={{ bgcolor: green[500], width: 60, height: 60 }}
-              src="/images/avatar/bakgrun.jpg"
-            />
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" marginBottom={3}>
               New Group
             </Typography>
+            <Grid>
+              <Input accept="image/*" id="group-image" style={{ display: 'none' }} type="file" name="group-image" onChange={handleImage} />
+              <Button variant="contained" component="span" color="success">
+                ADD GROUP PHOTO
+              </Button>
+            </Grid>
             <Box
               component="form"
               noValidate
@@ -112,7 +131,7 @@ export default function createGroup() {
                     id="group-name"
                     label="Group name"
                     autoFocus
-                    {...register('groupName')}
+                    {...register('group-name')}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
@@ -121,11 +140,11 @@ export default function createGroup() {
                     label="Next activity"
                     type="datetime-local"
                     defaultValue="2022-02-24T10:30"
-                    sx={{ width: 250 }}
+                    fullWidth
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    {...register('date')}
+                    {...register('datetime-local')}
                   />
                 </Grid>
                 <Grid item xs={12}>
