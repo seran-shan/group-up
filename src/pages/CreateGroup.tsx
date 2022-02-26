@@ -6,12 +6,17 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import CloseIcon from '@mui/icons-material/Close';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
+  Alert,
   Avatar,
   Checkbox,
+  Collapse,
   FormControlLabel,
   FormGroup,
+  IconButton,
   InputLabel,
   MenuItem,
   Modal,
@@ -22,13 +27,14 @@ import {
 import { green } from '@mui/material/colors';
 import { useForm } from 'react-hook-form';
 import {
-  getAllUsers,
   createGroups,
   findUserByEmail,
+  getUserByID,
 } from '../services/Firebase';
 import FormTextField from '../components/molecules/FormTextField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '../types/user';
+import { useAuth } from '../provider/AuthProvider';
 
 const theme = createTheme();
 
@@ -47,29 +53,44 @@ const style = {
 };
 
 export default function createGroup() {
+  const { user } = useAuth();
+
   const { register, getValues } = useForm();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    await createGroups(
-      getValues('groupName'),
-      getValues('description'),
-      getValues('date'),
-      age,
-      interests,
-      users
-    );
-  };
-
+  const [emails, setEmails] = useState<string[]>([]);
   const [interests, setInterests] = React.useState<string[]>([]);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [openError, setOpenError] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+
   const [age, setAge] = React.useState('');
 
-  const [users, setUsers] = useState<string[]>([]);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(user?.email);
+    console.log(
+      getValues('groupName'),
+      getValues('description'),
+      getValues('date'),
+      age,
+      interests,
+      emails
+    );
+
+    await createGroups(
+      getValues('groupName'),
+      getValues('description'),
+      getValues('date'),
+      age,
+      interests,
+      emails,
+      user?.uid
+    );
+  };
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -82,10 +103,12 @@ export default function createGroup() {
   const handleMember = async () => {
     await findUserByEmail(getValues('members')).then((data) => {
       if (!data) {
+        setOpenError(true);
         return;
       }
+      setOpenSuccess(true);
       const res = data as unknown as User;
-      setUsers([...users, res.email]);
+      setEmails((oldArray) => [...oldArray, res.email]);
     });
   };
 
@@ -110,6 +133,7 @@ export default function createGroup() {
             <Typography component="h1" variant="h5">
               New Group
             </Typography>
+
             <Box
               component="form"
               noValidate
@@ -223,10 +247,10 @@ export default function createGroup() {
                     value={age}
                     onChange={handleChange}
                   >
-                    <MenuItem value={10}>18-25</MenuItem>
-                    <MenuItem value={20}>25-30</MenuItem>
-                    <MenuItem value={30}>30-40</MenuItem>
-                    <MenuItem value={40}>40-60</MenuItem>
+                    <MenuItem value={22}>18-25</MenuItem>
+                    <MenuItem value={27}>25-30</MenuItem>
+                    <MenuItem value={35}>30-40</MenuItem>
+                    <MenuItem value={50}>40-60</MenuItem>
                     <MenuItem value={70}>60-80</MenuItem>
                   </Select>
                 </Grid>
@@ -257,9 +281,9 @@ export default function createGroup() {
                     height: '300px',
                   }}
                 >
-                  <Box>
-                    <li>{users}</li>
-                  </Box>
+                  {emails.map((person) => {
+                    return <p>{person}</p>;
+                  })}
                 </Box>
               </Box>
 
@@ -288,8 +312,59 @@ export default function createGroup() {
                   >
                     Add member
                   </Button>
+                  <Collapse in={openSuccess}>
+                    <Alert
+                      severity="success"
+                      action={
+                        <IconButton
+                          aria-label="close"
+                          color="inherit"
+                          size="small"
+                          onClick={() => {
+                            setOpenSuccess(false);
+                          }}
+                        >
+                          <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                      }
+                      sx={{ mb: 2 }}
+                    >
+                      The user has been added
+                    </Alert>
+                  </Collapse>
+                  <Collapse in={openError}>
+                    <Alert
+                      severity="error"
+                      action={
+                        <IconButton
+                          aria-label="close"
+                          color="inherit"
+                          size="small"
+                          onClick={() => {
+                            setOpenError(false);
+                          }}
+                        >
+                          <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                      }
+                      sx={{ mb: 2 }}
+                    >
+                      We could not find that user
+                    </Alert>
+                  </Collapse>
                 </Box>
               </Modal>
+              <Box
+                sx={{
+                  border: '1px solid #000',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <p>Admin:</p>
+                <p>{user?.email}</p>
+              </Box>
+
               <Button
                 type="submit"
                 variant="contained"
