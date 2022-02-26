@@ -85,9 +85,10 @@ export const getAllUsers = async () => {
 export const getAllGroups = async () => {
   const q = query(collection(db, 'Groups'));
   const querySnapshot = await getDocs(q);
-  const groups = [];
+  const groups: Group[] = [];
   querySnapshot.forEach((d) => {
-    groups.push(d.data());
+    const group = d.data() as unknown as Group;
+    groups.push(group);
   });
   return groups;
 };

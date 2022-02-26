@@ -1,20 +1,13 @@
-import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+
 import { Button, CardActionArea, CardActions, CardMedia } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
+
 import { getAllGroups, getGroupByID } from '../services/Firebase';
-import { DocumentData } from '@firebase/firestore';
+
 import { Group } from '../types/group';
 import Navbar from '../components/Navbar/Navbar';
+import GroupCard from '../components/App/GroupCard';
 
 export default function GroupsOverviewPage() {
   const [groups, setGroups] = useState<Group[]>();
@@ -59,7 +52,16 @@ export default function GroupsOverviewPage() {
       <Navbar />
       <Button onClick={getGroup}>print</Button>
       {groups?.map((group: Group) => {
-        return <p>{group.description}</p>;
+        return (
+          <GroupCard
+            name={group.name}
+            description={group.description}
+            date={group.date}
+            id={group.id}
+            users={group.users}
+            interests={group.interests}
+          />
+        );
       })}
     </Box>
   );
