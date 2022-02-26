@@ -62,16 +62,6 @@ export default function createGroup() {
   const [age, setAge] = React.useState('');
 
   const onSubmit = handleSubmit(async () => {
-    console.log(user?.email);
-    console.log(
-      getValues('groupName'),
-      getValues('description'),
-      getValues('date'),
-      age,
-      interests,
-      emails
-    );
-
     await createGroups(
       getValues('groupName'),
       getValues('description'),
