@@ -51,18 +51,27 @@ export default function GroupsOverviewPage() {
     <Box sx={{ flexGrow: 2 }}>
       <Navbar />
       <Button onClick={getGroup}>print</Button>
-      {groups?.map((group: Group) => {
-        return (
-          <GroupCard
-            name={group.name}
-            description={group.description}
-            date={group.date}
-            id={group.id}
-            users={group.users}
-            interests={group.interests}
-          />
-        );
-      })}
+      <Box
+        sx={{
+          width: '100%',
+          padding: '40px',
+          display: 'flex',
+          marginLeft: '20px',
+        }}
+      >
+        {groups?.map((group: Group) => {
+          return (
+            <GroupCard
+              name={group.name}
+              description={group.description}
+              date={group.date}
+              id={group.id}
+              users={group.users}
+              interests={group.interests}
+            />
+          );
+        })}
+      </Box>
     </Box>
   );
 

@@ -18,12 +18,26 @@ const GroupCard = (group: Group) => {
   return (
     <Card sx={{ maxWidth: '365px' }}>
       <CardHeader title={group.name}></CardHeader>
+      <CardMedia
+        component="img"
+        height="194"
+        image="https://d39l2hkdp2esp1.cloudfront.net/img/photo/170629/170629_00_2x.jpg"
+        alt="Paella dish"
+      />
       <CardContent>
         <Typography>{group.description}</Typography>
       </CardContent>
-      <Stack direction="row" spacing={1}>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+      >
         {group.interests.map((interest) => {
-          return <Chip label={interest} />;
+          return <Chip color="success" label={interest} />;
         })}
       </Stack>
       <p>Members: {group.users.length}</p>
