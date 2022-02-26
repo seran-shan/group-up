@@ -23,10 +23,7 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import {
-  createGroups,
-  findUserByEmail,
-} from '../../services/Firebase';
+import { createGroups, findUserByEmail } from '../../services/Firebase';
 import FormTextField from '../molecules/FormTextField';
 import { User } from '../../types/user';
 import { useAuth } from '../../provider/AuthProvider';
@@ -72,7 +69,7 @@ export default function createGroup() {
       getValues('date'),
       age,
       interests,
-      emails,
+      emails
     );
 
     await createGroups(
@@ -82,7 +79,7 @@ export default function createGroup() {
       age,
       interests,
       emails,
-      user?.uid,
+      user?.uid
     );
   });
 
@@ -330,12 +327,14 @@ export default function createGroup() {
                   sx={{
                     marginTop: '40px',
                     borderRadius: 5,
-                    backgroundColor: '#f1f1f1',
+                    backgroundColor: '#ffffff',
+                    border: 'solid 0.5px #2f2f2f',
+                    borderBottom: 'solid 0.5px #fff',
                   }}
                 >
                   <Box
                     sx={{
-                      backgroundColor: '#16913A',
+                      borderBottom: 'solid 0.5px #2f2f2f',
                       height: '60px',
                       display: 'flex',
                       justifyContent: 'center',
@@ -349,7 +348,7 @@ export default function createGroup() {
                       sx={{
                         fontWeight: 600,
                         fontSize: 22,
-                        color: '#f1f1f1',
+                        color: '#2f2f2f',
                         gridColumnStart: 2,
                         marginBottom: '10px',
                         marginTop: '20px',
@@ -365,6 +364,7 @@ export default function createGroup() {
                       height: '300px',
                       display: 'flex',
                       flexDirection: 'column',
+                      justifyContent: 'left',
                       alignItems: 'left',
                       padding: '20px',
                     }}
@@ -383,12 +383,11 @@ export default function createGroup() {
                   <Button
                     onClick={handleOpen}
                     fullWidth
-                    variant="contained"
+                    variant="outlined"
+                    color="success"
                     sx={{
                       mt: 0,
                       mb: 0,
-                      backgroundColor: '#125A2E',
-                      '&:hover': { backgroundColor: '#16913A' },
                     }}
                   >
                     Add members
@@ -423,7 +422,7 @@ export default function createGroup() {
                     <Collapse in={openSuccess}>
                       <Alert
                         severity="success"
-                        action={(
+                        action={
                           <IconButton
                             aria-label="close"
                             color="inherit"
@@ -434,7 +433,7 @@ export default function createGroup() {
                           >
                             <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        )}
+                        }
                         sx={{ mb: 2 }}
                       >
                         The user has been added
@@ -443,7 +442,7 @@ export default function createGroup() {
                     <Collapse in={openError}>
                       <Alert
                         severity="error"
-                        action={(
+                        action={
                           <IconButton
                             aria-label="close"
                             color="inherit"
@@ -454,7 +453,7 @@ export default function createGroup() {
                           >
                             <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        )}
+                        }
                         sx={{ mb: 2 }}
                       >
                         We could not find that user
