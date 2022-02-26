@@ -55,8 +55,8 @@ export const findUserByEmail = async (email: string) => {
   const q = query(userRef, where('email', '==', email));
   const users = await getDocs(q);
   let user;
-  users.forEach((doc) => {
-    user = doc.data();
+  users.forEach((snap) => {
+    user = snap.data();
   });
   console.log(user);
   return user;

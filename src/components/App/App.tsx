@@ -5,7 +5,6 @@ import SignUpView from '../../pages/SignUpView';
 import SignIn from '../../pages/SignInView';
 import DashboardView from '../../pages/DashboardView';
 import GroupsOverviewPage from '../../pages/GroupsOverview';
-import CreateGroup from '../CreateGroups/CreateGroup';
 import CreateGroupView from '../../pages/CreateGroupView';
 
 export const example = (x: number, y: number) => x + y;

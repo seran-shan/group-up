@@ -1,17 +1,14 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   Alert,
-  Avatar,
   Checkbox,
   Collapse,
   FormControlLabel,
@@ -24,15 +21,13 @@ import {
   SelectChangeEvent,
   Stack,
 } from '@mui/material';
-import { green } from '@mui/material/colors';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import {
   createGroups,
   findUserByEmail,
-  getUserByID,
 } from '../../services/Firebase';
 import FormTextField from '../molecules/FormTextField';
-import { useEffect, useState } from 'react';
 import { User } from '../../types/user';
 import { useAuth } from '../../provider/AuthProvider';
 
@@ -77,7 +72,7 @@ export default function createGroup() {
       getValues('date'),
       age,
       interests,
-      emails
+      emails,
     );
 
     await createGroups(
@@ -87,7 +82,7 @@ export default function createGroup() {
       age,
       interests,
       emails,
-      user?.uid
+      user?.uid,
     );
   });
 
@@ -374,10 +369,16 @@ export default function createGroup() {
                       padding: '20px',
                     }}
                   >
-                    <p>(Admin) {user?.email}</p>
-                    {emails.map((person) => {
-                      return <p>(Member){person}</p>;
-                    })}
+                    <p>
+                      (Admin)
+                      {user?.email}
+                    </p>
+                    {emails.map((person) => (
+                      <p>
+                        (Member)
+                        {person}
+                      </p>
+                    ))}
                   </Box>
                   <Button
                     onClick={handleOpen}
@@ -411,7 +412,7 @@ export default function createGroup() {
                     <FormTextField
                       label="Member Email"
                       {...register('members')}
-                    ></FormTextField>
+                    />
                     <Button
                       variant="outlined"
                       color="success"
@@ -422,7 +423,7 @@ export default function createGroup() {
                     <Collapse in={openSuccess}>
                       <Alert
                         severity="success"
-                        action={
+                        action={(
                           <IconButton
                             aria-label="close"
                             color="inherit"
@@ -433,7 +434,7 @@ export default function createGroup() {
                           >
                             <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        }
+                        )}
                         sx={{ mb: 2 }}
                       >
                         The user has been added
@@ -442,7 +443,7 @@ export default function createGroup() {
                     <Collapse in={openError}>
                       <Alert
                         severity="error"
-                        action={
+                        action={(
                           <IconButton
                             aria-label="close"
                             color="inherit"
@@ -453,7 +454,7 @@ export default function createGroup() {
                           >
                             <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        }
+                        )}
                         sx={{ mb: 2 }}
                       >
                         We could not find that user
