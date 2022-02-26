@@ -58,6 +58,7 @@ export const findUserByEmail = async (email: string) => {
   users.forEach((doc) => {
     user = doc.data();
   });
+  console.log(user);
   return user;
 };
 
@@ -67,7 +68,8 @@ export const createGroups = async (
   date: string,
   age: string,
   interests: string[],
-  users: string[]
+  users: string[],
+  admin: string | undefined
 ) => {
   const docRef = doc(collection(db, 'Groups'));
   await setDoc(docRef, {
@@ -77,6 +79,7 @@ export const createGroups = async (
     age,
     interests,
     users,
+    admin,
   });
 };
 
