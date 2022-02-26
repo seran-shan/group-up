@@ -5,8 +5,8 @@ import SignUpView from '../../pages/SignUpView';
 import SignIn from '../../pages/SignInView';
 import DashboardView from '../../pages/DashboardView';
 import GroupsOverviewPage from '../../pages/GroupsOverview';
-import CreateGroup from '../../pages/CreateGroup';
-import PrivateRoute from '../routes/PrivateRoute';
+import CreateGroup from '../CreateGroups/CreateGroup';
+import CreateGroupView from '../../pages/CreateGroupView';
 
 export const example = (x: number, y: number) => x + y;
 
@@ -16,7 +16,7 @@ const App = () => (
       <Routes>
         <Route path="/" element={<DashboardView />} />
         <Route path="/groups" element={<GroupsOverviewPage />} />
-        <Route path="/CreateGroup" element={<CreateGroup />} />
+        <Route path="/CreateGroup" element={<CreateGroupView />} />
 
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUpView />} />

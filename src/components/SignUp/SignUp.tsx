@@ -94,9 +94,8 @@ export default function SignUp() {
         >
           <Box
             sx={{
-              dispaly: 'flex',
+              display: 'flex',
               flexDirection: 'column',
-
               marginBottom: '60px',
             }}
           >
