@@ -40,8 +40,7 @@ export const createUser = async (
   lastName: string,
   email: string,
   birthday: Date,
-  id: string,
-  date: string | unknown
+  id: string
 ) => {
   await setDoc(doc(db, 'Users', id), {
     firstName,
@@ -129,4 +128,23 @@ export const getGroups = async () => {
   if (data.exists()) {
     return data;
   }
+};
+
+export const getYourGroups = async (id: string, email: string) => {
+  const ref = collection(db, 'Groups');
+  const qAdmin = query(ref, where('admin', '==', id));
+  const qGroups = query(ref, where('users', 'array-contains', email));
+  const myGroups: Group[] = [];
+  const adminGroups = await getDocs(qAdmin);
+  const memberGroups = await getDocs(qGroups);
+  adminGroups.forEach((snap) => {
+    const group = snap.data() as unknown as Group;
+    myGroups.push(group);
+  });
+  memberGroups.forEach((snap) => {
+    const group = snap.data() as unknown as Group;
+    myGroups.push(group);
+  });
+
+  return myGroups;
 };

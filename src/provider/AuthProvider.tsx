@@ -25,13 +25,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     password: string,
     firstName: string,
     lastName: string,
-    birthday: Date,
+    birthday: Date
   ) => {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     await createUser(firstName, lastName, email, birthday, res.user.uid);
   };
 
-  const login = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
+  const login = (email: string, password: string) =>
+    signInWithEmailAndPassword(auth, email, password);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: User | null) => {

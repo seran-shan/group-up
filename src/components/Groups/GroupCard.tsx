@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 const GroupCard = (group: Group) => {
   console.log(group);
   return (
-    <Card sx={{ minWidth: '365px' }}>
+    <Card sx={{ width: '300px', marginBottom: '50px' }}>
       <CardHeader title={group.name}></CardHeader>
       <CardMedia
         component="img"
