@@ -8,6 +8,7 @@ import {
   collection,
   query,
   getDocs,
+  where,
 } from '@firebase/firestore';
 import { getAuth, User } from '@firebase/auth';
 import { Group } from '../types/group';
@@ -35,16 +36,31 @@ export const db = getFirestore(firebaseApp);
 export default firebaseApp;
 
 export const createUser = async (
-  name: string,
-  age: number,
+  firstName: string,
+  lastName: string,
+  email: string,
+  birthday: Date,
   id: string,
   date: string | unknown
 ) => {
   await setDoc(doc(db, 'Users', id), {
-    name,
-    age,
-    date,
+    firstName,
+    lastName,
+    birthday,
+    email,
   });
+};
+
+export const findUserByEmail = async (email: string) => {
+  const userRef = collection(db, 'Users');
+  const q = query(userRef, where('email', '==', email));
+  const users = await getDocs(q);
+  let user;
+  users.forEach((snap) => {
+    user = snap.data();
+  });
+  console.log(user);
+  return user;
 };
 
 export const createGroups = async (
@@ -52,7 +68,9 @@ export const createGroups = async (
   description: string,
   date: string,
   age: string,
-  interests: string[]
+  interests: string[],
+  users: string[],
+  admin: string | undefined
 ) => {
   const docRef = doc(collection(db, 'Groups'));
   await setDoc(docRef, {
@@ -61,6 +79,8 @@ export const createGroups = async (
     date,
     age,
     interests,
+    users,
+    admin,
   });
 };
 
