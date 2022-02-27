@@ -27,7 +27,7 @@ export default function SignUp() {
   const { register, handleSubmit, getValues } = useForm();
 
   const [minDate, setMinDate] = useState<Date>();
-  const [date, setDate] = useState<string | unknown | null>(null);
+  const [date, setDate] = useState<Date | null>(null);
   const { signup } = useAuth();
   const [open, setOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -52,6 +52,7 @@ export default function SignUp() {
           getValues('email'),
           getValues('password'),
           getValues('firstName'),
+          getValues('lastName'),
           date,
         );
         if (user == null) {
@@ -93,9 +94,8 @@ export default function SignUp() {
         >
           <Box
             sx={{
-              dispaly: 'flex',
+              display: 'flex',
               flexDirection: 'column',
-
               marginBottom: '60px',
             }}
           >
@@ -168,7 +168,7 @@ export default function SignUp() {
                     label="Birth Year"
                     value={date}
                     maxDate={minDate}
-                    onChange={(newValue) => {
+                    onChange={(newValue: any) => {
                       setDate(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} />}
