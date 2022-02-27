@@ -40,7 +40,7 @@ export const createUser = async (
   lastName: string,
   email: string,
   birthday: Date,
-  id: string
+  id: string,
 ) => {
   await setDoc(doc(db, 'Users', id), {
     firstName,
@@ -69,7 +69,7 @@ export const createGroups = async (
   age: string,
   interests: string[],
   users: string[],
-  admin: string | undefined
+  admin: string | undefined,
 ) => {
   const docRef = doc(collection(db, 'Groups'));
   await setDoc(docRef, {
@@ -130,21 +130,26 @@ export const getGroups = async () => {
   }
 };
 
-export const getYourGroups = async (id: string, email: string) => {
+export const getMemberGroups = async (email: string) => {
   const ref = collection(db, 'Groups');
-  const qAdmin = query(ref, where('admin', '==', id));
   const qGroups = query(ref, where('users', 'array-contains', email));
   const myGroups: Group[] = [];
-  const adminGroups = await getDocs(qAdmin);
   const memberGroups = await getDocs(qGroups);
-  adminGroups.forEach((snap) => {
-    const group = snap.data() as unknown as Group;
-    myGroups.push(group);
-  });
   memberGroups.forEach((snap) => {
     const group = snap.data() as unknown as Group;
     myGroups.push(group);
   });
+  return myGroups;
+};
 
+export const getAdminGroups = async (id: string) => {
+  const ref = collection(db, 'Groups');
+  const qAdmin = query(ref, where('admin', '==', id));
+  const myGroups: Group[] = [];
+  const adminGroups = await getDocs(qAdmin);
+  adminGroups.forEach((snap) => {
+    const group = snap.data() as unknown as Group;
+    myGroups.push(group);
+  });
   return myGroups;
 };

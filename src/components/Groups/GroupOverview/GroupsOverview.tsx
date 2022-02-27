@@ -38,18 +38,16 @@ export default function GroupsOverview() {
           marginTop: '40px',
         }}
       >
-        {groups?.map((group: Group) => {
-          return (
-            <GroupCard
-              name={group.name}
-              description={group.description}
-              date={group.date}
-              id={group.id}
-              users={group.users}
-              interests={group.interests}
-            />
-          );
-        })}
+        {groups?.map((group: Group) => (
+          <GroupCard
+            name={group.name}
+            description={group.description}
+            date={group.date}
+            id={group.id}
+            users={group.users}
+            interests={group.interests}
+          />
+        ))}
       </Box>
     </Box>
   );

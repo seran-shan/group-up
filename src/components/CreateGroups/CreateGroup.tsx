@@ -69,7 +69,7 @@ export default function createGroup() {
       age,
       interests,
       emails,
-      user?.uid
+      user?.uid,
     );
   });
 
@@ -412,7 +412,7 @@ export default function createGroup() {
                     <Collapse in={openSuccess}>
                       <Alert
                         severity="success"
-                        action={
+                        action={(
                           <IconButton
                             aria-label="close"
                             color="inherit"
@@ -423,7 +423,7 @@ export default function createGroup() {
                           >
                             <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        }
+                        )}
                         sx={{ mb: 2 }}
                       >
                         The user has been added
@@ -432,7 +432,7 @@ export default function createGroup() {
                     <Collapse in={openError}>
                       <Alert
                         severity="error"
-                        action={
+                        action={(
                           <IconButton
                             aria-label="close"
                             color="inherit"
@@ -443,7 +443,7 @@ export default function createGroup() {
                           >
                             <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        }
+                        )}
                         sx={{ mb: 2 }}
                       >
                         We could not find that user

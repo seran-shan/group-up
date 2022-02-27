@@ -1,9 +1,8 @@
 import Box from '@mui/material/Box';
 
-import { Button } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
-import { getAllGroups, getYourGroups } from '../../../services/Firebase';
+import { getMemberGroups, getAdminGroups } from '../../../services/Firebase';
 
 import { Group } from '../../../types/group';
 import Navbar from '../../Navbar/Navbar';
@@ -12,13 +11,20 @@ import { useAuth } from '../../../provider/AuthProvider';
 
 export default function GroupsOverview() {
   const { user } = useAuth();
-  const [groups, setGroups] = useState<Group[]>();
+  const [memberGroups, setMemberGroups] = useState<Group[]>();
+  const [adminGroups, setAdminGroups] = useState<Group[]>();
 
   const getGroup = async () => {
-    console.log(user?.email);
-    await getYourGroups(user?.uid, user?.email).then((data) => {
+    if (user === null || user.email === null) {
+      return;
+    }
+    await getMemberGroups(user.email).then((data) => {
       console.log(data);
-      setGroups(data);
+      setMemberGroups(data);
+    });
+    await getAdminGroups(user.uid).then((data) => {
+      console.log(data);
+      setAdminGroups(data);
     });
   };
 
@@ -28,8 +34,7 @@ export default function GroupsOverview() {
   return (
     <Box sx={{ flexGrow: 2 }}>
       <Navbar />
-      <Button onClick={getGroup}>print</Button>
-
+      <Box>Your groups!</Box>
       <Box
         sx={{
           display: 'flex',
@@ -41,18 +46,38 @@ export default function GroupsOverview() {
           marginTop: '40px',
         }}
       >
-        {groups?.map((group: Group) => {
-          return (
-            <GroupCard
-              name={group.name}
-              description={group.description}
-              date={group.date}
-              id={group.id}
-              users={group.users}
-              interests={group.interests}
-            />
-          );
-        })}
+        {adminGroups?.map((group: Group) => (
+          <GroupCard
+            name={group.name}
+            description={group.description}
+            date={group.date}
+            id={group.id}
+            users={group.users}
+            interests={group.interests}
+          />
+        ))}
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'space-around',
+          maxWidth: '1000px',
+          margin: 'auto',
+          marginTop: '40px',
+        }}
+      >
+        {memberGroups?.map((group: Group) => (
+          <GroupCard
+            name={group.name}
+            description={group.description}
+            date={group.date}
+            id={group.id}
+            users={group.users}
+            interests={group.interests}
+          />
+        ))}
       </Box>
     </Box>
   );
