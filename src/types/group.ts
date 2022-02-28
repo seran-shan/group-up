@@ -1,7 +1,10 @@
-import { User } from "./profile";
+import { User } from './profile';
 
 export type Group = {
   description: string;
+  name: string;
+  date: Date;
   id: string;
-  users: User[]
+  users: string[];
+  interests: string[];
 };
