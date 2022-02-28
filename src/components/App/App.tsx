@@ -4,8 +4,9 @@ import { Routes, BrowserRouter, Route } from 'react-router-dom';
 import SignUpView from '../../pages/SignUpView';
 import SignIn from '../../pages/SignInView';
 import DashboardView from '../../pages/DashboardView';
-import GroupsOverviewPage from '../../pages/GroupsOverview';
 import CreateGroupView from '../../pages/CreateGroupView';
+import GroupView from '../../pages/GroupView';
+import MyGroupsView from '../../pages/MyGroupsView';
 
 export const example = (x: number, y: number) => x + y;
 
@@ -14,9 +15,9 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DashboardView />} />
-        <Route path="/groups" element={<GroupsOverviewPage />} />
+        <Route path="/groups" element={<GroupView />} />
         <Route path="/CreateGroup" element={<CreateGroupView />} />
-
+        <Route path="myGroups" element={<MyGroupsView />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUpView />} />
       </Routes>

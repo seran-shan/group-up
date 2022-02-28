@@ -58,7 +58,6 @@ export const findUserByEmail = async (email: string) => {
   users.forEach((snap) => {
     user = snap.data();
   });
-  console.log(user);
   return user;
 };
 
@@ -93,20 +92,15 @@ export const getUserByID = async (id: string) => {
   alert('User does not exist');
 };
 
-export const getAllUsers = async () => {
-  const q = query(collection(db, 'Users'));
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((d) => {
-    console.log(d.id);
-  });
-};
-
 export const getAllGroups = async () => {
   const q = query(collection(db, 'Groups'));
   const querySnapshot = await getDocs(q);
+  const groups: Group[] = [];
   querySnapshot.forEach((d) => {
-    console.log(d.id);
+    const group = d.data() as unknown as Group;
+    groups.push(group);
   });
+  return groups;
 };
 
 export const getGroupByID = async (id: string) => {
@@ -117,4 +111,36 @@ export const getGroupByID = async (id: string) => {
     return group as Group;
   }
   alert('Group does not exist');
+};
+
+export const getGroups = async () => {
+  const ref = doc(collection(db, 'Groups'));
+  const data = await getDoc(ref);
+  if (data.exists()) {
+    return data;
+  }
+};
+
+export const getMemberGroups = async (email: string) => {
+  const ref = collection(db, 'Groups');
+  const qGroups = query(ref, where('users', 'array-contains', email));
+  const myGroups: Group[] = [];
+  const memberGroups = await getDocs(qGroups);
+  memberGroups.forEach((snap) => {
+    const group = snap.data() as unknown as Group;
+    myGroups.push(group);
+  });
+  return myGroups;
+};
+
+export const getAdminGroups = async (id: string) => {
+  const ref = collection(db, 'Groups');
+  const qAdmin = query(ref, where('admin', '==', id));
+  const myGroups: Group[] = [];
+  const adminGroups = await getDocs(qAdmin);
+  adminGroups.forEach((snap) => {
+    const group = snap.data() as unknown as Group;
+    myGroups.push(group);
+  });
+  return myGroups;
 };
