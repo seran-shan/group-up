@@ -58,7 +58,6 @@ export const findUserByEmail = async (email: string) => {
   users.forEach((snap) => {
     user = snap.data();
   });
-  console.log(user);
   return user;
 };
 
@@ -91,14 +90,6 @@ export const getUserByID = async (id: string) => {
     return user as User;
   }
   alert('User does not exist');
-};
-
-export const getAllUsers = async () => {
-  const q = query(collection(db, 'Users'));
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((d) => {
-    console.log(d.id);
-  });
 };
 
 export const getAllGroups = async () => {

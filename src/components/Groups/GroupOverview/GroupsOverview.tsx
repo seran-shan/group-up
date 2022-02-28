@@ -14,7 +14,6 @@ export default function GroupsOverview() {
 
   const getGroup = async () => {
     await getAllGroups().then((data) => {
-      console.log(data);
       setGroups(data);
     });
   };

@@ -7,10 +7,9 @@ import Stack from '@mui/material/Stack';
 import { Group } from '../../types/group';
 
 const GroupCard: FC<Group> = ({
-  description,
   name,
   date,
-  id,
+
   users,
   interests,
 }) => (

@@ -19,11 +19,9 @@ export default function GroupsOverview() {
       return;
     }
     await getMemberGroups(user.email).then((data) => {
-      console.log(data);
       setMemberGroups(data);
     });
     await getAdminGroups(user.uid).then((data) => {
-      console.log(data);
       setAdminGroups(data);
     });
   };
