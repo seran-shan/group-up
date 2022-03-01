@@ -91,7 +91,6 @@ export const getUserByID = async (id: string) => {
     const user = data.data();
     return user as User;
   }
-  alert('User does not exist');
 };
 
 export const getAllGroups = async () => {
@@ -112,7 +111,6 @@ export const getGroupByID = async (id: string) => {
     const group = data.data();
     return group as Group;
   }
-  alert('Group does not exist');
 };
 
 export const getGroups = async () => {
