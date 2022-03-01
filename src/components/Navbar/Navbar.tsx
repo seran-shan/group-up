@@ -40,7 +40,9 @@ const Navbar = () => (
         <NavLink href="/groups" sx={{ marginRight: '40px' }}>
           Match
         </NavLink>
-        <NavLink sx={{ marginRight: '40  px' }}>Profile</NavLink>
+        <NavLink href="/profile" sx={{ marginRight: '40  px' }}>
+          Profile
+        </NavLink>
       </Box>
       <Box
         sx={{
