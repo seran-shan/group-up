@@ -1,6 +1,4 @@
 import Box from '@mui/material/Box';
-
-import { Button } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
 import { getAllGroups } from '../../../services/Firebase';
@@ -21,10 +19,11 @@ export default function GroupsOverview() {
   useEffect(() => {
     getGroup();
   }, []);
+
+
   return (
     <Box sx={{ flexGrow: 2 }}>
       <Navbar />
-      <Button onClick={getGroup}>print</Button>
 
       <Box
         sx={{
@@ -43,6 +42,7 @@ export default function GroupsOverview() {
             description={group.description}
             date={group.date}
             id={group.id}
+            contactInfo={group.contactInfo}
             users={group.users}
             interests={group.interests}
           />
