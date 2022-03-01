@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuth } from '../../provider/AuthProvider';
 import {
   Avatar,
   Box,
@@ -8,23 +7,21 @@ import {
   CardActions,
   CardContent,
   Divider,
-  Typography
+  Typography,
 } from '@mui/material';
+import { useAuth } from '../../provider/AuthProvider';
 
 const Profile = () => {
-  const { user, signout } = useAuth();
+  const { signout } = useAuth();
 
-  const handleLogout = async () => {
-    await signout();
-  };
   return (
-    <Card /*{...props}*/>
+    <Card>
       <CardContent>
         <Box
           sx={{
             alignItems: 'center',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
           }}
         >
           <Avatar
@@ -32,37 +29,23 @@ const Profile = () => {
             sx={{
               height: 64,
               mb: 2,
-              width: 64
+              width: 64,
             }}
           />
-          <Typography
-            color="textPrimary"
-            gutterBottom
-            variant="h5"
-          >
+          <Typography color="textPrimary" gutterBottom variant="h5">
             {/* {user.name} */}
           </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body2"
-          >
+          <Typography color="textSecondary" variant="body2">
             {/* {`${user.city} ${user.country}`} */}
           </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body2"
-          >
+          <Typography color="textSecondary" variant="body2">
             {/* {user.timezone} */}
           </Typography>
         </Box>
       </CardContent>
       <Divider />
       <CardActions>
-        <Button
-          color="primary"
-          fullWidth
-          variant="text"
-        >
+        <Button color="primary" fullWidth variant="text">
           Upload picture
         </Button>
       </CardActions>

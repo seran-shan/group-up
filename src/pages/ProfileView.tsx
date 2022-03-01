@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import {
+  Box, Container, Grid,
+} from '@mui/material';
 import Profile from '../components/Profile/Profile';
 import ProfileDetail from '../components/Profile/ProfileDetail';
 import Navbar from '../components/Navbar/Navbar';
@@ -11,7 +13,7 @@ const ProfileView = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8
+        py: 8,
       }}
     >
       <Container maxWidth="lg">

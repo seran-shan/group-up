@@ -1,5 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useAuth } from '../../provider/AuthProvider';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -8,19 +7,18 @@ import {
   CardHeader,
   Divider,
   Grid,
-  TextField,
 } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { useAuth } from '../../provider/AuthProvider';
 import { User } from '../../types/profile';
 import { createUser, getUserByID } from '../../services/Firebase';
 
 import FormTextField from '../molecules/FormTextField';
 
-import { useForm } from 'react-hook-form';
-
 const ProfileDetail = () => {
-  const { user, signout } = useAuth();
+  const { user } = useAuth();
 
-  const { register, handleSubmit, getValues } = useForm();
+  const { handleSubmit } = useForm();
 
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
@@ -39,7 +37,7 @@ const ProfileDetail = () => {
         console.log("Can't find user in firestore");
         return;
       }
-      var parsedUser = fUser as unknown as User;
+      const parsedUser = fUser as unknown as User;
       setFirstName(parsedUser.firstName);
       setLastName(parsedUser.lastName);
       setEmail(parsedUser.email);
@@ -86,7 +84,7 @@ const ProfileDetail = () => {
                 fullWidth
                 label="First name"
                 name="firstName"
-                disabled={true}
+                disabled
                 InputLabelProps={{ shrink: true }}
                 variant="outlined"
                 required
@@ -101,7 +99,7 @@ const ProfileDetail = () => {
                 name="lastName"
                 InputLabelProps={{ shrink: true }}
                 variant="outlined"
-                disabled={true}
+                disabled
                 required
                 value={lastName}
                 onChange={(e) => handleLastName(e.target.value)}
@@ -114,7 +112,7 @@ const ProfileDetail = () => {
                 name="email"
                 InputLabelProps={{ shrink: true }}
                 variant="outlined"
-                disabled={true}
+                disabled
                 required
                 value={email}
                 onChange={(e) => handleEmail(e.target.value)}
