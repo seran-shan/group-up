@@ -6,8 +6,9 @@ export interface IAuthContext {
   signup: (
     email: string,
     password: string,
-    name: string,
-    date: string | unknown
+    firstName: string,
+    lastName: string,
+    birthday: Date
   ) => void;
   signout: () => void;
   login: (email: string, password: string) => void;

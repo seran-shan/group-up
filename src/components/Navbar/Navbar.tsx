@@ -34,10 +34,12 @@ const Navbar = () => (
         <NavLink href="/" sx={{ marginRight: '40px' }}>
           Dashboard
         </NavLink>
-        <NavLink href="/groups" sx={{ marginRight: '40px' }}>
+        <NavLink href="/myGroups" sx={{ marginRight: '40px' }}>
           My Groups
         </NavLink>
-        <NavLink sx={{ marginRight: '40px' }}>Match</NavLink>
+        <NavLink href="/groups" sx={{ marginRight: '40px' }}>
+          Match
+        </NavLink>
         <NavLink sx={{ marginRight: '40  px' }}>Profile</NavLink>
       </Box>
       <Box
