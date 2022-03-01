@@ -18,7 +18,7 @@ const App = () => (
         <Route path="/" element={<DashboardView />} />
         <Route path="/groups" element={<GroupView />} />
         <Route path="/CreateGroup" element={<CreateGroupView />} />
-        <Route path="myGroups" element={<MyGroupsView />} />
+        <Route path="/myGroups" element={<MyGroupsView />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUpView />} />
         <Route path="/profile" element={<Profile />} />

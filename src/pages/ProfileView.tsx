@@ -2,9 +2,11 @@ import React from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import Profile from '../components/Profile/Profile';
 import ProfileDetail from '../components/Profile/ProfileDetail';
+import Navbar from '../components/Navbar/Navbar';
 
 const ProfileView = () => (
   <>
+    <Navbar />
     <Box
       component="main"
       sx={{
@@ -13,12 +15,6 @@ const ProfileView = () => (
       }}
     >
       <Container maxWidth="lg">
-        <Typography
-          sx={{ mb: 3 }}
-          variant="h4"
-        >
-          Account
-        </Typography>
         <Grid
           container
           spacing={3}
