@@ -20,7 +20,6 @@ export default function GroupsOverview() {
     getGroup();
   }, []);
 
-
   return (
     <Box sx={{ flexGrow: 2 }}>
       <Navbar />

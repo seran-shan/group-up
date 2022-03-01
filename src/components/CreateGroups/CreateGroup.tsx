@@ -62,6 +62,9 @@ export default function createGroup() {
   const [age, setAge] = React.useState('');
 
   const onSubmit = handleSubmit(async () => {
+    const { v4: uuidv4 } = require('uuid');
+
+    const id = uuidv4();
     await createGroups(
       getValues('groupName'),
       getValues('description'),
@@ -70,6 +73,7 @@ export default function createGroup() {
       interests,
       emails,
       user?.uid,
+      id,
     );
   });
 
