@@ -69,6 +69,7 @@ export const createGroups = async (
   interests: string[],
   users: string[],
   admin: string | undefined,
+  image?: string,
   id: string,
 ) => {
   const docRef = doc(db, 'Groups', id);
@@ -80,6 +81,7 @@ export const createGroups = async (
     interests,
     users,
     admin,
+    image,
     id,
   });
 };
