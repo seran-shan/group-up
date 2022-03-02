@@ -5,9 +5,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 
-import {
-  Box, Button, Modal, Typography,
-} from '@material-ui/core';
+import { Box, Button, Modal, Typography } from '@material-ui/core';
 
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -79,8 +77,9 @@ const GroupCard: FC<GroupCardProps> = ({
         groupData.interests,
         groupData.users,
         groupData.admin,
-        groupData.id,
+        groupData.id
       );
+      console.log('sucess');
     } catch (err) {
       console.log(err);
     }
@@ -105,11 +104,7 @@ const GroupCard: FC<GroupCardProps> = ({
 
       <p>{description}</p>
 
-      <p>
-        {users.length + 1}
-        {' '}
-        members
-      </p>
+      <p>{users.length + 1} members</p>
       <p>{date}</p>
 
       <Grid container justifyContent="center" spacing={2} sx={{ pb: 3 }}>
@@ -170,9 +165,7 @@ const GroupCard: FC<GroupCardProps> = ({
           >
             <Box sx={style}>
               <Typography id="match" variant="h6" component="h2">
-                Contact information:
-                {' '}
-                {contactInfo}
+                Contact information: {contactInfo}
               </Typography>
             </Box>
           </Modal>
