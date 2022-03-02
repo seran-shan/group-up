@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 
 import {
-  Box, Button, Modal, Typography,
+  Box, Button, Modal, Typography
 } from '@material-ui/core';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -79,8 +79,9 @@ const GroupCard: FC<GroupCardProps> = ({
         groupData.interests,
         groupData.users,
         groupData.admin,
-        groupData.id,
+        groupData.id
       );
+      console.log('sucess');
     } catch (err) {
       console.log(err);
     }

@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../../provider/AuthProvider';
 
 import { getAllGroups } from '../../../services/Firebase';
 
@@ -9,10 +10,23 @@ import GroupCard from '../GroupCard';
 
 export default function GroupsOverview() {
   const [groups, setGroups] = useState<Group[]>();
+  const { user } = useAuth();
 
   const getGroup = async () => {
+    const extraGroups: Group[] = [];
     await getAllGroups().then((data) => {
-      setGroups(data);
+      data.forEach((group) => {
+        if (user?.email == null) {
+          return;
+        }
+        if (
+          !group.users.includes(user?.email) &&
+          !(group.admin === user?.uid)
+        ) {
+          extraGroups.push(group);
+        }
+      });
+      setGroups(extraGroups);
     });
   };
 

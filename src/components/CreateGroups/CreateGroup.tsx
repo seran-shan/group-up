@@ -89,7 +89,7 @@ export default function createGroup() {
       emails,
       user?.uid,
       `groupFotos/${image?.name}`,
-      id,
+      id
     );
   });
 
@@ -181,12 +181,19 @@ export default function createGroup() {
             <Grid>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <label htmlFor="group-image">
-                  <Input accept="image/*" id="group-image" type="file" name="group-image" onChange={(e) => { handleImage(e); }} />
+                  <Input
+                    accept="image/*"
+                    id="group-image"
+                    type="file"
+                    name="group-image"
+                    onChange={(e) => {
+                      handleImage(e);
+                    }}
+                  />
                   <Button variant="contained" component="span" color="success">
                     ADD IMAGE
                   </Button>
                 </label>
-
               </Stack>
             </Grid>
             <Box sx={{ mt: 3, width: '500px' }}>

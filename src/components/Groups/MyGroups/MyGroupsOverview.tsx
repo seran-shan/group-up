@@ -32,52 +32,68 @@ export default function GroupsOverview() {
   return (
     <Box sx={{ flexGrow: 2 }}>
       <Navbar />
-      <Box>Your groups!</Box>
       <Box
         sx={{
+          maxWidth: '80%',
           display: 'flex',
           flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-around',
-          maxWidth: '1000px',
           margin: 'auto',
-          marginTop: '40px',
+          justifyContent: 'space-evenly',
         }}
       >
-        {adminGroups?.map((group: Group) => (
-          <GroupCard
-            name={group.name}
-            description={group.description}
-            date={group.date}
-            id={group.id}
-            contactInfo={group.contactInfo}
-            users={group.users}
-            interests={group.interests}
-          />
-        ))}
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-around',
-          maxWidth: '1000px',
-          margin: 'auto',
-          marginTop: '40px',
-        }}
-      >
-        {memberGroups?.map((group: Group) => (
-          <GroupCard
-            name={group.name}
-            description={group.description}
-            date={group.date}
-            id={group.id}
-            contactInfo={group.contactInfo}
-            users={group.users}
-            interests={group.interests}
-          />
-        ))}
+        <Box sx={{}}>
+          <p>Groups that you are an admin of</p>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-around',
+              maxWidth: '1000px',
+              margin: 'auto',
+              marginTop: '40px',
+            }}
+          >
+            {adminGroups?.map((group: Group) => (
+              <GroupCard
+                name={group.name}
+                description={group.description}
+                date={group.date}
+                id={group.id}
+                contactInfo={group.contactInfo}
+                users={group.users}
+                interests={group.interests}
+              />
+            ))}
+          </Box>
+        </Box>
+        <Box>
+          <p>Groups that you are a member of:</p>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-around',
+              maxWidth: '1000px',
+              margin: 'auto',
+              marginTop: '40px',
+            }}
+          >
+            {memberGroups?.map((group: Group) => (
+              <GroupCard
+                name={group.name}
+                description={group.description}
+                date={group.date}
+                id={group.id}
+                contactInfo={group.contactInfo}
+                users={group.users}
+                interests={group.interests}
+              />
+            ))}
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
