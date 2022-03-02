@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
+import { v4 as uuidv4 } from 'uuid';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
@@ -62,6 +63,7 @@ export default function createGroup() {
   const [age, setAge] = React.useState('');
 
   const onSubmit = handleSubmit(async () => {
+    const id = uuidv4();
     await createGroups(
       getValues('groupName'),
       getValues('description'),
@@ -70,6 +72,7 @@ export default function createGroup() {
       interests,
       emails,
       user?.uid,
+      id,
     );
   });
 
