@@ -7,6 +7,7 @@ import Profile from '../../pages/ProfileView';
 import CreateGroupView from '../../pages/CreateGroupView';
 import GroupView from '../../pages/GroupView';
 import MyGroupsView from '../../pages/MyGroupsView';
+import GroupProfileView from '../../pages/GroupProfileView';
 
 export const example = (x: number, y: number) => x + y;
 
@@ -20,6 +21,7 @@ const App = () => (
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUpView />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/groupProfile" element={<GroupProfileView />} />
       </Routes>
     </BrowserRouter>
   </div>
