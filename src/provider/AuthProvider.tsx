@@ -15,9 +15,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const signout = () => {
-    signOut(auth).catch((err) => {
-      alert(err);
-    });
+    signOut(auth);
   };
 
   const signup = async (
