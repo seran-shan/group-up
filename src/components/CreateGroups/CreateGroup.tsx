@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
+import { v4 as uuidv4 } from 'uuid';
 
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import {
@@ -78,6 +79,7 @@ export default function createGroup() {
       });
     }
 
+    const id = uuidv4();
     await createGroups(
       getValues('groupName'),
       getValues('description'),
@@ -87,6 +89,7 @@ export default function createGroup() {
       emails,
       user?.uid,
       `groupFotos/${image?.name}`,
+      id,
     );
   });
 

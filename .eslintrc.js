@@ -36,8 +36,8 @@ module.exports = {
       2,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
+    'comma-dangle': [0, 'never'],
 
-    'comma-dangle': [2, 'always-multiline'],
     'object-shorthand': [
       2,
       'always',

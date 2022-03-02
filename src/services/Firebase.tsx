@@ -70,8 +70,9 @@ export const createGroups = async (
   users: string[],
   admin: string | undefined,
   image?: string,
+  id: string,
 ) => {
-  const docRef = doc(collection(db, 'Groups'));
+  const docRef = doc(db, 'Groups', id);
   await setDoc(docRef, {
     name,
     description,
@@ -81,6 +82,7 @@ export const createGroups = async (
     users,
     admin,
     image,
+    id,
   });
 };
 
@@ -91,7 +93,6 @@ export const getUserByID = async (id: string) => {
     const user = data.data();
     return user as User;
   }
-  alert('User does not exist');
 };
 
 export const getAllGroups = async () => {
@@ -112,7 +113,6 @@ export const getGroupByID = async (id: string) => {
     const group = data.data();
     return group as Group;
   }
-  alert('Group does not exist');
 };
 
 export const getGroups = async () => {
@@ -145,4 +145,15 @@ export const getAdminGroups = async (id: string) => {
     myGroups.push(group);
   });
   return myGroups;
+};
+
+export const addMemberToGroup = async (userEmail: string, groupID: string) => {
+  const group = await getGroupByID(groupID);
+  if (group == null) {
+    return;
+  }
+  const users = group?.users;
+  users.push(userEmail);
+  const docRef = doc(db, 'Groups', groupID);
+  setDoc(docRef, group);
 };
