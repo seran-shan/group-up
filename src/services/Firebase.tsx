@@ -69,8 +69,8 @@ export const createGroups = async (
   interests: string[],
   users: string[],
   admin: string | undefined,
-  image?: string,
   id: string,
+  image?: string,
 ) => {
   const docRef = doc(db, 'Groups', id);
   await setDoc(docRef, {
