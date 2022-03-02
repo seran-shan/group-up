@@ -12,8 +12,6 @@ import {
 import { useAuth } from '../../provider/AuthProvider';
 
 const Profile = () => {
-  const { signout } = useAuth();
-
   return (
     <Card>
       <CardContent>

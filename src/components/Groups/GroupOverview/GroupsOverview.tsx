@@ -19,7 +19,10 @@ export default function GroupsOverview() {
         if (user?.email == null) {
           return;
         }
-        if (!group.users.includes(user?.email) && !(group.admin == user?.uid)) {
+        if (
+          !group.users.includes(user?.email) &&
+          !(group.admin === user?.uid)
+        ) {
           extraGroups.push(group);
         }
       });
