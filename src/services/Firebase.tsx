@@ -69,6 +69,7 @@ export const createGroups = async (
   interests: string[],
   users: string[],
   admin: string | undefined,
+  image?: string,
 ) => {
   const docRef = doc(collection(db, 'Groups'));
   await setDoc(docRef, {
@@ -79,6 +80,7 @@ export const createGroups = async (
     interests,
     users,
     admin,
+    image,
   });
 };
 

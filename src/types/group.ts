@@ -5,4 +5,5 @@ export type Group = {
   id: string;
   users: string[];
   interests: string[];
+  image?: string | undefined;
 };

@@ -69,6 +69,7 @@ module.exports = {
     'no-plusplus': 1,
     'no-param-reassign': 1,
     'no-unreachable-loop': 1, // TODO: enable
+    "jsx-a11y/label-has-associated-control": 0,
 
     strict: [2, 'safe'],
     'valid-jsdoc': [
