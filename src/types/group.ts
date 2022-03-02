@@ -7,5 +7,6 @@ export type Group = {
   contactInfo: string;
   users: string[];
   interests: string[];
+  image?: string | undefined;
   admin: string;
 };

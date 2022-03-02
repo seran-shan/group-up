@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import {
   Alert,
   Checkbox,
@@ -24,12 +24,17 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { createGroups, findUserByEmail } from '../../services/Firebase';
 import FormTextField from '../molecules/FormTextField';
 import { User } from '../../types/user';
 import { useAuth } from '../../provider/AuthProvider';
 
 const theme = createTheme();
+
+const Input = styled('input')({
+  display: 'none',
+});
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -61,8 +66,22 @@ export default function createGroup() {
   const [openSuccess, setOpenSuccess] = useState(false);
 
   const [age, setAge] = React.useState('');
+  const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const onSubmit = handleSubmit(async () => {
+<<<<<<< HEAD
+=======
+    console.log(image);
+    const storage = getStorage();
+    if (image) {
+      const storageRef = ref(storage, `groupFotos/${image.name}`);
+
+      uploadBytes(storageRef, image as Blob).then(() => {
+        console.log('Uploaded an image!');
+      });
+    }
+
+>>>>>>> b22a79c5f60950bcf77ba91e6d0fb5d755d9b6a3
     const id = uuidv4();
     await createGroups(
       getValues('groupName'),
@@ -72,6 +91,10 @@ export default function createGroup() {
       interests,
       emails,
       user?.uid,
+<<<<<<< HEAD
+=======
+      `groupFotos/${image?.name}`,
+>>>>>>> b22a79c5f60950bcf77ba91e6d0fb5d755d9b6a3
       id,
     );
   });
@@ -94,6 +117,14 @@ export default function createGroup() {
       const res = data as unknown as User;
       setEmails((oldArray) => [...oldArray, res.email]);
     });
+  };
+
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target as HTMLInputElement;
+    if (input.files?.length) {
+      const groupim = input.files[0];
+      setImage(groupim);
+    }
   };
 
   return (
@@ -153,7 +184,17 @@ export default function createGroup() {
                 marginBottom: '32px',
               }}
             />
+            <Grid>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <label htmlFor="group-image">
+                  <Input accept="image/*" id="group-image" type="file" name="group-image" onChange={(e) => { handleImage(e); }} />
+                  <Button variant="contained" component="span" color="success">
+                    ADD IMAGE
+                  </Button>
+                </label>
 
+              </Stack>
+            </Grid>
             <Box sx={{ mt: 3, width: '500px' }}>
               <form onSubmit={onSubmit}>
                 <Grid container spacing={2}>
