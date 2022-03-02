@@ -69,8 +69,6 @@ export default function createGroup() {
   const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const onSubmit = handleSubmit(async () => {
-<<<<<<< HEAD
-=======
     console.log(image);
     const storage = getStorage();
     if (image) {
@@ -81,7 +79,6 @@ export default function createGroup() {
       });
     }
 
->>>>>>> b22a79c5f60950bcf77ba91e6d0fb5d755d9b6a3
     const id = uuidv4();
     await createGroups(
       getValues('groupName'),
@@ -91,11 +88,8 @@ export default function createGroup() {
       interests,
       emails,
       user?.uid,
-<<<<<<< HEAD
-=======
       `groupFotos/${image?.name}`,
->>>>>>> b22a79c5f60950bcf77ba91e6d0fb5d755d9b6a3
-      id,
+      id
     );
   });
 
@@ -187,12 +181,19 @@ export default function createGroup() {
             <Grid>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <label htmlFor="group-image">
-                  <Input accept="image/*" id="group-image" type="file" name="group-image" onChange={(e) => { handleImage(e); }} />
+                  <Input
+                    accept="image/*"
+                    id="group-image"
+                    type="file"
+                    name="group-image"
+                    onChange={(e) => {
+                      handleImage(e);
+                    }}
+                  />
                   <Button variant="contained" component="span" color="success">
                     ADD IMAGE
                   </Button>
                 </label>
-
               </Stack>
             </Grid>
             <Box sx={{ mt: 3, width: '500px' }}>
@@ -456,7 +457,7 @@ export default function createGroup() {
                     <Collapse in={openSuccess}>
                       <Alert
                         severity="success"
-                        action={(
+                        action={
                           <IconButton
                             aria-label="close"
                             color="inherit"
@@ -467,7 +468,7 @@ export default function createGroup() {
                           >
                             <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        )}
+                        }
                         sx={{ mb: 2 }}
                       >
                         The user has been added
@@ -476,7 +477,7 @@ export default function createGroup() {
                     <Collapse in={openError}>
                       <Alert
                         severity="error"
-                        action={(
+                        action={
                           <IconButton
                             aria-label="close"
                             color="inherit"
@@ -487,7 +488,7 @@ export default function createGroup() {
                           >
                             <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        )}
+                        }
                         sx={{ mb: 2 }}
                       >
                         We could not find that user
