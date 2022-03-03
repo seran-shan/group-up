@@ -8,6 +8,9 @@ import { Group } from '../../../types/group';
 import Navbar from '../../Navbar/Navbar';
 import GroupCard from '../GroupCard';
 import { useAuth } from '../../../provider/AuthProvider';
+import Typography from 'material-ui/styles/typography';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function GroupsOverview() {
   const { user } = useAuth();
@@ -29,9 +32,32 @@ export default function GroupsOverview() {
   useEffect(() => {
     getGroup();
   }, []);
+
+  const navigate = useNavigate();
+
+  const handleNav = () => {
+    navigate('/createGroup');
+  };
+
   return (
     <Box sx={{ flexGrow: 2 }}>
       <Navbar />
+      <Box sx={{ width: '100%', height: '200px' }}>
+        <h1>Experience new things with friends </h1>
+        <Button
+          onClick={handleNav}
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 3,
+            mb: 2,
+            backgroundColor: '#125A2E',
+            '&:hover': { backgroundColor: '#16913A' },
+          }}
+        >
+          Create new group
+        </Button>
+      </Box>
       <Box
         sx={{
           maxWidth: '80%',
