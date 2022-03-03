@@ -70,6 +70,8 @@ module.exports = {
     'no-param-reassign': 1,
     'no-unreachable-loop': 1, // TODO: enable
     'jsx-a11y/label-has-associated-control': 0,
+    'react/jsx-closing-tag-location': 0,
+    'react/self-closing-comp': 0,
 
     strict: [2, 'safe'],
     'valid-jsdoc': [

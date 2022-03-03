@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -127,21 +126,7 @@ const ProfileDetail = () => {
             justifyContent: 'center',
             p: 2,
           }}
-        >
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              backgroundColor: '#125A2E',
-              '&:hover': { backgroundColor: '#16913A' },
-            }}
-          >
-            Save details
-          </Button>
-        </Box>
+        ></Box>
       </Card>
     </form>
   );
