@@ -21,7 +21,7 @@ const Profile = () => (
         }}
       >
         <Avatar
-            // src={user.avatar}
+          // src={user.avatar}
           sx={{
             height: 64,
             mb: 2,
@@ -39,12 +39,6 @@ const Profile = () => (
         </Typography>
       </Box>
     </CardContent>
-    <Divider />
-    <CardActions>
-      <Button color="primary" fullWidth variant="text">
-        Upload picture
-      </Button>
-    </CardActions>
   </Card>
 );
 

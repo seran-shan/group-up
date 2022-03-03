@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box, Container, Grid, Typography
-} from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import GroupProfile from '../components/Profile/GroupProfile';
 import GroupProfileDetail from '../components/Profile/GroupProfileDetail';
@@ -42,10 +40,7 @@ const GroupProfileView = () => {
             Group Profile
           </Typography>
           <Grid container spacing={3}>
-            <Grid item lg={4} md={6} xs={12}>
-              <GroupProfile />
-            </Grid>
-            <Grid item lg={8} md={6} xs={12}>
+            <Grid item lg={16} md={16} xs={16}>
               <GroupProfileDetail
                 description={group?.description}
                 name={group?.name}
