@@ -239,7 +239,7 @@ export default function SignUp() {
         <Collapse in={open}>
           <Alert
             severity="error"
-            action={
+            action={(
               <IconButton
                 aria-label="close"
                 color="inherit"
@@ -250,7 +250,7 @@ export default function SignUp() {
               >
                 <CloseIcon fontSize="inherit" />
               </IconButton>
-            }
+            )}
             sx={{ mb: 2 }}
           >
             {errorMsg}

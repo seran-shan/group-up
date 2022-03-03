@@ -50,7 +50,6 @@ const GroupProfileView = () => {
                 description={group?.description}
                 name={group?.name}
                 users={group?.users}
-                admin={group?.admin}
                 interests={group?.interests}
                 age={group?.age}
                 date={group?.date}

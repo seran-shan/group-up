@@ -116,14 +116,6 @@ export const getGroupByID = async (id: string) => {
   }
 };
 
-export const getGroups = async () => {
-  const ref = doc(collection(db, 'Groups'));
-  const data = await getDoc(ref);
-  if (data.exists()) {
-    return data;
-  }
-};
-
 export const getMemberGroups = async (email: string) => {
   const ref = collection(db, 'Groups');
   const qGroups = query(ref, where('users', 'array-contains', email));

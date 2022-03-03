@@ -60,9 +60,9 @@ export default function GroupsOverview() {
                 description={group.description}
                 date={group.date}
                 id={group.id}
-                contactInfo={group.contactInfo}
                 users={group.users}
                 interests={group.interests}
+                admin={group.admin}
               />
             ))}
           </Box>
@@ -87,9 +87,9 @@ export default function GroupsOverview() {
                 description={group.description}
                 date={group.date}
                 id={group.id}
-                contactInfo={group.contactInfo}
                 users={group.users}
                 interests={group.interests}
+                admin={group.admin}
               />
             ))}
           </Box>

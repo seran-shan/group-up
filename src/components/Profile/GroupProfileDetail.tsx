@@ -19,7 +19,6 @@ interface GroupProfileProps {
   description: string | undefined;
   name: string | undefined;
   users: string[] | undefined;
-  admin: string | undefined;
   interests: string[] | undefined;
   date: string | undefined;
   age: string | undefined;
@@ -29,7 +28,6 @@ const GroupProfileDetail: FC<GroupProfileProps> = ({
   description,
   name,
   users,
-  admin,
   interests,
   age,
   date,

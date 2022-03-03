@@ -3,9 +3,9 @@ import React from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 
+import Button from '@material-ui/core/Button';
 import NavLink from '../molecules/NavLink';
 import { useAuth } from '../../provider/AuthProvider';
-import Button from '@material-ui/core/Button';
 
 const Navbar = () => {
   const { signout } = useAuth();
