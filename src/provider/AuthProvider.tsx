@@ -23,7 +23,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     password: string,
     firstName: string,
     lastName: string,
-    birthday: Date,
+    birthday: Date
   ) => {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     await createUser(firstName, lastName, email, birthday, res.user.uid);

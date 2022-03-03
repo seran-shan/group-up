@@ -69,8 +69,7 @@ export const createGroups = async (
   interests: string[],
   users: string[],
   admin: string | undefined,
-  id: string,
-  image?: string
+  id: string
 ) => {
   const docRef = doc(db, 'Groups', id);
   await setDoc(docRef, {
@@ -81,7 +80,7 @@ export const createGroups = async (
     interests,
     users,
     admin,
-    image,
+
     id,
   });
 };
@@ -113,14 +112,6 @@ export const getGroupByID = async (id: string) => {
   if (data.exists()) {
     const group = data.data();
     return group as Group;
-  }
-};
-
-export const getGroups = async () => {
-  const ref = doc(collection(db, 'Groups'));
-  const data = await getDoc(ref);
-  if (data.exists()) {
-    return data;
   }
 };
 

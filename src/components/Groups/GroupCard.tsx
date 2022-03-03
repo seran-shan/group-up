@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Chip from '@mui/material/Chip';
@@ -8,12 +8,18 @@ import Grid from '@mui/material/Grid';
 import {
   Box, Button, Modal, Typography
 } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import {
+  getGroupByID,
+  createGroups,
+  getUserByID,
+} from '../../services/Firebase';
 import { useAuth } from '../../provider/AuthProvider';
-import { getGroupByID, createGroups } from '../../services/Firebase';
+import { User } from '../../types/profile';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -33,32 +39,33 @@ interface GroupCardProps {
   name: string;
   date: string;
   description: string;
-  contactInfo: string;
   users: string[];
   interests: string[];
   id: string;
+  admin: string;
 }
 
 const GroupCard: FC<GroupCardProps> = ({
   name,
   date,
   description,
-  contactInfo,
   users,
   interests,
   id,
+  admin,
 }) => {
   const [openJoin, setOpenJoin] = React.useState(false);
   const handleOpenJoin = () => setOpenJoin(true);
   const handleCloseJoin = () => setOpenJoin(false);
 
   const [openMatch, setOpenMatch] = React.useState(false);
-  const handleOpenMatch = () => setOpenMatch(true);
+  const handleOpenMatch = () => {
+    setOpenMatch(true);
+  };
   const handleCloseMatch = () => setOpenMatch(false);
 
   const { user } = useAuth();
 
-  // doesn't work
   const handleAddMember = async () => {
     const groupData = await getGroupByID(id);
     if (groupData == null || user == null) {
@@ -81,11 +88,32 @@ const GroupCard: FC<GroupCardProps> = ({
         groupData.admin,
         groupData.id
       );
-      console.log('sucess');
     } catch (err) {
       console.log(err);
     }
   };
+
+  const navigate = useNavigate();
+
+  const handleNav = () => {
+    navigate(`/groups/${id}`);
+  };
+
+  const [adminUser2, setAdminUser] = useState<string | null>();
+
+  const getAdmin = async () => {
+    const adminUser = await getUserByID(admin);
+    if (adminUser == null) {
+      return;
+    }
+
+    const theUser = adminUser as unknown as User;
+    setAdminUser(theUser?.email);
+  };
+
+  useEffect(() => {
+    getAdmin();
+  }, []);
 
   return (
     <Card sx={{ width: '350px', marginBottom: '100px' }}>
@@ -143,6 +171,7 @@ const GroupCard: FC<GroupCardProps> = ({
 
         <Grid item xs="auto" sm="auto" md="auto" justifyContent="space-between">
           <Button
+            onClick={handleNav}
             variant="contained"
             startIcon={<VisibilityIcon />}
             size="small"
@@ -170,11 +199,10 @@ const GroupCard: FC<GroupCardProps> = ({
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Typography id="match" variant="h6" component="h2">
-                Contact information:
-                {' '}
-                {contactInfo}
-              </Typography>
+              <p>
+                Contact info:
+                {adminUser2}
+              </p>
             </Box>
           </Modal>
         </Grid>

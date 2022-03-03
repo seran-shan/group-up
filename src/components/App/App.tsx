@@ -8,6 +8,8 @@ import CreateGroupView from '../../pages/CreateGroupView';
 import GroupView from '../../pages/GroupView';
 import MyGroupsView from '../../pages/MyGroupsView';
 import GroupProfileView from '../../pages/GroupProfileView';
+import NoUserRoute from '../routes/NoUserRoute';
+import PrivateRoute from '../routes/PrivateRoute';
 
 export const example = (x: number, y: number) => x + y;
 
@@ -15,13 +17,18 @@ const App = () => (
   <div className="App">
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<GroupView />} />
-        <Route path="/CreateGroup" element={<CreateGroupView />} />
-        <Route path="/myGroups" element={<MyGroupsView />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUpView />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/groupProfile" element={<GroupProfileView />} />
+        <Route element={<NoUserRoute />}>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUpView />} />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<GroupView />} />
+          <Route path="/CreateGroup" element={<CreateGroupView />} />
+          <Route path="/myGroups" element={<MyGroupsView />} />
+
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/groups/:id" element={<GroupProfileView />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </div>

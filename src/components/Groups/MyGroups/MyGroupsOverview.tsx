@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box';
 
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 import { getMemberGroups, getAdminGroups } from '../../../services/Firebase';
 
@@ -29,9 +31,32 @@ export default function GroupsOverview() {
   useEffect(() => {
     getGroup();
   }, []);
+
+  const navigate = useNavigate();
+
+  const handleNav = () => {
+    navigate('/createGroup');
+  };
+
   return (
     <Box sx={{ flexGrow: 2 }}>
       <Navbar />
+      <Box sx={{ width: '100%', height: '200px' }}>
+        <h1>Experience new things with friends </h1>
+        <Button
+          onClick={handleNav}
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 3,
+            mb: 2,
+            backgroundColor: '#125A2E',
+            '&:hover': { backgroundColor: '#16913A' },
+          }}
+        >
+          Create new group
+        </Button>
+      </Box>
       <Box
         sx={{
           maxWidth: '80%',
@@ -60,9 +85,9 @@ export default function GroupsOverview() {
                 description={group.description}
                 date={group.date}
                 id={group.id}
-                contactInfo={group.contactInfo}
                 users={group.users}
                 interests={group.interests}
+                admin={group.admin}
               />
             ))}
           </Box>
@@ -87,9 +112,9 @@ export default function GroupsOverview() {
                 description={group.description}
                 date={group.date}
                 id={group.id}
-                contactInfo={group.contactInfo}
                 users={group.users}
                 interests={group.interests}
+                admin={group.admin}
               />
             ))}
           </Box>

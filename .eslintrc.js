@@ -69,7 +69,9 @@ module.exports = {
     'no-plusplus': 1,
     'no-param-reassign': 1,
     'no-unreachable-loop': 1, // TODO: enable
-    "jsx-a11y/label-has-associated-control": 0,
+    'jsx-a11y/label-has-associated-control': 0,
+    'react/jsx-closing-tag-location': 0,
+    'react/self-closing-comp': 0,
 
     strict: [2, 'safe'],
     'valid-jsdoc': [
@@ -93,7 +95,8 @@ module.exports = {
     ],
     'jsx-a11y/anchor-is-valid': 'off',
     'jsx-a11y/anchor-has-content': 'off',
-
+    'react/jsx-wrap-multilines': 0,
+    'object-curly-newline': 0,
     'eslint-plugin/consistent-output': 0,
     'eslint-plugin/require-meta-schema': 0,
     'eslint-plugin/require-meta-type': 0,
