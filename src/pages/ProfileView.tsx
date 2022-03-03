@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Container, Grid } from '@mui/material';
-import Profile from '../components/Profile/Profile';
 import ProfileDetail from '../components/Profile/ProfileDetail';
 import Navbar from '../components/Navbar/Navbar';
 

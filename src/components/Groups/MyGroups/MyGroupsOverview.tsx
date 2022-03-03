@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box';
 
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 import { getMemberGroups, getAdminGroups } from '../../../services/Firebase';
 
@@ -8,9 +10,6 @@ import { Group } from '../../../types/group';
 import Navbar from '../../Navbar/Navbar';
 import GroupCard from '../GroupCard';
 import { useAuth } from '../../../provider/AuthProvider';
-import Typography from 'material-ui/styles/typography';
-import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
 
 export default function GroupsOverview() {
   const { user } = useAuth();
