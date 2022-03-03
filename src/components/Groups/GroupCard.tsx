@@ -1,18 +1,31 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 
-import { Box, Button, Modal, Typography } from '@material-ui/core';
+import { Box, Button, Modal, Select, Typography } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useAuth } from '../../provider/AuthProvider';
-import { getGroupByID, createGroups } from '../../services/Firebase';
+import {
+  getGroupByID,
+  createGroups,
+  getAdminGroups,
+  getMemberGroups,
+} from '../../services/Firebase';
+import { Group } from '../../types/group';
+import MenuItem from '@mui/material/MenuItem';
+import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { group } from 'console';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -52,7 +65,9 @@ const GroupCard: FC<GroupCardProps> = ({
   const handleCloseJoin = () => setOpenJoin(false);
 
   const [openMatch, setOpenMatch] = React.useState(false);
-  const handleOpenMatch = () => setOpenMatch(true);
+  const handleOpenMatch = () => {
+    setOpenMatch(true);
+  };
   const handleCloseMatch = () => setOpenMatch(false);
 
   const { user } = useAuth();
@@ -90,6 +105,36 @@ const GroupCard: FC<GroupCardProps> = ({
 
   const handleNav = () => {
     navigate(`/groups/${id}`);
+  };
+
+  const [memberGroups, setMemberGroups] = useState<Group[]>();
+  const [adminGroups, setAdminGroups] = useState<Group[]>();
+
+  const getGroup = async () => {
+    if (user === null || user.email === null) {
+      return;
+    }
+    await getMemberGroups(user.email).then((data) => {
+      console.log(data);
+      setMemberGroups(data);
+    });
+    await getAdminGroups(user.uid).then((data) => {
+      console.log(data);
+
+      setAdminGroups(data);
+    });
+  };
+
+  useEffect(() => {
+    getGroup();
+  }, []);
+
+  const [groupMatch, setGroupMatch] = useState<Group[]>([]);
+  const handleCheckbox = (event: SelectChangeEvent) => {
+    setGroupMatch((oldArray) => [
+      ...oldArray,
+      event.target.value as unknown as Group,
+    ]);
   };
 
   return (
@@ -173,8 +218,31 @@ const GroupCard: FC<GroupCardProps> = ({
           >
             <Box sx={style}>
               <Typography id="match" variant="h6" component="h2">
-                Contact information: {contactInfo}
+                With what group do you want to match?
               </Typography>
+              {memberGroups?.map((group) => {
+                return (
+                  <FormControlLabel
+                    control={
+                      <Checkbox color="success" onChange={handleCheckbox} />
+                    }
+                    label={group.name}
+                    value={group}
+                  />
+                );
+              })}
+              {adminGroups?.map((group) => {
+                return (
+                  <FormControlLabel
+                    control={
+                      <Checkbox color="success" onChange={handleCheckbox} />
+                    }
+                    label={group.name}
+                    value={group}
+                  />
+                );
+              })}
+              <Button>Match</Button>
             </Box>
           </Modal>
         </Grid>

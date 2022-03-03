@@ -5,10 +5,8 @@ import {
   signOut,
   User,
 } from '@firebase/auth';
-import { auth, createUser, getAllGroups } from '../services/Firebase';
+import { auth, createUser } from '../services/Firebase';
 import AuthContext, { IAuthContext } from '../context/AuthContext';
-import { setgroups } from 'process';
-import { Group } from '../types/group';
 
 export const useAuth = () => useContext<IAuthContext>(AuthContext);
 
@@ -31,8 +29,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     await createUser(firstName, lastName, email, birthday, res.user.uid);
   };
 
-  const login = (email: string, password: string) =>
-    signInWithEmailAndPassword(auth, email, password);
+  const login = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: User | null) => {

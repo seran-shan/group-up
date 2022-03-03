@@ -1,13 +1,13 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import {
+  Box, Container, Grid, Typography
+} from '@mui/material';
+import { useParams } from 'react-router-dom';
 import GroupProfile from '../components/Profile/GroupProfile';
 import GroupProfileDetail from '../components/Profile/GroupProfileDetail';
 import Navbar from '../components/Navbar/Navbar';
 import { Group } from '../types/group';
-import group from 'material-ui/svg-icons/social/group';
-import { useParams } from 'react-router-dom';
 import { getGroupByID } from '../services/Firebase';
-import { Groups } from '@mui/icons-material';
 
 const GroupProfileView = () => {
   const { id } = useParams();

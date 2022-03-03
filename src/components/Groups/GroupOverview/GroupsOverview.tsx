@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../provider/AuthProvider';
 
@@ -8,10 +7,6 @@ import { getAllGroups } from '../../../services/Firebase';
 import { Group } from '../../../types/group';
 import Navbar from '../../Navbar/Navbar';
 import GroupCard from '../GroupCard';
-
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import Button from '@mui/material/Button';
-import GroupProfileView from '../../../pages/GroupProfileView';
 
 export default function GroupsOverview() {
   const [groups, setGroups] = useState<Group[]>();
@@ -25,8 +20,8 @@ export default function GroupsOverview() {
           return;
         }
         if (
-          !group.users.includes(user?.email) &&
-          !(group.admin === user?.uid)
+          !group.users.includes(user?.email)
+          && !(group.admin === user?.uid)
         ) {
           extraGroups.push(group);
         }

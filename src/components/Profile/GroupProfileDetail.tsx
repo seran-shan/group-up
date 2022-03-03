@@ -11,11 +11,9 @@ import {
 } from '@mui/material';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import FormDatePicker from '../molecules/FormDatePicker';
-import { Group } from '../../types/group';
-import FormTextField from '../molecules/FormTextField';
 import Box from '@material-ui/core/Box';
-import Typography from 'material-ui/styles/typography';
+import FormDatePicker from '../molecules/FormDatePicker';
+import FormTextField from '../molecules/FormTextField';
 
 interface GroupProfileProps {
   description: string | undefined;
