@@ -5,9 +5,8 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 
-import {
-  Box, Button, Modal, Typography
-} from '@material-ui/core';
+import { Box, Button, Modal, Typography } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -87,6 +86,12 @@ const GroupCard: FC<GroupCardProps> = ({
     }
   };
 
+  const navigate = useNavigate();
+
+  const handleNav = () => {
+    navigate(`/groups/${id}`);
+  };
+
   return (
     <Card sx={{ width: '350px', marginBottom: '100px' }}>
       <CardHeader title={name} sx={{ pt: 3 }} />
@@ -106,11 +111,7 @@ const GroupCard: FC<GroupCardProps> = ({
 
       <p>{description}</p>
 
-      <p>
-        {users.length + 1}
-        {' '}
-        members
-      </p>
+      <p>{users.length + 1} members</p>
       <p>{date}</p>
 
       <Grid container justifyContent="center" spacing={2} sx={{ pb: 3 }}>
@@ -143,6 +144,7 @@ const GroupCard: FC<GroupCardProps> = ({
 
         <Grid item xs="auto" sm="auto" md="auto" justifyContent="space-between">
           <Button
+            onClick={handleNav}
             variant="contained"
             startIcon={<VisibilityIcon />}
             size="small"
@@ -171,9 +173,7 @@ const GroupCard: FC<GroupCardProps> = ({
           >
             <Box sx={style}>
               <Typography id="match" variant="h6" component="h2">
-                Contact information:
-                {' '}
-                {contactInfo}
+                Contact information: {contactInfo}
               </Typography>
             </Box>
           </Modal>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { User } from '@firebase/auth';
+import { Group } from '../types/group';
 
 export interface IAuthContext {
   user: User | null;

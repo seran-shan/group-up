@@ -13,107 +13,111 @@ import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import FormDatePicker from '../molecules/FormDatePicker';
 import { Group } from '../../types/group';
+import FormTextField from '../molecules/FormTextField';
+import Box from '@material-ui/core/Box';
+import Typography from 'material-ui/styles/typography';
 
 interface GroupProfileProps {
-    group: Group
+  description: string | undefined;
+  name: string | undefined;
+  users: string[] | undefined;
+  admin: string | undefined;
+  interests: string[] | undefined;
+  date: string | undefined;
+  age: string | undefined;
 }
 
-const GroupProfileDetail: FC<GroupProfileProps> = ({ group }) => (
-  <form
-    autoComplete="off"
-    noValidate
-  >
+const GroupProfileDetail: FC<GroupProfileProps> = ({
+  description,
+  name,
+  users,
+  admin,
+  interests,
+  age,
+  date,
+}) => (
+  <form autoComplete="off" noValidate>
     <Card>
-      <CardHeader
-        subheader="Read only"
-        title={group?.name}
-      />
+      <CardHeader subheader="Read only" title={name} />
       <Divider />
       <CardContent>
-        <Grid
-          container
-          spacing={3}
-        >
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
-            <TextField
+        <Grid container spacing={3}>
+          <Grid item md={12} xs={12}>
+            <FormTextField
               fullWidth
               label="Group Name"
+              disabled
               name="Group-Name"
+              InputLabelProps={{ shrink: true }}
               required
-              value={group?.name}
+              value={name}
               variant="outlined"
             />
           </Grid>
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
-            <TextField
+          <Grid item md={12} xs={12}>
+            <FormTextField
               fullWidth
-              label="Age limit"
-              name="age-limit"
-              required
-              value={group?.age}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
-            <TextField
-              fullWidth
+              disabled
               multiline
               maxRows={6}
               label="Description"
+              InputLabelProps={{ shrink: true }}
               name="description"
-              value={group?.description}
+              value={description}
               required
               variant="outlined"
             />
           </Grid>
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
+          <Grid item md={12} xs={12}>
+            <FormTextField
+              fullWidth
+              label="Age limit"
+              name="age-limit"
+              InputLabelProps={{ shrink: true }}
+              disabled
+              required
+              value={age}
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item md={12} xs={12}>
             <LocalizationProvider
               dateAdapter={AdapterDateFns}
               sx={{ width: '100%' }}
             >
-              <Grid
-                xs={12}
-              >
+              <Grid xs={12}>
                 <FormDatePicker
                   label=""
-                  value={group?.date}
-                  onChange={() => {
-                  }}
+                  value={date}
+                  disabled
+                  onChange={() => {}}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </Grid>
             </LocalizationProvider>
           </Grid>
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
-            {group?.users.map((person) => <li>{person}</li>)}
+          <Grid item md={12} xs={12}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <p>Members:</p>
+              {users?.map((person) => (
+                <p>{person}</p>
+              ))}
+            </Box>
           </Grid>
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
-            <Stack direction="row" spacing={1}>
-              {group?.interests.map((interest) => <Chip label={interest} color="success" />)}
+          <Grid item md={12} xs={12}>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {interests?.map((interest) => (
+                <Chip label={interest} color="success" />
+              ))}
             </Stack>
           </Grid>
         </Grid>
