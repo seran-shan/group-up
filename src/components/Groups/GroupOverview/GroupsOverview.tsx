@@ -1,7 +1,6 @@
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../provider/AuthProvider';
 
 import { getAllGroups } from '../../../services/Firebase';
@@ -25,7 +24,6 @@ const style = {
 };
 
 export default function GroupsOverview() {
-
   const [interests, setInterests] = React.useState<string[]>([]);
 
   const handleCheckbox = (event: SelectChangeEvent) => {
@@ -35,7 +33,6 @@ export default function GroupsOverview() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { register } = useForm();
 
   const [groups, setGroups] = useState<Group[]>();
   const { user } = useAuth();
@@ -50,12 +47,6 @@ export default function GroupsOverview() {
     setAge(event.target.value as string);
   };
 
-  const [date, setDate] = React.useState('');
-
-  const handleDate = (event: SelectChangeEvent) => {
-    setDate(event.target.value as string);
-  };
-
   const handleFilter = async () => {
     const extraGroups: Group[] = [];
     await getAllGroups().then((data) => {
@@ -65,9 +56,9 @@ export default function GroupsOverview() {
         }
         if (
           !group.users.includes(user?.email)
-          && !(group.admin === user?.uid) && (group.age == age)
-          && ((group.users.length + 1) == size)
-          && (group.location == location)
+          && !(group.admin === user?.uid) && (group.age === age)
+          && ((group.users.length + 1) === size)
+          && (group.location === location)
           // && (group.interests.includes())
         ) {
           extraGroups.push(group);
@@ -78,7 +69,7 @@ export default function GroupsOverview() {
       console.log(extraGroups);
       console.log(interests);
     });
-  }
+  };
 
   const [size, setSize] = React.useState(0);
 
@@ -120,26 +111,34 @@ export default function GroupsOverview() {
           maxWidth: '1000px',
           margin: 'auto',
           marginTop: '40px',
-        }}>
-        <Button onClick={handleOpen}
+        }}
+      >
+        <Button
+          onClick={handleOpen}
           variant="contained"
           size="small"
           style={{ background: '#33792F' }}
-        >Filter groups</Button>
+        >
+          Filter groups
+        </Button>
         <Modal
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style} >
+          <Box sx={style}>
             <Typography variant="h5" component="h2" sx={{ textAlign: 'center', m: 1, fontWeight: 'bold' }}>
               Filter groups
             </Typography>
             <Box sx={{
-              textAlign: 'left', m: 1, width: '100%', display: 'flex',
+              textAlign: 'left',
+              m: 1,
+              width: '100%',
+              display: 'flex',
               flexDirection: 'column'
-            }}>
+            }}
+            >
               <Stack component="form" noValidate spacing={3} />
               <Grid display="flex">
                 <div>
@@ -153,11 +152,11 @@ export default function GroupsOverview() {
                       fullWidth
                       label="Location"
                     >
-                      <MenuItem value={'Moholt'}>Moholt</MenuItem>
-                      <MenuItem value={'Solsiden'}>Solsiden</MenuItem>
-                      <MenuItem value={'Midtbyen'}>Midtbyen</MenuItem>
-                      <MenuItem value={'Ila'}>Ila</MenuItem>
-                      <MenuItem value={'Lade'}>Lade</MenuItem>
+                      <MenuItem value="Moholt">Moholt</MenuItem>
+                      <MenuItem value="Solsiden">Solsiden</MenuItem>
+                      <MenuItem value="Midtbyen">Midtbyen</MenuItem>
+                      <MenuItem value="Ila">Ila</MenuItem>
+                      <MenuItem value="Lade">Lade</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
@@ -202,8 +201,7 @@ export default function GroupsOverview() {
                 </div>
               </Grid>
               <Grid item xs={12}>
-                <Typography
-                >
+                <Typography>
                   Interests
                 </Typography>
               </Grid>
@@ -290,7 +288,7 @@ export default function GroupsOverview() {
               <Typography>
                 Date
               </Typography>
-              <Grid item xs={12} sm={6} md={6} >
+              <Grid item xs={12} sm={6} md={6}>
                 <FormTextField
                   // onChange={handleDate}
                   id="datetime-local"
@@ -304,10 +302,12 @@ export default function GroupsOverview() {
               </Grid>
 
               <Grid sx={{ marginTop: 2, marginRight: 12, marginLeft: 5, textAlign: 'center' }}>
-                <Button variant="contained"
+                <Button
+                  variant="contained"
                   size="small"
                   style={{ background: '#33792F' }}
-                  onClick={handleFilter}>
+                  onClick={handleFilter}
+                >
                   Filter
                 </Button>
               </Grid>
@@ -335,7 +335,6 @@ export default function GroupsOverview() {
             users={group.users}
             interests={group.interests}
             admin={group.admin}
-            location={group.location}
           />
         ))}
       </Box>

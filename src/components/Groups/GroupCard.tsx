@@ -43,7 +43,6 @@ interface GroupCardProps {
   interests: string[];
   id: string;
   admin: string;
-  location: string;
 }
 
 const GroupCard: FC<GroupCardProps> = ({
@@ -53,8 +52,7 @@ const GroupCard: FC<GroupCardProps> = ({
   users,
   interests,
   id,
-  admin,
-  location,
+  admin
 }) => {
   const [openJoin, setOpenJoin] = React.useState(false);
   const handleOpenJoin = () => setOpenJoin(true);

@@ -265,11 +265,11 @@ export default function createGroup() {
                       value={location}
                       onChange={handleLocation}
                     >
-                      <MenuItem value={'Moholt'}>Moholt</MenuItem>
-                      <MenuItem value={'Solsiden'}>Solsiden</MenuItem>
-                      <MenuItem value={'Midtbyen'}>Midtbyen</MenuItem>
-                      <MenuItem value={'Ila'}>Ila</MenuItem>
-                      <MenuItem value={'Lade'}>Lade</MenuItem>
+                      <MenuItem value="Moholt">Moholt</MenuItem>
+                      <MenuItem value="Solsiden">Solsiden</MenuItem>
+                      <MenuItem value="Midtbyen">Midtbyen</MenuItem>
+                      <MenuItem value="Ila">Ila</MenuItem>
+                      <MenuItem value="Lade">Lade</MenuItem>
                     </Select>
                   </Grid>
                   <Grid item xs={12}>
