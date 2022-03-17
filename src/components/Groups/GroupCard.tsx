@@ -83,6 +83,7 @@ const GroupCard: FC<GroupCardProps> = ({
         groupData.description,
         groupData.date,
         groupData.age,
+        groupData.membershipType,
         groupData.interests,
         groupData.users,
         groupData.admin,
