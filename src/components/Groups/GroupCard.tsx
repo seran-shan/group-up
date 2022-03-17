@@ -52,7 +52,7 @@ const GroupCard: FC<GroupCardProps> = ({
   users,
   interests,
   id,
-  admin,
+  admin
 }) => {
   const [openJoin, setOpenJoin] = React.useState(false);
   const handleOpenJoin = () => setOpenJoin(true);
@@ -87,7 +87,8 @@ const GroupCard: FC<GroupCardProps> = ({
         groupData.interests,
         groupData.users,
         groupData.admin,
-        groupData.id
+        groupData.id,
+        groupData.location
       );
     } catch (err) {
       console.log(err);
