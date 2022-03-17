@@ -16,7 +16,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 700,
+  width: 600,
+  length: 100,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -169,88 +170,92 @@ export default function GroupsOverview() {
               </Grid>
 
               <Grid item xs={12}>
-                <Typography
+                <Typography sx={{ fontWeight: 'bold' }}
                 >
                   Interests
                 </Typography>
               </Grid>
-              <Grid sx={{ marginRight: 12, marginLeft: 5 }}>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Sports"
-                    value="Sports"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Music"
-                    value="Music"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Reading"
-                    value="Reading"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Cooking"
-                    value="Cooking"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Dancing"
-                    value="Dancing"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Pets"
-                    value="Pets"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Politics"
-                    value="Politics"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Photography"
-                    value="Photography"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Partying"
-                    value="Partying"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox color="success" onChange={handleCheckbox} />
-                    }
-                    label="Art"
-                    value="Art"
-                  />
-                </FormGroup>
+              <Grid display="flex">
+                <Grid sx={{ marginRight: 5, marginLeft: 2 }}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Sports"
+                      value="Sports"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Music"
+                      value="Music"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Reading"
+                      value="Reading"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Cooking"
+                      value="Cooking"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Dancing"
+                      value="Dancing"
+                    />
+                  </FormGroup>
+                </Grid>
+                <Grid sx={{ marginRight: 12, marginLeft: 5 }}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Pets"
+                      value="Pets"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Politics"
+                      value="Politics"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Photography"
+                      value="Photography"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Partying"
+                      value="Partying"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox color="success" onChange={handleCheckbox} />
+                      }
+                      label="Art"
+                      value="Art"
+                    />
+                  </FormGroup>
+                </Grid>
               </Grid>
-              <Typography sx={{ fontWeight: 'bold' }}>
+              <Typography sx={{ fontWeight: 'bold', marginTop: 1 }}>
                 Date
               </Typography>
               <Grid item xs={12} sm={6} md={6} >
@@ -266,7 +271,7 @@ export default function GroupsOverview() {
                 />
               </Grid>
 
-              <Grid sx={{ marginTop: 2, marginRight: 12, marginLeft: 5, textAlign: 'left' }}>
+              <Grid sx={{ marginTop: 2, marginRight: 12, marginLeft: 5, textAlign: 'center' }}>
                 <Button variant="contained"
                   size="small"
                   style={{ background: '#33792F' }}
