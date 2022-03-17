@@ -67,6 +67,7 @@ export default function createGroup() {
   const [openSuccess, setOpenSuccess] = useState(false);
 
   const [age, setAge] = React.useState('');
+  const [membershipType, setMembershipType] = React.useState('');
   const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const onSubmit = handleSubmit(async () => {
@@ -86,6 +87,7 @@ export default function createGroup() {
       getValues('description'),
       getValues('date'),
       age,
+      membershipType,
       interests,
       emails,
       user?.uid,
@@ -95,6 +97,10 @@ export default function createGroup() {
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
+  };
+
+  const handleMebershipChange = (event: SelectChangeEvent) => {
+    setMembershipType(event.target.value as string);
   };
 
   const handleCheckbox = (event: SelectChangeEvent) => {
@@ -256,11 +262,11 @@ export default function createGroup() {
                     <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label">Age</InputLabel>
                       <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={age}
+                        labelId="dropdrown-membership-label"
+                        id="dropdrown-membership"
+                        value={membershipType}
                         label="Age"
-                        onChange={handleChange}
+                        onChange={handleMebershipChange}
                       >
                         <MenuItem value={'Gold'}>Gold</MenuItem>
                         <MenuItem value={'Regular'}>Regular</MenuItem>
