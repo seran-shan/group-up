@@ -57,8 +57,8 @@ export default function GroupsOverview() {
         if (
           !group.users.includes(user?.email)
           && !(group.admin === user?.uid) && (group.age === age)
-          && ((group.users.length + 1) === size)
-          && (group.location === location)
+          && (((group.users.length + 1) === size) || (size > 5 && (group.users.length + 1 > 5)))
+          // && (group.location === location)
           // && (group.interests.includes())
         ) {
           extraGroups.push(group);

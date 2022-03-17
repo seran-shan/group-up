@@ -51,7 +51,7 @@ const style = {
   p: 4,
 };
 
-export default function createGroup() {
+export default function CreateGroup() {
   const { user } = useAuth();
 
   const { register, getValues, handleSubmit } = useForm();
@@ -67,11 +67,8 @@ export default function createGroup() {
   const [openSuccess, setOpenSuccess] = useState(false);
 
   const [age, setAge] = React.useState('');
-<<<<<<< HEAD
   const [location, setLocation] = React.useState('');
-=======
   const [membershipType, setMembershipType] = React.useState('');
->>>>>>> bf092ff28d4f5c231fa9a8a901e5fc516500e6a7
   const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const onSubmit = handleSubmit(async () => {
@@ -104,14 +101,13 @@ export default function createGroup() {
     setAge(event.target.value as string);
   };
 
-<<<<<<< HEAD
   const handleLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
-=======
+  }
   const handleMebershipChange = (event: SelectChangeEvent) => {
     setMembershipType(event.target.value as string);
->>>>>>> bf092ff28d4f5c231fa9a8a901e5fc516500e6a7
   };
+
 
   const handleCheckbox = (event: SelectChangeEvent) => {
     setInterests((oldArray) => [...oldArray, event.target.value as string]);
@@ -565,3 +561,4 @@ export default function createGroup() {
     </Box>
   );
 }
+
