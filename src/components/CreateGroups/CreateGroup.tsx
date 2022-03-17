@@ -12,6 +12,7 @@ import {
   Alert,
   Checkbox,
   Collapse,
+  FormControl,
   FormControlLabel,
   FormGroup,
   IconButton,
@@ -66,7 +67,11 @@ export default function createGroup() {
   const [openSuccess, setOpenSuccess] = useState(false);
 
   const [age, setAge] = React.useState('');
+<<<<<<< HEAD
   const [location, setLocation] = React.useState('');
+=======
+  const [membershipType, setMembershipType] = React.useState('');
+>>>>>>> bf092ff28d4f5c231fa9a8a901e5fc516500e6a7
   const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const onSubmit = handleSubmit(async () => {
@@ -86,6 +91,7 @@ export default function createGroup() {
       getValues('description'),
       getValues('date'),
       age,
+      membershipType,
       interests,
       emails,
       user?.uid,
@@ -98,8 +104,13 @@ export default function createGroup() {
     setAge(event.target.value as string);
   };
 
+<<<<<<< HEAD
   const handleLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
+=======
+  const handleMebershipChange = (event: SelectChangeEvent) => {
+    setMembershipType(event.target.value as string);
+>>>>>>> bf092ff28d4f5c231fa9a8a901e5fc516500e6a7
   };
 
   const handleCheckbox = (event: SelectChangeEvent) => {
@@ -239,21 +250,38 @@ export default function createGroup() {
                       {...register('description')}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <InputLabel sx={{ color: '#125A2E' }}>Agelimit</InputLabel>
-                    <Select
-                      labelId="dropdown-age-label"
-                      id="dropdown-age"
-                      fullWidth
-                      value={age}
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={22}>18-25</MenuItem>
-                      <MenuItem value={27}>25-30</MenuItem>
-                      <MenuItem value={35}>30-40</MenuItem>
-                      <MenuItem value={50}>40-60</MenuItem>
-                      <MenuItem value={70}>60-80</MenuItem>
-                    </Select>
+                  <Grid item xs={12} sm={6} md={6}>
+                    <FormControl fullWidth>
+                      <InputLabel sx={{ color: '#125A2E' }}>Agelimit</InputLabel>
+                      <Select
+                        labelId="dropdown-age-label"
+                        id="dropdown-age"
+                        fullWidth
+                        value={age}
+                        onChange={handleChange}
+                      >
+                        <MenuItem value={22}>18-25</MenuItem>
+                        <MenuItem value={27}>25-30</MenuItem>
+                        <MenuItem value={35}>30-40</MenuItem>
+                        <MenuItem value={50}>40-60</MenuItem>
+                        <MenuItem value={70}>60-80</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                      <Select
+                        labelId="dropdrown-membership-label"
+                        id="dropdrown-membership"
+                        value={membershipType}
+                        label="Age"
+                        onChange={handleMebershipChange}
+                      >
+                        <MenuItem value={'Gold'}>Gold</MenuItem>
+                        <MenuItem value={'Regular'}>Regular</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
 
                   <Grid item xs={12}>

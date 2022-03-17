@@ -4,6 +4,7 @@ export type Group = {
   date: string;
   id: string;
   age: string;
+  membershipType: string;
   contactInfo: string;
   users: string[];
   interests: string[];
