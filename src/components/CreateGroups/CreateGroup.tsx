@@ -51,7 +51,7 @@ const style = {
   p: 4,
 };
 
-export default function createGroup() {
+export default function CreateGroup() {
   const { user } = useAuth();
 
   const { register, getValues, handleSubmit } = useForm();
@@ -67,6 +67,7 @@ export default function createGroup() {
   const [openSuccess, setOpenSuccess] = useState(false);
 
   const [age, setAge] = React.useState('');
+  const [location, setLocation] = React.useState('');
   const [membershipType, setMembershipType] = React.useState('');
   const [image, setImage] = React.useState<File | undefined>(undefined);
 
@@ -91,7 +92,8 @@ export default function createGroup() {
       interests,
       emails,
       user?.uid,
-      id
+      id,
+      location
     );
   });
 
@@ -99,9 +101,13 @@ export default function createGroup() {
     setAge(event.target.value as string);
   };
 
+  const handleLocation = (event: SelectChangeEvent) => {
+    setLocation(event.target.value as string);
+  }
   const handleMebershipChange = (event: SelectChangeEvent) => {
     setMembershipType(event.target.value as string);
   };
+
 
   const handleCheckbox = (event: SelectChangeEvent) => {
     setInterests((oldArray) => [...oldArray, event.target.value as string]);
@@ -274,6 +280,22 @@ export default function createGroup() {
                     </FormControl>
                   </Grid>
 
+                  <Grid item xs={12}>
+                    <InputLabel sx={{ color: '#125A2E' }}>Location</InputLabel>
+                    <Select
+                      labelId="dropdown-age-label"
+                      id="dropdown-age"
+                      fullWidth
+                      value={location}
+                      onChange={handleLocation}
+                    >
+                      <MenuItem value="Moholt">Moholt</MenuItem>
+                      <MenuItem value="Solsiden">Solsiden</MenuItem>
+                      <MenuItem value="Midtbyen">Midtbyen</MenuItem>
+                      <MenuItem value="Ila">Ila</MenuItem>
+                      <MenuItem value="Lade">Lade</MenuItem>
+                    </Select>
+                  </Grid>
                   <Grid item xs={12}>
                     <Typography
                       component="h1"
@@ -539,3 +561,4 @@ export default function createGroup() {
     </Box>
   );
 }
+

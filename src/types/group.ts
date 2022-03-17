@@ -10,4 +10,5 @@ export type Group = {
   interests: string[];
   image?: string | undefined;
   admin: string;
+  location: string;
 };
