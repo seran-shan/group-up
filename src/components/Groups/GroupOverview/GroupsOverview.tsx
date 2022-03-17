@@ -1,6 +1,7 @@
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../provider/AuthProvider';
 
 import { getAllGroups } from '../../../services/Firebase';
@@ -34,10 +35,12 @@ export default function GroupsOverview() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+
   const [groups, setGroups] = useState<Group[]>();
   const { user } = useAuth();
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
+  const { register, getValues, handleSubmit } = useForm();
 
   const handleLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
@@ -49,26 +52,58 @@ export default function GroupsOverview() {
 
   const handleFilter = async () => {
     const extraGroups: Group[] = [];
+
     await getAllGroups().then((data) => {
-      data.forEach((group) => {
-        if (user?.email == null) {
-          return;
-        }
-        if (
-          !group.users.includes(user?.email)
-          && !(group.admin === user?.uid) && (group.age === age)
-          && (((group.users.length + 1) === size) || (size > 5 && (group.users.length + 1 > 5)))
-          // && (group.location === location)
-          // && (group.interests.includes())
-        ) {
-          extraGroups.push(group);
-        }
-      });
-      setGroups(extraGroups);
-      setOpen(false);
-      console.log(extraGroups);
-      console.log(interests);
-    });
+
+      if (location.length != 0) {
+        data.map(group => {
+          if (group.location == location) {
+            extraGroups.push(group)
+          }
+        })
+
+        if (size != 0) {
+          data.map(group => {
+            if (((group.users.length + 1) === size)) {
+              extraGroups.push(group)
+            }
+          })
+
+          if (getValues('date').length != 0) {
+            data.map(group => {
+              if (group.date == getValues('date')) {
+                extraGroups.push(group)
+              }
+            })
+
+            if (age.length != 0) {
+              data.map(group => {
+                if (group.age == age) {
+                  extraGroups.push(group)
+                }
+              })
+
+              data.forEach((group) => {
+                if (user?.email == null) {
+                  return;
+                }
+                if (
+                  !group.users.includes(user?.email)
+                  && (!(group.admin === user?.uid) &&
+                    ((group.age === age)
+                      || (((group.users.length + 1) === size))
+                      || (group.location === location)
+                      || (group.date == getValues('date'))))
+                  // || group.interests.includes(interests))
+                ) {
+                  extraGroups.push(group);
+                }
+              });
+              setGroups(extraGroups);
+              setOpen(false);
+              console.log(extraGroups);
+              console.log(interests);
+            });
   };
 
   const [size, setSize] = React.useState(0);
@@ -195,7 +230,8 @@ export default function GroupsOverview() {
                       <MenuItem value={2}>2</MenuItem>
                       <MenuItem value={3}>3</MenuItem>
                       <MenuItem value={4}>4</MenuItem>
-                      <MenuItem value={5}>5+</MenuItem>
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={6}>6</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
@@ -290,14 +326,14 @@ export default function GroupsOverview() {
               </Typography>
               <Grid item xs={12} sm={6} md={6}>
                 <FormTextField
-                  // onChange={handleDate}
                   id="datetime-local"
                   required
                   type="datetime-local"
                   defaultValue="2022-02-24T10:30"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
+                  {...register('date')}
                 />
               </Grid>
 
