@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -65,12 +65,11 @@ export default function GroupsOverview() {
     });
   }
 
-  /** 
   const [size, setSize] = React.useState('');
 
   const handleSize = (event: SelectChangeEvent) => {
-    setSize(event.target.value as unknown as number);
-  };*/
+    setSize(event.target.value as string);
+  };
 
   const getGroup = async () => {
     const extraGroups: Group[] = [];
@@ -119,7 +118,7 @@ export default function GroupsOverview() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style} >
-            <Typography variant="h5" component="h2" sx={{ textAlign: 'center', m: 1 }}>
+            <Typography variant="h5" component="h2" sx={{ textAlign: 'center', m: 1, fontWeight: 'bold' }}>
               Filter groups
             </Typography>
             <Box sx={{
@@ -128,49 +127,52 @@ export default function GroupsOverview() {
             }}>
               <Stack component="form" noValidate spacing={3} />
               <Grid>
-                <Typography sx={{ fontWeight: 'bold' }}>
+                <Typography>
                   Location
                 </Typography>
               </Grid>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Agelimit
-              </Typography>
-              <Grid item xs={12}>
-                <Select
-                  labelId="dropdown-age-label"
-                  id="dropdown-age"
-                  fullWidth
-                  value={age}
-                  onChange={handleChange}
-                >
-                  <MenuItem value={22}>18-25</MenuItem>
-                  <MenuItem value={27}>25-30</MenuItem>
-                  <MenuItem value={35}>30-40</MenuItem>
-                  <MenuItem value={50}>40-60</MenuItem>
-                  <MenuItem value={70}>60-80</MenuItem>
-                </Select>
+              <Grid display="flex">
+                <div>
+                  <FormControl sx={{ m: 1, minWidth: 150 }}>
+                    <InputLabel id="demo-simple-select-autowidth-label">Age</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-autowidth-label"
+                      id="demo-simple-select-autowidth"
+                      value={age}
+                      onChange={handleChange}
+                      fullWidth
+                      label="Age"
+                    >
+                      <MenuItem value={22}>18-25</MenuItem>
+                      <MenuItem value={27}>25-30</MenuItem>
+                      <MenuItem value={35}>30-40</MenuItem>
+                      <MenuItem value={50}>40-60</MenuItem>
+                      <MenuItem value={70}>60-80</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div>
+                  <FormControl sx={{ m: 1, minWidth: 150 }}>
+                    <InputLabel id="demo-simple-select-autowidth-label">Size</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-autowidth-label"
+                      id="demo-simple-select-autowidth"
+                      value={size}
+                      onChange={handleSize}
+                      fullWidth
+                      label="Size"
+                    >
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={4}>4</MenuItem>
+                      <MenuItem value={5}>5+</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
               </Grid>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Group size
-              </Typography>
               <Grid item xs={12}>
-                <Select
-                  labelId="dropdown-size-label"
-                  id="dropdown-size"
-                  fullWidth
-                // value={size}
-                // onChange={handleSize}
-                >
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5+</MenuItem>
-                </Select>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Typography sx={{ fontWeight: 'bold' }}
+                <Typography
                 >
                   Interests
                 </Typography>
@@ -255,7 +257,7 @@ export default function GroupsOverview() {
                   </FormGroup>
                 </Grid>
               </Grid>
-              <Typography sx={{ fontWeight: 'bold', marginTop: 1 }}>
+              <Typography>
                 Date
               </Typography>
               <Grid item xs={12} sm={6} md={6} >
