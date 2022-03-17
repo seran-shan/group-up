@@ -40,9 +40,20 @@ export default function GroupsOverview() {
   const [groups, setGroups] = useState<Group[]>();
   const { user } = useAuth();
   const [age, setAge] = React.useState('');
+  const [location, setLocation] = React.useState('');
+
+  const handleLocation = (event: SelectChangeEvent) => {
+    setLocation(event.target.value as string);
+  };
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
+  };
+
+  const [date, setDate] = React.useState('');
+
+  const handleDate = (event: SelectChangeEvent) => {
+    setDate(event.target.value as string);
   };
 
   const handleFilter = async () => {
@@ -55,6 +66,9 @@ export default function GroupsOverview() {
         if (
           !group.users.includes(user?.email)
           && !(group.admin === user?.uid) && (group.age == age)
+          && ((group.users.length + 1) == size)
+          && (group.location == location)
+          // && (group.interests.includes())
         ) {
           extraGroups.push(group);
         }
@@ -62,13 +76,14 @@ export default function GroupsOverview() {
       setGroups(extraGroups);
       setOpen(false);
       console.log(extraGroups);
+      console.log(interests);
     });
   }
 
-  const [size, setSize] = React.useState('');
+  const [size, setSize] = React.useState(0);
 
   const handleSize = (event: SelectChangeEvent) => {
-    setSize(event.target.value as string);
+    setSize(event.target.value as unknown as number);
   };
 
   const getGroup = async () => {
@@ -126,18 +141,33 @@ export default function GroupsOverview() {
               flexDirection: 'column'
             }}>
               <Stack component="form" noValidate spacing={3} />
-              <Grid>
-                <Typography>
-                  Location
-                </Typography>
-              </Grid>
               <Grid display="flex">
                 <div>
                   <FormControl sx={{ m: 1, minWidth: 150 }}>
-                    <InputLabel id="demo-simple-select-autowidth-label">Age</InputLabel>
+                    <InputLabel id="label-location">Location</InputLabel>
                     <Select
-                      labelId="demo-simple-select-autowidth-label"
-                      id="demo-simple-select-autowidth"
+                      labelId="label-location"
+                      id="label-age"
+                      value={location}
+                      onChange={handleLocation}
+                      fullWidth
+                      label="Location"
+                    >
+                      <MenuItem value={'Moholt'}>Moholt</MenuItem>
+                      <MenuItem value={'Solsiden'}>Solsiden</MenuItem>
+                      <MenuItem value={'Midtbyen'}>Midtbyen</MenuItem>
+                      <MenuItem value={'Ila'}>Ila</MenuItem>
+                      <MenuItem value={'Lade'}>Lade</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+
+                <div>
+                  <FormControl sx={{ m: 1, minWidth: 150 }}>
+                    <InputLabel id="label-age">Age</InputLabel>
+                    <Select
+                      labelId="label-age"
+                      id="label-age"
                       value={age}
                       onChange={handleChange}
                       fullWidth
@@ -153,10 +183,10 @@ export default function GroupsOverview() {
                 </div>
                 <div>
                   <FormControl sx={{ m: 1, minWidth: 150 }}>
-                    <InputLabel id="demo-simple-select-autowidth-label">Size</InputLabel>
+                    <InputLabel id="label-size">Size</InputLabel>
                     <Select
-                      labelId="demo-simple-select-autowidth-label"
-                      id="demo-simple-select-autowidth"
+                      labelId="label-size"
+                      id="label-size"
                       value={size}
                       onChange={handleSize}
                       fullWidth
@@ -262,6 +292,7 @@ export default function GroupsOverview() {
               </Typography>
               <Grid item xs={12} sm={6} md={6} >
                 <FormTextField
+                  // onChange={handleDate}
                   id="datetime-local"
                   required
                   type="datetime-local"
@@ -269,7 +300,6 @@ export default function GroupsOverview() {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  {...register('date')}
                 />
               </Grid>
 
@@ -305,6 +335,7 @@ export default function GroupsOverview() {
             users={group.users}
             interests={group.interests}
             admin={group.admin}
+            location={group.location}
           />
         ))}
       </Box>

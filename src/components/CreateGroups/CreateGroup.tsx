@@ -66,6 +66,7 @@ export default function createGroup() {
   const [openSuccess, setOpenSuccess] = useState(false);
 
   const [age, setAge] = React.useState('');
+  const [location, setLocation] = React.useState('');
   const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const onSubmit = handleSubmit(async () => {
@@ -88,12 +89,17 @@ export default function createGroup() {
       interests,
       emails,
       user?.uid,
-      id
+      id,
+      location
     );
   });
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
+  };
+
+  const handleLocation = (event: SelectChangeEvent) => {
+    setLocation(event.target.value as string);
   };
 
   const handleCheckbox = (event: SelectChangeEvent) => {
@@ -250,6 +256,22 @@ export default function createGroup() {
                     </Select>
                   </Grid>
 
+                  <Grid item xs={12}>
+                    <InputLabel sx={{ color: '#125A2E' }}>Location</InputLabel>
+                    <Select
+                      labelId="dropdown-age-label"
+                      id="dropdown-age"
+                      fullWidth
+                      value={location}
+                      onChange={handleLocation}
+                    >
+                      <MenuItem value={'Moholt'}>Moholt</MenuItem>
+                      <MenuItem value={'Solsiden'}>Solsiden</MenuItem>
+                      <MenuItem value={'Midtbyen'}>Midtbyen</MenuItem>
+                      <MenuItem value={'Ila'}>Ila</MenuItem>
+                      <MenuItem value={'Lade'}>Lade</MenuItem>
+                    </Select>
+                  </Grid>
                   <Grid item xs={12}>
                     <Typography
                       component="h1"
