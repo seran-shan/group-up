@@ -6,20 +6,31 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 
 import {
-  Box, Button, Modal, Typography
+  Box, Button, IconButton, Modal, Typography
 } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import StarIcon from '@mui/icons-material/Star';
+
+import { InputLabel } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import {
   getGroupByID,
   createGroups,
   getUserByID,
+  getMemberGroups,
+  addSuperlikes
 } from '../../services/Firebase';
+
 import { useAuth } from '../../provider/AuthProvider';
 import { User } from '../../types/profile';
+import { Group } from '../../types/group';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -43,6 +54,7 @@ interface GroupCardProps {
   interests: string[];
   id: string;
   admin: string;
+  superlikedGroups: string[];
 }
 
 const GroupCard: FC<GroupCardProps> = ({
@@ -52,7 +64,8 @@ const GroupCard: FC<GroupCardProps> = ({
   users,
   interests,
   id,
-  admin
+  admin,
+  superlikedGroups
 }) => {
   const [openJoin, setOpenJoin] = React.useState(false);
   const handleOpenJoin = () => setOpenJoin(true);
@@ -63,6 +76,17 @@ const GroupCard: FC<GroupCardProps> = ({
     setOpenMatch(true);
   };
   const handleCloseMatch = () => setOpenMatch(false);
+
+  // superlikes
+  const [openSuperlike, setOpenSuperlike] = React.useState(false);
+  const handleOpenSuperlike = () => setOpenSuperlike(true);
+  const handleCloseSuperlike = () => setOpenSuperlike(false);
+
+  const [group, setGroup] = React.useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setGroup(event.target.value);
+  };
 
   const { user } = useAuth();
 
@@ -115,11 +139,94 @@ const GroupCard: FC<GroupCardProps> = ({
 
   useEffect(() => {
     getAdmin();
+    getMemGroups();
   }, []);
 
+  const [memberGroups, setMemberGroups] = useState<Group[]>();
+
+  const getMemGroups = async () => {
+    if (user === null || user.email === null) {
+      return;
+    }
+    await getMemberGroups(user.email).then((data) => {
+      setMemberGroups(data);
+      console.log(memberGroups);
+    });
+  };
+
+  const handleSuperlikes = async () => {
+    await addSuperlikes(group, id);
+    console.log(superlikedGroups);
+  };
+
   return (
+
     <Card sx={{ width: '350px', marginBottom: '100px' }}>
       <CardHeader title={name} sx={{ pt: 3 }} />
+
+      <Grid container justifyContent="center" spacing={1} sx={{ pb: 1 }}>
+        <IconButton
+          onClick={handleOpenSuperlike}
+          aria-label="superlike"
+          color="primary"
+          size="medium"
+        >
+          <StarIcon />
+        </IconButton>
+
+        <Modal
+          disableEnforceFocus
+          open={openSuperlike}
+          onClose={handleCloseSuperlike}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              Choose the group you want to superlike on behalf of:
+            </Typography>
+
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Group</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={group}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  {memberGroups?.map((memberGroup: Group) => (
+                    <MenuItem
+                      value={memberGroup.id}
+                    >
+                      {memberGroup.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+
+            <Button
+              onClick={() => {
+                handleSuperlikes();
+                handleCloseSuperlike();
+              }}
+              variant="outlined"
+              color="primary"
+            >
+              Give a superlike
+            </Button>
+
+          </Box>
+        </Modal>
+
+      </Grid>
+
       <Stack
         direction="row"
         spacing={1}

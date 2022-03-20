@@ -335,6 +335,7 @@ export default function GroupsOverview() {
             users={group.users}
             interests={group.interests}
             admin={group.admin}
+            superlikedGroups={group.superlikedGroups}
           />
         ))}
       </Box>
