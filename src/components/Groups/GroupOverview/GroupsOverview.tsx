@@ -40,7 +40,13 @@ export default function GroupsOverview() {
   const { user } = useAuth();
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
-  const { register, getValues, handleSubmit } = useForm();
+  const { register, getValues } = useForm();
+
+  const [size, setSize] = React.useState(0);
+
+  const handleSize = (event: SelectChangeEvent) => {
+    setSize(event.target.value as unknown as number);
+  };
 
   const handleLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
@@ -55,61 +61,72 @@ export default function GroupsOverview() {
 
     await getAllGroups().then((data) => {
 
-      if (location.length != 0) {
-        data.map(group => {
-          if (group.location == location) {
-            extraGroups.push(group)
-          }
-        })
+      data.forEach((group) => {
+        extraGroups.push(group)
+      })
 
-        if (size != 0) {
-          data.map(group => {
-            if (((group.users.length + 1) === size)) {
-              extraGroups.push(group)
-            }
-          })
+      data.forEach((group) => {
+        if (user?.email == null) {
+          return;
+        }
+
+        if (
+          !group.users.includes(user?.email)
+          && (!(group.admin === user?.uid)
+          )) {
+
+          if (location.length != 0) {
+            data.map(group => {
+              if ((group.location != location)) {
+                let index = extraGroups.indexOf(group)
+                extraGroups.splice(index, index + 1)
+              }
+            })
+          }
+
+          if (size != 0) {
+            data.map(group => {
+              if (((group.users.length) != size)) {
+                let index = extraGroups.indexOf(group)
+                extraGroups.splice(index, index + 1)
+              }
+            })
+          }
+
+          if (interests.length != 0) {
+            console.log(interests)
+            data.map(group => {
+              interests.map(interest => {
+                if (((group.interests.indexOf(interest)) != -1)) {
+                  let index = extraGroups.indexOf(group)
+                  extraGroups.splice(index, index + 1)
+                }
+              })
+            })
+          }
 
           if (getValues('date').length != 0) {
             data.map(group => {
-              if (group.date == getValues('date')) {
-                extraGroups.push(group)
+              if (group.date != getValues('date')) {
+                let index = extraGroups.indexOf(group)
+                extraGroups.splice(index, index + 1)
               }
             })
+          }
 
-            if (age.length != 0) {
-              data.map(group => {
-                if (group.age == age) {
-                  extraGroups.push(group)
-                }
-              })
-
-              data.forEach((group) => {
-                if (user?.email == null) {
-                  return;
-                }
-                if (
-                  !group.users.includes(user?.email)
-                  && (!(group.admin === user?.uid) &&
-                    ((group.age === age)
-                      || (((group.users.length + 1) === size))
-                      || (group.location === location)
-                      || (group.date == getValues('date'))))
-                  // || group.interests.includes(interests))
-                ) {
-                  extraGroups.push(group);
-                }
-              });
-              setGroups(extraGroups);
-              setOpen(false);
-              console.log(extraGroups);
-              console.log(interests);
-            });
-  };
-
-  const [size, setSize] = React.useState(0);
-
-  const handleSize = (event: SelectChangeEvent) => {
-    setSize(event.target.value as unknown as number);
+          if (age.length != 0) {
+            data.map(group => {
+              if ((group.age != age)) {
+                let index = extraGroups.indexOf(group)
+                extraGroups.splice(index, index + 1)
+              }
+            })
+          }
+        }
+      });
+      setGroups(extraGroups);
+      setOpen(false);
+    });
   };
 
   const getGroup = async () => {
