@@ -25,27 +25,24 @@ const style = {
 };
 
 export default function GroupsOverview() {
-  const [interests, setInterests] = React.useState<string[]>([]);
-
-  const handleCheckbox = (event: SelectChangeEvent) => {
-    setInterests((oldArray) => [...oldArray, event.target.value as string]);
-  };
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
+  const [interests, setInterests] = React.useState<string[]>([]);
   const [groups, setGroups] = useState<Group[]>();
   const { user } = useAuth();
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
   const { register, getValues } = useForm();
-
   const [size, setSize] = React.useState(0);
 
   const handleSize = (event: SelectChangeEvent) => {
     setSize(event.target.value as unknown as number);
+  };
+
+  const handleCheckbox = (event: SelectChangeEvent) => {
+    setInterests((oldArray) => [...oldArray, event.target.value as string]);
   };
 
   const handleLocation = (event: SelectChangeEvent) => {
@@ -97,7 +94,8 @@ export default function GroupsOverview() {
             console.log(interests)
             data.map(group => {
               interests.map(interest => {
-                if (((group.interests.indexOf(interest)) != -1)) {
+                console.log(group.interests.includes(interest))
+                if (!group.interests.includes(interest)) {
                   let index = extraGroups.indexOf(group)
                   extraGroups.splice(index, index + 1)
                 }
@@ -126,6 +124,7 @@ export default function GroupsOverview() {
       });
       setGroups(extraGroups);
       setOpen(false);
+      setInterests([]);
     });
   };
 
