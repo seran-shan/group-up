@@ -57,10 +57,9 @@ export default function GroupsOverview() {
     const extraGroups: Group[] = [];
 
     await getAllGroups().then((data) => {
-
       data.forEach((group) => {
-        extraGroups.push(group)
-      })
+        extraGroups.push(group);
+      });
 
       data.forEach((group) => {
         if (user?.email == null) {
@@ -71,54 +70,53 @@ export default function GroupsOverview() {
           !group.users.includes(user?.email)
           && (!(group.admin === user?.uid)
           )) {
-
-          if (location.length != 0) {
-            data.map(group => {
-              if ((group.location != location)) {
-                let index = extraGroups.indexOf(group)
-                extraGroups.splice(index, index + 1)
+          if (location.length !== 0) {
+            data.forEach((g) => {
+              if ((g.location !== location)) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
               }
-            })
+            });
           }
 
-          if (size != 0) {
-            data.map(group => {
-              if (((group.users.length) != size)) {
-                let index = extraGroups.indexOf(group)
-                extraGroups.splice(index, index + 1)
+          if (size !== 0) {
+            data.forEach((g) => {
+              if (((g.users.length) !== size - 1)) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
               }
-            })
+            });
           }
 
-          if (interests.length != 0) {
-            console.log(interests)
-            data.map(group => {
-              interests.map(interest => {
-                console.log(group.interests.includes(interest))
-                if (!group.interests.includes(interest)) {
-                  let index = extraGroups.indexOf(group)
-                  extraGroups.splice(index, index + 1)
+          if (interests.length !== 0) {
+            console.log(interests);
+            data.forEach((g) => {
+              interests.forEach((interest) => {
+                console.log(g.interests.includes(interest));
+                if (!g.interests.includes(interest)) {
+                  const index = extraGroups.indexOf(g);
+                  extraGroups.splice(index, index + 1);
                 }
-              })
-            })
+              });
+            });
           }
 
-          if (getValues('date').length != 0) {
-            data.map(group => {
-              if (group.date != getValues('date')) {
-                let index = extraGroups.indexOf(group)
-                extraGroups.splice(index, index + 1)
+          if (getValues('date').length !== 0) {
+            data.forEach((g) => {
+              if (g.date !== getValues('date')) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
               }
-            })
+            });
           }
 
-          if (age.length != 0) {
-            data.map(group => {
-              if ((group.age != age)) {
-                let index = extraGroups.indexOf(group)
-                extraGroups.splice(index, index + 1)
+          if (age.length !== 0) {
+            data.forEach((g) => {
+              if ((g.age !== age)) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
               }
-            })
+            });
           }
         }
       });
@@ -248,6 +246,9 @@ export default function GroupsOverview() {
                       <MenuItem value={4}>4</MenuItem>
                       <MenuItem value={5}>5</MenuItem>
                       <MenuItem value={6}>6</MenuItem>
+                      <MenuItem value={7}>7</MenuItem>
+                      <MenuItem value={8}>8</MenuItem>
+                      <MenuItem value={9}>9</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
