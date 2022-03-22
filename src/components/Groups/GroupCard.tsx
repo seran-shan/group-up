@@ -25,7 +25,8 @@ import {
   createGroups,
   getUserByID,
   getMemberGroups,
-  addSuperlikes
+  addSuperlikes,
+  addLikes
 } from '../../services/Firebase';
 
 import { useAuth } from '../../provider/AuthProvider';
@@ -55,6 +56,7 @@ interface GroupCardProps {
   id: string;
   admin: string;
   superlikedGroups: string[];
+  likedGroups: string[];
 }
 
 const GroupCard: FC<GroupCardProps> = ({
@@ -65,7 +67,8 @@ const GroupCard: FC<GroupCardProps> = ({
   interests,
   id,
   admin,
-  superlikedGroups
+  superlikedGroups,
+  likedGroups
 }) => {
   const [openJoin, setOpenJoin] = React.useState(false);
   const handleOpenJoin = () => setOpenJoin(true);
@@ -76,6 +79,10 @@ const GroupCard: FC<GroupCardProps> = ({
     setOpenMatch(true);
   };
   const handleCloseMatch = () => setOpenMatch(false);
+
+  const [openLike, setOpenLike] = React.useState(false);
+  const handleOpenLike = () => setOpenLike(true);
+  const handleCloseLike = () => setOpenLike(false);
 
   // superlikes
   const [openSuperlike, setOpenSuperlike] = React.useState(false);
@@ -157,6 +164,11 @@ const GroupCard: FC<GroupCardProps> = ({
   const handleSuperlikes = async () => {
     await addSuperlikes(group, id);
     console.log(superlikedGroups);
+  };
+
+  const handleLikes = async () => {
+    await addLikes(group, id);
+    console.log(likedGroups);
   };
 
   return (
@@ -292,7 +304,7 @@ const GroupCard: FC<GroupCardProps> = ({
 
         <Grid item xs="auto" sm="auto" md="auto" justifyContent="space-between">
           <Button
-            onClick={handleOpenMatch}
+            onClick={handleOpenLike}
             variant="contained"
             startIcon={<FavoriteBorderIcon />}
             size="small"
@@ -302,16 +314,58 @@ const GroupCard: FC<GroupCardProps> = ({
           </Button>
 
           <Modal
-            open={openMatch}
-            onClose={handleCloseMatch}
+            disableEnforceFocus
+            open={openLike}
+            onClose={handleCloseLike}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <p>
-                Contact info:
-                {adminUser2}
-              </p>
+              <Grid>
+                <p>
+                  Contact info:
+                  {adminUser2}
+                </p>
+              </Grid>
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+              >
+                Choose the group you want to match on behalf of:
+              </Typography>
+
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Group</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={group}
+                    label="Age"
+                    onChange={handleChange}
+                  >
+                    {memberGroups?.map((memberGroup: Group) => (
+                      <MenuItem
+                        value={memberGroup.id}
+                      >
+                        {memberGroup.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+
+              <Button
+                onClick={() => {
+                  handleLikes();
+                  handleCloseLike();
+                }}
+                variant="outlined"
+                color="primary"
+              >
+                Match
+              </Button>
             </Box>
           </Modal>
         </Grid>

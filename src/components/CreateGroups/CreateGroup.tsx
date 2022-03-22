@@ -103,7 +103,7 @@ export default function CreateGroup() {
       emails,
       user?.uid,
       id,
-      location
+      location,
     );
 
     handleNewOpen()
@@ -566,8 +566,8 @@ export default function CreateGroup() {
                   Create group
                 </Button>
                 <Snackbar open={newOpen} autoHideDuration={6000} onClose={handleNewClose}>
-                  <Alert onClose={handleNewClose} severity='success' sx={{width: '100%'}}>
-                      Group Created
+                  <Alert onClose={handleNewClose} severity='success' sx={{ width: '100%' }}>
+                    Group Created
                   </Alert>
                 </Snackbar>
               </form>
