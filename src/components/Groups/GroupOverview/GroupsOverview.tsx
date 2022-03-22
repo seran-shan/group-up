@@ -127,9 +127,6 @@ export default function GroupsOverview() {
     });
   };
 
-
-
-
   const getGroup = async () => {
     const extraGroups: Group[] = [];
     await getAllGroups().then((data) => {
@@ -253,10 +250,10 @@ export default function GroupsOverview() {
                       <MenuItem value={7}>7</MenuItem>
                       <MenuItem value={8}>8</MenuItem>
                       <MenuItem value={9}>9</MenuItem>
-                    </Select >
-                  </FormControl >
-                </div >
-              </Grid >
+                    </Select>
+                  </FormControl>
+                </div>
+              </Grid>
               <Grid item xs={12}>
                 <Typography>
                   Interests
@@ -368,10 +365,10 @@ export default function GroupsOverview() {
                   Filter
                 </Button>
               </Grid>
-            </Box >
-          </Box >
-        </Modal >
-      </Grid >
+            </Box>
+          </Box>
+        </Modal>
+      </Grid>
       <Box
         sx={{
           display: 'flex',
@@ -396,6 +393,6 @@ export default function GroupsOverview() {
           />
         ))}
       </Box>
-    </Box >
+    </Box>
   );
 }
