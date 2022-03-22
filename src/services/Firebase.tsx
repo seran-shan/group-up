@@ -152,3 +152,18 @@ export const addMemberToGroup = async (userEmail: string, groupID: string) => {
   const docRef = doc(db, 'Groups', groupID);
   setDoc(docRef, group);
 };
+
+export const addSuperlikes = async (groupID1: string, groupID2: string) => {
+  const groupSuperliking = await getGroupByID(groupID1);
+  const groupSuperliked = await getGroupByID(groupID2);
+  if (groupSuperliking == null) {
+    return;
+  }
+  if (groupSuperliked == null) {
+    return;
+  }
+  const superlikedGroupsArray = groupSuperliking?.superlikedGroups;
+  superlikedGroupsArray.push(groupSuperliked.name);
+  const docRef = doc(db, 'Groups', groupID1);
+  setDoc(docRef, groupSuperliking);
+};

@@ -25,11 +25,16 @@ const style = {
 };
 
 export default function GroupsOverview() {
+  const [interests, setInterests] = React.useState<string[]>([]);
+
+  const handleCheckbox = (event: SelectChangeEvent) => {
+    setInterests((oldArray) => [...oldArray, event.target.value as string]);
+  };
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [interests, setInterests] = React.useState<string[]>([]);
   const [groups, setGroups] = useState<Group[]>();
   const { user } = useAuth();
   const [age, setAge] = React.useState('');
@@ -39,10 +44,6 @@ export default function GroupsOverview() {
 
   const handleSize = (event: SelectChangeEvent) => {
     setSize(event.target.value as unknown as number);
-  };
-
-  const handleCheckbox = (event: SelectChangeEvent) => {
-    setInterests((oldArray) => [...oldArray, event.target.value as string]);
   };
 
   const handleLocation = (event: SelectChangeEvent) => {
@@ -125,6 +126,9 @@ export default function GroupsOverview() {
       setInterests([]);
     });
   };
+
+
+
 
   const getGroup = async () => {
     const extraGroups: Group[] = [];
@@ -249,10 +253,10 @@ export default function GroupsOverview() {
                       <MenuItem value={7}>7</MenuItem>
                       <MenuItem value={8}>8</MenuItem>
                       <MenuItem value={9}>9</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-              </Grid>
+                    </Select >
+                  </FormControl >
+                </div >
+              </Grid >
               <Grid item xs={12}>
                 <Typography>
                   Interests
@@ -364,10 +368,10 @@ export default function GroupsOverview() {
                   Filter
                 </Button>
               </Grid>
-            </Box>
-          </Box>
-        </Modal>
-      </Grid>
+            </Box >
+          </Box >
+        </Modal >
+      </Grid >
       <Box
         sx={{
           display: 'flex',
@@ -388,9 +392,10 @@ export default function GroupsOverview() {
             users={group.users}
             interests={group.interests}
             admin={group.admin}
+            superlikedGroups={group.superlikedGroups}
           />
         ))}
       </Box>
-    </Box>
+    </Box >
   );
 }

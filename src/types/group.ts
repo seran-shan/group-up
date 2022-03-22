@@ -11,4 +11,5 @@ export type Group = {
   image?: string | undefined;
   admin: string;
   location: string;
+  superlikedGroups: string[];
 };

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
   Divider,
   Grid,
+  IconButton,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../provider/AuthProvider';
@@ -13,6 +16,12 @@ import { User } from '../../types/profile';
 import { createUser, getUserByID } from '../../services/Firebase';
 
 import FormTextField from '../molecules/FormTextField';
+import Modal from '@material-ui/core/Modal';
+import Collapse from '@material-ui/core/Collapse';
+
+import CloseIcon from '@mui/icons-material/Close';
+import { Snackbar } from '@material-ui/core';
+
 
 const ProfileDetail = () => {
   const { user } = useAuth();
@@ -23,6 +32,19 @@ const ProfileDetail = () => {
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [birthday, setBirthday] = useState<Date>(new Date());
+  const [visibility, setVisibility] = useState<boolean>(true)
+  const [showSave, setSaveButton] = useState<string>('none');
+  const [showEdit, setEditButton] = useState<string>('flex');
+  const [readOnly, setHeader] = useState<string>('Read Only');
+ 
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+
+
 
   // const [date, setDate] = useState<string | unknown | null>(null);
 
@@ -50,6 +72,9 @@ const ProfileDetail = () => {
     }
     try {
       await createUser(firstName, lastName, email, birthday, user?.uid);
+      handleOpen()
+      setOpenSuccess(true)
+      handleVis()
     } catch (err) {
       console.log(err);
     }
@@ -66,6 +91,24 @@ const ProfileDetail = () => {
   const handleEmail = (value: string) => {
     setEmail(value);
   };
+
+  const handleVis = () => {
+    console.log(visibility)
+    if (visibility == false){
+      setVisibility(true)
+      setSaveButton('none')
+      setEditButton('flex')
+      setHeader('Read Only')
+    } else{
+      setVisibility(false)
+      setSaveButton('flex')
+      setEditButton('none')
+      setHeader('')
+    }
+    
+  }
+
+
   return (
     <form
       autoComplete="off"
@@ -74,7 +117,7 @@ const ProfileDetail = () => {
       //   {...props}
     >
       <Card>
-        <CardHeader subheader="Read only" title="Profile" />
+        <CardHeader subheader={readOnly} title="Profile" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
@@ -83,7 +126,7 @@ const ProfileDetail = () => {
                 fullWidth
                 label="First name"
                 name="firstName"
-                disabled
+                disabled={visibility}
                 InputLabelProps={{ shrink: true }}
                 variant="outlined"
                 required
@@ -96,9 +139,9 @@ const ProfileDetail = () => {
                 fullWidth
                 label="Last Name"
                 name="lastName"
+                disabled={visibility}
                 InputLabelProps={{ shrink: true }}
                 variant="outlined"
-                disabled
                 required
                 value={lastName}
                 onChange={(e) => handleLastName(e.target.value)}
@@ -109,9 +152,9 @@ const ProfileDetail = () => {
                 fullWidth
                 label="Email"
                 name="email"
+                disabled={visibility}
                 InputLabelProps={{ shrink: true }}
                 variant="outlined"
-                disabled
                 required
                 value={email}
                 onChange={(e) => handleEmail(e.target.value)}
@@ -122,12 +165,43 @@ const ProfileDetail = () => {
         <Divider />
         <Box
           sx={{
-            display: 'flex',
+            display: `${showSave}`,
             justifyContent: 'center',
             p: 2,
-          }}
-        ></Box>
+          }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+            mt: 3,
+            mb: 2,
+            backgroundColor: '#125A2E',
+            '&:hover': { backgroundColor: '#16913A' }
+          }}>
+        Save details
+          </Button>
+        </Box>
       </Card>
+      <Box sx={{display: `${showEdit}`}}> 
+      <Button 
+      onClick={handleVis}
+      variant="contained"
+      sx={{
+          mt: 3,
+          mb: 2,
+          top:15,
+          backgroundColor: '#125A2E',
+          '&:hover': { backgroundColor: '#16913A' },
+        }}>
+        Edit Profile
+      </Button></Box>
+     
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity='success' sx={{width: '100%'}}>
+                      Your profile has been updated
+                  </Alert>
+                </Snackbar>
     </form>
   );
 };

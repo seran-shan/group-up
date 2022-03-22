@@ -8,7 +8,7 @@ import NavLink from '../molecules/NavLink';
 import { useAuth } from '../../provider/AuthProvider';
 
 const Navbar = () => {
-  const { signout } = useAuth();
+  const { signout, user } = useAuth();
 
   const handleLogout = () => {
     signout();
@@ -52,6 +52,13 @@ const Navbar = () => {
           <NavLink href="/profile" sx={{ marginRight: '40  px' }}>
             Profile
           </NavLink>
+          {user?.uid === 'ObrQl9DSMHRBJkaQ4ikFom9OlA02' ? (
+            <NavLink href="/admin" sx={{ marginRight: '40  px' }}>
+              Admin
+            </NavLink>
+          ) : (
+            <Box />
+          )}
         </Box>
         <Box
           sx={{

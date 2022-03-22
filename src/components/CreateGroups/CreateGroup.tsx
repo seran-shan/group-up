@@ -30,6 +30,8 @@ import { createGroups, findUserByEmail } from '../../services/Firebase';
 import FormTextField from '../molecules/FormTextField';
 import { User } from '../../types/user';
 import { useAuth } from '../../provider/AuthProvider';
+import { Snackbar } from '@material-ui/core';
+
 
 const theme = createTheme();
 
@@ -66,6 +68,14 @@ export default function CreateGroup() {
   const [openError, setOpenError] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
 
+  const [newOpen, setNewOpen] = useState(false)
+  const handleNewOpen = () => {
+    setNewOpen(true)
+  }
+  const handleNewClose = () => {
+    setNewOpen(false)
+  }
+
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [membershipType, setMembershipType] = React.useState('');
@@ -95,6 +105,8 @@ export default function CreateGroup() {
       id,
       location
     );
+
+    handleNewOpen()
   });
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -107,6 +119,7 @@ export default function CreateGroup() {
   const handleMebershipChange = (event: SelectChangeEvent) => {
     setMembershipType(event.target.value as string);
   };
+
 
   const handleCheckbox = (event: SelectChangeEvent) => {
     setInterests((oldArray) => [...oldArray, event.target.value as string]);
@@ -552,6 +565,11 @@ export default function CreateGroup() {
                 >
                   Create group
                 </Button>
+                <Snackbar open={newOpen} autoHideDuration={6000} onClose={handleNewClose}>
+                  <Alert onClose={handleNewClose} severity='success' sx={{ width: '100%' }}>
+                    Group Created
+                  </Alert>
+                </Snackbar>
               </form>
             </Box>
           </Box>
@@ -560,3 +578,4 @@ export default function CreateGroup() {
     </Box>
   );
 }
+

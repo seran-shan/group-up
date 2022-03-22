@@ -10,6 +10,7 @@ import MyGroupsView from '../../pages/MyGroupsView';
 import GroupProfileView from '../../pages/GroupProfileView';
 import NoUserRoute from '../routes/NoUserRoute';
 import PrivateRoute from '../routes/PrivateRoute';
+import Admin from '../Admin/Admin';
 
 export const example = (x: number, y: number) => x + y;
 
@@ -28,6 +29,7 @@ const App = () => (
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/groups/:id" element={<GroupProfileView />} />
+          <Route path="/admin" element={<Admin />} />
         </Route>
       </Routes>
     </BrowserRouter>
