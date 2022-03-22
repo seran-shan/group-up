@@ -142,6 +142,22 @@ export const getAdminGroups = async (id: string) => {
   return myGroups;
 };
 
+export const getGroupsSuperliking = async (groupID: string) => {
+  const group = await getGroupByID(groupID);
+  if (group == null) {
+    return;
+  }
+  const ref = collection(db, 'Groups');
+  const qSuperliking = query(ref, where('superlikedGroups', 'array-contains', group.name));
+  const groups: Group[] = [];
+  const groupsSuperliking = await getDocs(qSuperliking);
+  groupsSuperliking.forEach((snap) => {
+    const group = snap.data() as unknown as Group;
+    groups.push(group);
+  });
+  return groups;
+};
+
 export const addMemberToGroup = async (userEmail: string, groupID: string) => {
   const group = await getGroupByID(groupID);
   if (group == null) {
