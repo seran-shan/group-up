@@ -45,6 +45,8 @@ const GroupProfileDetail: FC<GroupProfileProps> = ({
   const [open, setOpen] = React.useState(false);
   const handleOpen = (event: any) => {
     setOpen(true);
+    setDescription('');
+    setOpenSuccess(false);
     setUserEmail(event.target.value);
   };
   const handleClose = () => setOpen(false);
@@ -62,8 +64,8 @@ const GroupProfileDetail: FC<GroupProfileProps> = ({
     const reporterData = await getUserByID(reporterID);
     const reportEmail = reporterData?.email as string;
     const id = uuidv4();
-
     await addReport(userEmail, reportEmail, reportDescription, id);
+    setDescription('');
   };
   const style = {
     position: 'absolute' as 'absolute',
@@ -214,6 +216,7 @@ const GroupProfileDetail: FC<GroupProfileProps> = ({
                     setOpenSuccess(false);
                   }}
                 >
+                  x
                 </IconButton>
               }
               sx={{ mb: 2 }}
