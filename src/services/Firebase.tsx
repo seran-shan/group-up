@@ -167,3 +167,13 @@ export const addSuperlikes = async (groupID1: string, groupID2: string) => {
   const docRef = doc(db, 'Groups', groupID1);
   setDoc(docRef, groupSuperliking);
 };
+
+export const addReport = async (userEmail: string, reporterEmail:string, reportDescription: string, id: string) => {
+  const docRef = doc(db, 'Reports', id);
+  setDoc(docRef, {
+
+    reportDescription,
+    userEmail,
+    reporterEmail
+  });
+};

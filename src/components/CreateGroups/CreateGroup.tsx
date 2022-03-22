@@ -103,11 +103,10 @@ export default function CreateGroup() {
 
   const handleLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
-  }
+  };
   const handleMebershipChange = (event: SelectChangeEvent) => {
     setMembershipType(event.target.value as string);
   };
-
 
   const handleCheckbox = (event: SelectChangeEvent) => {
     setInterests((oldArray) => [...oldArray, event.target.value as string]);
@@ -274,8 +273,8 @@ export default function CreateGroup() {
                         label="Age"
                         onChange={handleMebershipChange}
                       >
-                        <MenuItem value={'Gold'}>Gold</MenuItem>
-                        <MenuItem value={'Regular'}>Regular</MenuItem>
+                        <MenuItem value="Gold">Gold</MenuItem>
+                        <MenuItem value="Regular">Regular</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -561,4 +560,3 @@ export default function CreateGroup() {
     </Box>
   );
 }
-
