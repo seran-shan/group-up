@@ -1,4 +1,18 @@
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  Typography,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../provider/AuthProvider';
@@ -26,6 +40,7 @@ const style = {
 export default function GroupsOverview() {
   const [interests, setInterests] = React.useState<string[]>([]);
 
+  console.log(interests);
   const handleCheckbox = (event: SelectChangeEvent) => {
     setInterests((oldArray) => [...oldArray, event.target.value as string]);
   };
@@ -55,9 +70,11 @@ export default function GroupsOverview() {
           return;
         }
         if (
-          !group.users.includes(user?.email)
-          && !(group.admin === user?.uid) && (group.age === age)
-          && (((group.users.length + 1) === size) || (size > 5 && (group.users.length + 1 > 5)))
+          !group.users.includes(user?.email) &&
+          !(group.admin === user?.uid) &&
+          group.age === age &&
+          (group.users.length + 1 === parseInt(size, 10) ||
+            (parseInt(size, 10) > 5 && group.users.length + 1 > 10))
           // && (group.location === location)
           // && (group.interests.includes())
         ) {
@@ -66,15 +83,13 @@ export default function GroupsOverview() {
       });
       setGroups(extraGroups);
       setOpen(false);
-      console.log(extraGroups);
-      console.log(interests);
     });
   };
 
-  const [size, setSize] = React.useState(0);
+  const [size, setSize] = React.useState('0');
 
   const handleSize = (event: SelectChangeEvent) => {
-    setSize(event.target.value as unknown as number);
+    setSize(event.target.value as unknown as string);
   };
 
   const getGroup = async () => {
@@ -85,8 +100,8 @@ export default function GroupsOverview() {
           return;
         }
         if (
-          !group.users.includes(user?.email)
-          && !(group.admin === user?.uid)
+          !group.users.includes(user?.email) &&
+          !(group.admin === user?.uid)
         ) {
           extraGroups.push(group);
         }
@@ -128,16 +143,21 @@ export default function GroupsOverview() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography variant="h5" component="h2" sx={{ textAlign: 'center', m: 1, fontWeight: 'bold' }}>
+            <Typography
+              variant="h5"
+              component="h2"
+              sx={{ textAlign: 'center', m: 1, fontWeight: 'bold' }}
+            >
               Filter groups
             </Typography>
-            <Box sx={{
-              textAlign: 'left',
-              m: 1,
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
+            <Box
+              sx={{
+                textAlign: 'left',
+                m: 1,
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
             >
               <Stack component="form" noValidate spacing={3} />
               <Grid display="flex">
@@ -201,9 +221,7 @@ export default function GroupsOverview() {
                 </div>
               </Grid>
               <Grid item xs={12}>
-                <Typography>
-                  Interests
-                </Typography>
+                <Typography>Interests</Typography>
               </Grid>
               <Grid display="flex">
                 <Grid sx={{ marginRight: 5, marginLeft: 2 }}>
@@ -285,9 +303,7 @@ export default function GroupsOverview() {
                   </FormGroup>
                 </Grid>
               </Grid>
-              <Typography>
-                Date
-              </Typography>
+              <Typography>Date</Typography>
               <Grid item xs={12} sm={6} md={6}>
                 <FormTextField
                   // onChange={handleDate}
@@ -301,7 +317,14 @@ export default function GroupsOverview() {
                 />
               </Grid>
 
-              <Grid sx={{ marginTop: 2, marginRight: 12, marginLeft: 5, textAlign: 'center' }}>
+              <Grid
+                sx={{
+                  marginTop: 2,
+                  marginRight: 12,
+                  marginLeft: 5,
+                  textAlign: 'center',
+                }}
+              >
                 <Button
                   variant="contained"
                   size="small"
@@ -335,7 +358,6 @@ export default function GroupsOverview() {
             users={group.users}
             interests={group.interests}
             admin={group.admin}
-            superlikedGroups={group.superlikedGroups}
           />
         ))}
       </Box>

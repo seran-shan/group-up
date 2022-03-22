@@ -8,10 +8,10 @@ import {
   Grid,
   Stack,
   TextField,
+  Box,
 } from '@mui/material';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import Box from '@material-ui/core/Box';
 import FormDatePicker from '../molecules/FormDatePicker';
 import FormTextField from '../molecules/FormTextField';
 
