@@ -150,8 +150,8 @@ export default function GroupsOverview() {
           return;
         }
         if (
-          !group.users.includes(user?.email) &&
-          !(group.admin === user?.uid)
+          !group.users.includes(user?.email)
+          && !(group.admin === user?.uid)
         ) {
           extraGroups.push(group);
         }
@@ -412,6 +412,7 @@ export default function GroupsOverview() {
             users={group.users}
             interests={group.interests}
             admin={group.admin}
+            superlikedGroups={group.superlikedGroups}
           />
         ))}
       </Box>

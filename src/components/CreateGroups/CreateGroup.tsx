@@ -562,29 +562,24 @@ export default function CreateGroup() {
                 >
                   Create group
                 </Button>
-<<<<<<< HEAD
-  <Snackbar open={newOpen} autoHideDuration={6000} onClose={handleNewClose}>
-    <Alert onClose={handleNewClose} severity="success" sx={{ width: '100%' }}>
-=======
                 <Snackbar
-        open={newOpen}
-        autoHideDuration={6000}
-        onClose={handleNewClose}
-      >
-        <Alert
-          onClose={handleNewClose}
-          severity="success"
-          sx={{ width: '100%' }}
-        >
->>>>>>> 5311322d8df0edfa1f4522c66c861e1edba4dca2
-          Group Created
-        </Alert>
-      </Snackbar>
-    </form>
-  </Box>
-          </Box >
-        </Box >
-      </ThemeProvider >
-    </Box >
+                  open={newOpen}
+                  autoHideDuration={6000}
+                  onClose={handleNewClose}
+                >
+                  <Alert
+                    onClose={handleNewClose}
+                    severity="success"
+                    sx={{ width: '100%' }}
+                  >
+                    Group Created
+                  </Alert>
+                </Snackbar>
+              </form>
+            </Box>
+          </Box>
+        </Box>
+      </ThemeProvider>
+    </Box>
   );
 }
