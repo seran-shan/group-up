@@ -74,17 +74,10 @@ const GroupCard: FC<GroupCardProps> = ({
   const handleOpenJoin = () => setOpenJoin(true);
   const handleCloseJoin = () => setOpenJoin(false);
 
-  const [openMatch, setOpenMatch] = React.useState(false);
-  const handleOpenMatch = () => {
-    setOpenMatch(true);
-  };
-  const handleCloseMatch = () => setOpenMatch(false);
-
   const [openLike, setOpenLike] = React.useState(false);
   const handleOpenLike = () => setOpenLike(true);
   const handleCloseLike = () => setOpenLike(false);
 
-  // superlikes
   const [openSuperlike, setOpenSuperlike] = React.useState(false);
   const handleOpenSuperlike = () => setOpenSuperlike(true);
   const handleCloseSuperlike = () => setOpenSuperlike(false);
@@ -119,7 +112,9 @@ const GroupCard: FC<GroupCardProps> = ({
         groupData.users,
         groupData.admin,
         groupData.id,
-        groupData.location
+        groupData.location,
+        groupData.superlikedGroups,
+        groupData.likedGroups
       );
     } catch (err) {
       console.log(err);

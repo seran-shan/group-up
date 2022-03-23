@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
+import { Group } from '../../types/group';
 
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import {
@@ -70,10 +71,10 @@ export default function CreateGroup() {
 
   const [newOpen, setNewOpen] = useState(false)
   const handleNewOpen = () => {
-    setNewOpen(true)
+    setNewOpen(true);
   }
   const handleNewClose = () => {
-    setNewOpen(false)
+    setNewOpen(false);
   }
 
   const [age, setAge] = React.useState('');
@@ -93,6 +94,8 @@ export default function CreateGroup() {
     }
 
     const id = uuidv4();
+    const superlikedGroups: string[] = [];
+    const likedGroups: string[] = [];
     await createGroups(
       getValues('groupName'),
       getValues('description'),
@@ -104,9 +107,11 @@ export default function CreateGroup() {
       user?.uid,
       id,
       location,
+      superlikedGroups,
+      likedGroups
     );
 
-    handleNewOpen()
+    handleNewOpen();
   });
 
   const handleChange = (event: SelectChangeEvent) => {
