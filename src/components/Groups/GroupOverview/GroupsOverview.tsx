@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../provider/AuthProvider';
 
 import { getAllGroups } from '../../../services/Firebase';
@@ -53,6 +54,12 @@ export default function GroupsOverview() {
   const { user } = useAuth();
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
+  const { register, getValues } = useForm();
+  const [size, setSize] = React.useState(0);
+
+  const handleSize = (event: SelectChangeEvent) => {
+    setSize(event.target.value as unknown as number);
+  };
 
   const handleLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
@@ -64,32 +71,75 @@ export default function GroupsOverview() {
 
   const handleFilter = async () => {
     const extraGroups: Group[] = [];
+
     await getAllGroups().then((data) => {
+      data.forEach((group) => {
+        extraGroups.push(group);
+      });
+
       data.forEach((group) => {
         if (user?.email == null) {
           return;
         }
+
         if (
-          !group.users.includes(user?.email) &&
-          !(group.admin === user?.uid) &&
-          group.age === age &&
-          (group.users.length + 1 === parseInt(size, 10) ||
-            (parseInt(size, 10) > 5 && group.users.length + 1 > 10))
-          // && (group.location === location)
-          // && (group.interests.includes())
-        ) {
-          extraGroups.push(group);
+          !group.users.includes(user?.email)
+          && (!(group.admin === user?.uid)
+          )) {
+          if (location.length !== 0) {
+            data.forEach((g) => {
+              if ((g.location !== location)) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
+              }
+            });
+          }
+
+          if (size !== 0) {
+            data.forEach((g) => {
+              if (((g.users.length) !== size - 1)) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
+              }
+            });
+          }
+
+          if (interests.length !== 0) {
+            console.log(interests);
+            data.forEach((g) => {
+              interests.forEach((interest) => {
+                console.log(g.interests.includes(interest));
+                if (!g.interests.includes(interest)) {
+                  const index = extraGroups.indexOf(g);
+                  extraGroups.splice(index, index + 1);
+                }
+              });
+            });
+          }
+
+          if (getValues('date').length !== 0) {
+            data.forEach((g) => {
+              if (g.date !== getValues('date')) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
+              }
+            });
+          }
+
+          if (age.length !== 0) {
+            data.forEach((g) => {
+              if ((g.age !== age)) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
+              }
+            });
+          }
         }
       });
       setGroups(extraGroups);
       setOpen(false);
+      setInterests([]);
     });
-  };
-
-  const [size, setSize] = React.useState('0');
-
-  const handleSize = (event: SelectChangeEvent) => {
-    setSize(event.target.value as unknown as string);
   };
 
   const getGroup = async () => {
@@ -100,8 +150,8 @@ export default function GroupsOverview() {
           return;
         }
         if (
-          !group.users.includes(user?.email) &&
-          !(group.admin === user?.uid)
+          !group.users.includes(user?.email)
+          && !(group.admin === user?.uid)
         ) {
           extraGroups.push(group);
         }
@@ -215,7 +265,11 @@ export default function GroupsOverview() {
                       <MenuItem value={2}>2</MenuItem>
                       <MenuItem value={3}>3</MenuItem>
                       <MenuItem value={4}>4</MenuItem>
-                      <MenuItem value={5}>5+</MenuItem>
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={6}>6</MenuItem>
+                      <MenuItem value={7}>7</MenuItem>
+                      <MenuItem value={8}>8</MenuItem>
+                      <MenuItem value={9}>9</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
@@ -306,14 +360,14 @@ export default function GroupsOverview() {
               <Typography>Date</Typography>
               <Grid item xs={12} sm={6} md={6}>
                 <FormTextField
-                  // onChange={handleDate}
                   id="datetime-local"
                   required
                   type="datetime-local"
                   defaultValue="2022-02-24T10:30"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
+                  {...register('date')}
                 />
               </Grid>
 
@@ -358,6 +412,7 @@ export default function GroupsOverview() {
             users={group.users}
             interests={group.interests}
             admin={group.admin}
+            superlikedGroups={group.superlikedGroups}
           />
         ))}
       </Box>
