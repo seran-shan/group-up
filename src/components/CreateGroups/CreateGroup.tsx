@@ -22,11 +22,11 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  Snackbar,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import { Snackbar } from '@material-ui/core';
 import { createGroups, findUserByEmail } from '../../services/Firebase';
 import FormTextField from '../molecules/FormTextField';
 import { User } from '../../types/user';
@@ -81,14 +81,11 @@ export default function CreateGroup() {
   const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const onSubmit = handleSubmit(async () => {
-    console.log(image);
     const storage = getStorage();
     if (image) {
       const storageRef = ref(storage, `groupFotos/${image.name}`);
 
-      uploadBytes(storageRef, image as Blob).then(() => {
-        console.log('Uploaded an image!');
-      });
+      uploadBytes(storageRef, image as Blob);
     }
 
     const id = uuidv4();
@@ -258,7 +255,9 @@ export default function CreateGroup() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={6}>
                     <FormControl fullWidth>
-                      <InputLabel sx={{ color: '#125A2E' }}>Agelimit</InputLabel>
+                      <InputLabel sx={{ color: '#125A2E' }}>
+                        Agelimit
+                      </InputLabel>
                       <Select
                         labelId="dropdown-age-label"
                         id="dropdown-age"
@@ -563,16 +562,29 @@ export default function CreateGroup() {
                 >
                   Create group
                 </Button>
-                <Snackbar open={newOpen} autoHideDuration={6000} onClose={handleNewClose}>
-                  <Alert onClose={handleNewClose} severity="success" sx={{ width: '100%' }}>
-                    Group Created
-                  </Alert>
-                </Snackbar>
-              </form>
-            </Box>
-          </Box>
-        </Box>
-      </ThemeProvider>
-    </Box>
+<<<<<<< HEAD
+  <Snackbar open={newOpen} autoHideDuration={6000} onClose={handleNewClose}>
+    <Alert onClose={handleNewClose} severity="success" sx={{ width: '100%' }}>
+=======
+                <Snackbar
+        open={newOpen}
+        autoHideDuration={6000}
+        onClose={handleNewClose}
+      >
+        <Alert
+          onClose={handleNewClose}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
+>>>>>>> 5311322d8df0edfa1f4522c66c861e1edba4dca2
+          Group Created
+        </Alert>
+      </Snackbar>
+    </form>
+  </Box>
+          </Box >
+        </Box >
+      </ThemeProvider >
+    </Box >
   );
 }

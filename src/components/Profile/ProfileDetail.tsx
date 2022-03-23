@@ -8,9 +8,9 @@ import {
   CardHeader,
   Divider,
   Grid,
+  Snackbar,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { Snackbar } from '@material-ui/core';
 import { useAuth } from '../../provider/AuthProvider';
 import { User } from '../../types/profile';
 import { createUser, getUserByID } from '../../services/Firebase';
@@ -30,6 +30,7 @@ const ProfileDetail = () => {
   const [showSave, setSaveButton] = useState<string>('none');
   const [showEdit, setEditButton] = useState<string>('flex');
   const [readOnly, setHeader] = useState<string>('Read Only');
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -164,7 +165,7 @@ const ProfileDetail = () => {
               mt: 3,
               mb: 2,
               backgroundColor: '#125A2E',
-              '&:hover': { backgroundColor: '#16913A' }
+              '&:hover': { backgroundColor: '#16913A' },
             }}
           >
             Save details
