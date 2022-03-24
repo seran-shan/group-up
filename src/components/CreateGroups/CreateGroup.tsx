@@ -279,12 +279,12 @@ export default function CreateGroup() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                      <InputLabel id="dropdown-age-select-label">Membership type</InputLabel>
                       <Select
                         labelId="dropdrown-membership-label"
                         id="dropdrown-membership"
                         value={membershipType}
-                        label="Age"
+                        label="Membership"
                         onChange={handleMebershipChange}
                       >
                         <MenuItem value="Gold">Gold</MenuItem>
