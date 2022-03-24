@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SuperlikesOverview from '../components/Groups/SuperlikeOverview.tsx/SuperlikesOverview';
+import LikesOverview from '../components/Groups/LikeOverview.tsx/LikesOverview';
 
-const SuperlikesView = () => <SuperlikesOverview />;
+const LikesView = () => <LikesOverview />;
 
-export default SuperlikesView;
+export default LikesView;
