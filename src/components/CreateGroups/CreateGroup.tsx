@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
-import { Group } from '../../types/group';
 
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import {

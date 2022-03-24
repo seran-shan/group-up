@@ -77,8 +77,6 @@ const GroupCard: FC<GroupCardProps> = ({
   const handleOpenJoin = () => setOpenJoin(true);
   const handleCloseJoin = () => setOpenJoin(false);
 
-
-
   const [openLike, setOpenLike] = React.useState(false);
   const handleOpenLike = () => setOpenLike(true);
   const handleCloseLike = () => setOpenLike(false);
@@ -162,6 +160,7 @@ const GroupCard: FC<GroupCardProps> = ({
 
   const handleSuperlikes = async () => {
     await addSuperlikes(group, id);
+    console.log(superlikedGroups);
   };
 
   const handleLikes = async () => {
