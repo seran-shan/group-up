@@ -22,6 +22,7 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  Snackbar,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -66,23 +67,30 @@ export default function CreateGroup() {
   const [openError, setOpenError] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
 
+  const [newOpen, setNewOpen] = useState(false);
+  const handleNewOpen = () => {
+    setNewOpen(true);
+  };
+  const handleNewClose = () => {
+    setNewOpen(false);
+  };
+
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [membershipType, setMembershipType] = React.useState('');
   const [image, setImage] = React.useState<File | undefined>(undefined);
 
   const onSubmit = handleSubmit(async () => {
-    console.log(image);
     const storage = getStorage();
     if (image) {
       const storageRef = ref(storage, `groupFotos/${image.name}`);
 
-      uploadBytes(storageRef, image as Blob).then(() => {
-        console.log('Uploaded an image!');
-      });
+      uploadBytes(storageRef, image as Blob);
     }
 
     const id = uuidv4();
+    const superlikedGroups: string[] = [];
+    const likedGroups: string[] = [];
     await createGroups(
       getValues('groupName'),
       getValues('description'),
@@ -93,8 +101,12 @@ export default function CreateGroup() {
       emails,
       user?.uid,
       id,
-      location
+      location,
+      superlikedGroups,
+      likedGroups
     );
+
+    handleNewOpen();
   });
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -247,7 +259,9 @@ export default function CreateGroup() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={6}>
                     <FormControl fullWidth>
-                      <InputLabel sx={{ color: '#125A2E' }}>Agelimit</InputLabel>
+                      <InputLabel sx={{ color: '#125A2E' }}>
+                        Agelimit
+                      </InputLabel>
                       <Select
                         labelId="dropdown-age-label"
                         id="dropdown-age"
@@ -265,12 +279,12 @@ export default function CreateGroup() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                      <InputLabel id="dropdown-age-select-label">Membership type</InputLabel>
                       <Select
                         labelId="dropdrown-membership-label"
                         id="dropdrown-membership"
                         value={membershipType}
-                        label="Age"
+                        label="Membership"
                         onChange={handleMebershipChange}
                       >
                         <MenuItem value="Gold">Gold</MenuItem>
@@ -552,6 +566,19 @@ export default function CreateGroup() {
                 >
                   Create group
                 </Button>
+                <Snackbar
+                  open={newOpen}
+                  autoHideDuration={6000}
+                  onClose={handleNewClose}
+                >
+                  <Alert
+                    onClose={handleNewClose}
+                    severity="success"
+                    sx={{ width: '100%' }}
+                  >
+                    Group Created
+                  </Alert>
+                </Snackbar>
               </form>
             </Box>
           </Box>

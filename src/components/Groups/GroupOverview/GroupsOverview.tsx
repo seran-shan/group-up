@@ -1,6 +1,21 @@
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  Typography,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAuth } from '../../../provider/AuthProvider';
 
 import { getAllGroups } from '../../../services/Firebase';
@@ -26,6 +41,7 @@ const style = {
 export default function GroupsOverview() {
   const [interests, setInterests] = React.useState<string[]>([]);
 
+  console.log(interests);
   const handleCheckbox = (event: SelectChangeEvent) => {
     setInterests((oldArray) => [...oldArray, event.target.value as string]);
   };
@@ -38,6 +54,12 @@ export default function GroupsOverview() {
   const { user } = useAuth();
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
+  const { register, getValues } = useForm();
+  const [size, setSize] = React.useState('0');
+
+  const handleSize = (event: SelectChangeEvent) => {
+    setSize(event.target.value as unknown as string);
+  };
 
   const handleLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
@@ -49,32 +71,75 @@ export default function GroupsOverview() {
 
   const handleFilter = async () => {
     const extraGroups: Group[] = [];
+
     await getAllGroups().then((data) => {
+      data.forEach((group) => {
+        extraGroups.push(group);
+      });
+
       data.forEach((group) => {
         if (user?.email == null) {
           return;
         }
+
         if (
           !group.users.includes(user?.email)
-          && !(group.admin === user?.uid) && (group.age === age)
-          && (((group.users.length + 1) === size) || (size > 5 && (group.users.length + 1 > 5)))
-          // && (group.location === location)
-          // && (group.interests.includes())
+          && !(group.admin === user?.uid)
         ) {
-          extraGroups.push(group);
+          if (location.length !== 0) {
+            data.forEach((g) => {
+              if (g.location !== location) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
+              }
+            });
+          }
+
+          if (parseInt(size, 10) !== 0) {
+            data.forEach((g) => {
+              if (g.users.length !== parseInt(size, 10) - 1) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
+              }
+            });
+          }
+
+          if (interests.length !== 0) {
+            console.log(interests);
+            data.forEach((g) => {
+              interests.forEach((interest) => {
+                console.log(g.interests.includes(interest));
+                if (!g.interests.includes(interest)) {
+                  const index = extraGroups.indexOf(g);
+                  extraGroups.splice(index, index + 1);
+                }
+              });
+            });
+          }
+
+          if (getValues('date').length !== 0) {
+            data.forEach((g) => {
+              if (g.date !== getValues('date')) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
+              }
+            });
+          }
+
+          if (age.length !== 0) {
+            data.forEach((g) => {
+              if (g.age !== age) {
+                const index = extraGroups.indexOf(g);
+                extraGroups.splice(index, index + 1);
+              }
+            });
+          }
         }
       });
       setGroups(extraGroups);
       setOpen(false);
-      console.log(extraGroups);
-      console.log(interests);
+      setInterests([]);
     });
-  };
-
-  const [size, setSize] = React.useState(0);
-
-  const handleSize = (event: SelectChangeEvent) => {
-    setSize(event.target.value as unknown as number);
   };
 
   const getGroup = async () => {
@@ -128,16 +193,21 @@ export default function GroupsOverview() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography variant="h5" component="h2" sx={{ textAlign: 'center', m: 1, fontWeight: 'bold' }}>
+            <Typography
+              variant="h5"
+              component="h2"
+              sx={{ textAlign: 'center', m: 1, fontWeight: 'bold' }}
+            >
               Filter groups
             </Typography>
-            <Box sx={{
-              textAlign: 'left',
-              m: 1,
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
+            <Box
+              sx={{
+                textAlign: 'left',
+                m: 1,
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
             >
               <Stack component="form" noValidate spacing={3} />
               <Grid display="flex">
@@ -195,15 +265,17 @@ export default function GroupsOverview() {
                       <MenuItem value={2}>2</MenuItem>
                       <MenuItem value={3}>3</MenuItem>
                       <MenuItem value={4}>4</MenuItem>
-                      <MenuItem value={5}>5+</MenuItem>
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={6}>6</MenuItem>
+                      <MenuItem value={7}>7</MenuItem>
+                      <MenuItem value={8}>8</MenuItem>
+                      <MenuItem value={9}>9</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
               </Grid>
               <Grid item xs={12}>
-                <Typography>
-                  Interests
-                </Typography>
+                <Typography>Interests</Typography>
               </Grid>
               <Grid display="flex">
                 <Grid sx={{ marginRight: 5, marginLeft: 2 }}>
@@ -285,12 +357,9 @@ export default function GroupsOverview() {
                   </FormGroup>
                 </Grid>
               </Grid>
-              <Typography>
-                Date
-              </Typography>
+              <Typography>Date</Typography>
               <Grid item xs={12} sm={6} md={6}>
                 <FormTextField
-                  // onChange={handleDate}
                   id="datetime-local"
                   required
                   type="datetime-local"
@@ -298,10 +367,18 @@ export default function GroupsOverview() {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  {...register('date')}
                 />
               </Grid>
 
-              <Grid sx={{ marginTop: 2, marginRight: 12, marginLeft: 5, textAlign: 'center' }}>
+              <Grid
+                sx={{
+                  marginTop: 2,
+                  marginRight: 12,
+                  marginLeft: 5,
+                  textAlign: 'center',
+                }}
+              >
                 <Button
                   variant="contained"
                   size="small"
@@ -336,6 +413,7 @@ export default function GroupsOverview() {
             interests={group.interests}
             admin={group.admin}
             superlikedGroups={group.superlikedGroups}
+            likedGroups={group.likedGroups}
           />
         ))}
       </Box>

@@ -14,9 +14,9 @@ import {
   Stack,
   TextField,
   Typography,
+  Box,
 } from '@mui/material';
 import { LocalizationProvider } from '@mui/lab';
-import Box from '@mui/material/Box';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { v4 as uuidv4 } from 'uuid';
 import FormDatePicker from '../molecules/FormDatePicker';
