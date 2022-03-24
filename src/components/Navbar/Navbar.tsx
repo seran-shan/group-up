@@ -46,8 +46,8 @@ const Navbar = () => {
           <NavLink href="/myGroups" sx={{ marginRight: '40px' }}>
             My Groups
           </NavLink>
-          <NavLink href="/superlikes" sx={{ marginRight: '40px' }}>
-            My superlikes
+          <NavLink href="/likes" sx={{ marginRight: '40px' }}>
+            My likes
           </NavLink>
           <NavLink href="/" sx={{ marginRight: '40px' }}>
             Match

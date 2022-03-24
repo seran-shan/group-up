@@ -162,6 +162,22 @@ export const getGroupsSuperliking = async (groupID: string) => {
   return groups;
 };
 
+export const getMatches = async (groupID: string) => {
+  const group = await getGroupByID(groupID);
+  if (group == null) {
+    return;
+  }
+  const ref = collection(db, 'Groups');
+  const qliking = query(ref, where('likedGroups', 'array-contains', group.name));
+  const groups: Group[] = [];
+  const groupsMatches = await getDocs(qliking);
+  groupsMatches.forEach((snap) => {
+    const g = snap.data() as unknown as Group;
+    groups.push(g);
+  });
+  return groups;
+};
+
 export const addMemberToGroup = async (userEmail: string, groupID: string) => {
   const group = await getGroupByID(groupID);
   if (group == null) {
