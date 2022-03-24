@@ -4,10 +4,14 @@ import CardHeader from '@mui/material/CardHeader';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
-
 import {
-  Box, Button, IconButton, Modal, Typography
-} from '@material-ui/core';
+  Box,
+  Button,
+  IconButton,
+  Modal,
+  Typography,
+  InputLabel,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -15,7 +19,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import StarIcon from '@mui/icons-material/Star';
 
-import { InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -73,6 +76,8 @@ const GroupCard: FC<GroupCardProps> = ({
   const [openJoin, setOpenJoin] = React.useState(false);
   const handleOpenJoin = () => setOpenJoin(true);
   const handleCloseJoin = () => setOpenJoin(false);
+
+
 
   const [openLike, setOpenLike] = React.useState(false);
   const handleOpenLike = () => setOpenLike(true);
@@ -152,13 +157,11 @@ const GroupCard: FC<GroupCardProps> = ({
     }
     await getMemberGroups(user.email).then((data) => {
       setMemberGroups(data);
-      console.log(memberGroups);
     });
   };
 
   const handleSuperlikes = async () => {
     await addSuperlikes(group, id);
-    console.log(superlikedGroups);
   };
 
   const handleLikes = async () => {
@@ -167,7 +170,6 @@ const GroupCard: FC<GroupCardProps> = ({
   };
 
   return (
-
     <Card sx={{ width: '350px', marginBottom: '100px' }}>
       <CardHeader title={name} sx={{ pt: 3 }} />
 
@@ -189,11 +191,7 @@ const GroupCard: FC<GroupCardProps> = ({
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-            >
+            <Typography id="modal-modal-title" variant="h6" component="h2">
               Choose the group you want to superlike on behalf of:
             </Typography>
 
@@ -208,9 +206,7 @@ const GroupCard: FC<GroupCardProps> = ({
                   onChange={handleChange}
                 >
                   {memberGroups?.map((memberGroup: Group) => (
-                    <MenuItem
-                      value={memberGroup.id}
-                    >
+                    <MenuItem value={memberGroup.id}>
                       {memberGroup.name}
                     </MenuItem>
                   ))}
@@ -228,10 +224,8 @@ const GroupCard: FC<GroupCardProps> = ({
             >
               Give a superlike
             </Button>
-
           </Box>
         </Modal>
-
       </Grid>
 
       <Stack
@@ -241,10 +235,19 @@ const GroupCard: FC<GroupCardProps> = ({
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
+          flexWrap: 'wrap',
         }}
       >
         {interests.map((interest) => (
-          <Chip color="success" label={interest} />
+          <Chip
+            sx={{
+              backgroundColor: '#77DD77',
+              fontWeight: 600,
+              color: 'black',
+              marginBottom: '10px',
+            }}
+            label={interest}
+          />
         ))}
       </Stack>
 
@@ -267,7 +270,10 @@ const GroupCard: FC<GroupCardProps> = ({
             variant="contained"
             startIcon={<AddIcon />}
             size="small"
-            style={{ background: '#CDEBC7' }}
+            style={{
+              background: 'green',
+              color: 'white',
+            }}
           >
             Join group
           </Button>
@@ -291,7 +297,10 @@ const GroupCard: FC<GroupCardProps> = ({
             variant="contained"
             startIcon={<VisibilityIcon />}
             size="small"
-            style={{ background: '#CDEBC7' }}
+            style={{
+              background: 'green',
+              color: 'white',
+            }}
           >
             View profile
           </Button>
@@ -303,7 +312,7 @@ const GroupCard: FC<GroupCardProps> = ({
             variant="contained"
             startIcon={<FavoriteBorderIcon />}
             size="small"
-            style={{ background: '#CDEBC7' }}
+            style={{ background: 'green' }}
           >
             Match
           </Button>

@@ -1,9 +1,9 @@
 import { Box } from '@mui/material';
 import React from 'react';
 
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from '@mui/material/Avatar';
 
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import NavLink from '../molecules/NavLink';
 import { useAuth } from '../../provider/AuthProvider';
 
@@ -45,6 +45,9 @@ const Navbar = () => {
         </NavLink> */}
           <NavLink href="/myGroups" sx={{ marginRight: '40px' }}>
             My Groups
+          </NavLink>
+          <NavLink href="/superlikes" sx={{ marginRight: '40px' }}>
+            My superlikes
           </NavLink>
           <NavLink href="/" sx={{ marginRight: '40px' }}>
             Match

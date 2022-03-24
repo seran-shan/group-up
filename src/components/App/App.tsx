@@ -11,6 +11,8 @@ import GroupProfileView from '../../pages/GroupProfileView';
 import NoUserRoute from '../routes/NoUserRoute';
 import PrivateRoute from '../routes/PrivateRoute';
 import Admin from '../Admin/Admin';
+import SuperlikesView from '../../pages/SuperlikesOverview';
+import SuperlikesOverview from '../Groups/SuperlikeOverview.tsx/SuperlikesOverview';
 
 export const example = (x: number, y: number) => x + y;
 
@@ -26,6 +28,7 @@ const App = () => (
           <Route path="/" element={<GroupView />} />
           <Route path="/CreateGroup" element={<CreateGroupView />} />
           <Route path="/myGroups" element={<MyGroupsView />} />
+          <Route path="/superlikes" element={<SuperlikesOverview />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/groups/:id" element={<GroupProfileView />} />
