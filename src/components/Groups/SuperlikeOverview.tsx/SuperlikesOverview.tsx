@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import { InputLabel, Modal, Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
@@ -64,12 +63,6 @@ export default function SuperlikesOverview() {
     getMemGroups();
   }, []);
 
-  const navigate = useNavigate();
-
-  const handleNav = () => {
-    navigate('/createGroup');
-  };
-
   const [group, setGroup] = React.useState('');
   const handleChange = (event: SelectChangeEvent) => {
     setGroup(event.target.value);
@@ -123,7 +116,7 @@ export default function SuperlikesOverview() {
                     variant="h6"
                     component="h2"
                   >
-                    Which group's superlikes do you want to view?
+                    Which groups superlikes do you want to view?
                   </Typography>
 
                   <Box sx={{ minWidth: 120 }}>
@@ -180,7 +173,6 @@ export default function SuperlikesOverview() {
                   users={memberGroup.users}
                   interests={memberGroup.interests}
                   admin={memberGroup.admin}
-                  superlikedGroups={memberGroup.superlikedGroups}
                 />
               ))}
             </Box>

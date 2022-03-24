@@ -156,8 +156,8 @@ export const getGroupsSuperliking = async (groupID: string) => {
   const groups: Group[] = [];
   const groupsSuperliking = await getDocs(qSuperliking);
   groupsSuperliking.forEach((snap) => {
-    const group = snap.data() as unknown as Group;
-    groups.push(group);
+    const g = snap.data() as unknown as Group;
+    groups.push(g);
   });
   return groups;
 };

@@ -11,7 +11,6 @@ import GroupProfileView from '../../pages/GroupProfileView';
 import NoUserRoute from '../routes/NoUserRoute';
 import PrivateRoute from '../routes/PrivateRoute';
 import Admin from '../Admin/Admin';
-import SuperlikesView from '../../pages/SuperlikesOverview';
 import SuperlikesOverview from '../Groups/SuperlikeOverview.tsx/SuperlikesOverview';
 
 export const example = (x: number, y: number) => x + y;
