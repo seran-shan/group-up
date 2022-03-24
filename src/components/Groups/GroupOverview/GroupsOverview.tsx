@@ -55,10 +55,10 @@ export default function GroupsOverview() {
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
   const { register, getValues } = useForm();
-  const [size, setSize] = React.useState(0);
+  const [size, setSize] = React.useState('0');
 
   const handleSize = (event: SelectChangeEvent) => {
-    setSize(event.target.value as unknown as number);
+    setSize(event.target.value as unknown as string);
   };
 
   const handleLocation = (event: SelectChangeEvent) => {
@@ -84,20 +84,20 @@ export default function GroupsOverview() {
 
         if (
           !group.users.includes(user?.email)
-          && (!(group.admin === user?.uid)
-          )) {
+          && !(group.admin === user?.uid)
+        ) {
           if (location.length !== 0) {
             data.forEach((g) => {
-              if ((g.location !== location)) {
+              if (g.location !== location) {
                 const index = extraGroups.indexOf(g);
                 extraGroups.splice(index, index + 1);
               }
             });
           }
 
-          if (size !== 0) {
+          if (parseInt(size, 10) !== 0) {
             data.forEach((g) => {
-              if (((g.users.length) !== size - 1)) {
+              if (g.users.length !== parseInt(size, 10) - 1) {
                 const index = extraGroups.indexOf(g);
                 extraGroups.splice(index, index + 1);
               }
@@ -128,7 +128,7 @@ export default function GroupsOverview() {
 
           if (age.length !== 0) {
             data.forEach((g) => {
-              if ((g.age !== age)) {
+              if (g.age !== age) {
                 const index = extraGroups.indexOf(g);
                 extraGroups.splice(index, index + 1);
               }
@@ -365,7 +365,7 @@ export default function GroupsOverview() {
                   type="datetime-local"
                   defaultValue="2022-02-24T10:30"
                   InputLabelProps={{
-                    shrink: true
+                    shrink: true,
                   }}
                   {...register('date')}
                 />
