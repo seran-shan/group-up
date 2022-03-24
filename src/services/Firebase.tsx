@@ -188,6 +188,16 @@ export const addSuperlikes = async (groupID1: string, groupID2: string) => {
   setDoc(docRef, groupSuperliking);
 };
 
+export const addReport = async (userEmail: string, reporterEmail:string, reportDescription: string, id: string) => {
+  const docRef = doc(db, 'Reports', id);
+  setDoc(docRef, {
+
+    reportDescription,
+    userEmail,
+    reporterEmail
+  })};
+
+
 export const addLikes = async (groupID1: string, groupID2: string) => {
   const groupLiking: Group | undefined = await getGroupByID(groupID1);
   const groupLiked: Group | undefined = await getGroupByID(groupID2);
@@ -206,3 +216,4 @@ export const addLikes = async (groupID1: string, groupID2: string) => {
   setDoc(docRef1, groupLiking);
   setDoc(docRef2, groupLiked);
 };
+
