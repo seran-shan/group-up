@@ -89,6 +89,8 @@ export default function CreateGroup() {
     }
 
     const id = uuidv4();
+    const superlikedGroups: string[] = [];
+    const likedGroups: string[] = [];
     await createGroups(
       getValues('groupName'),
       getValues('description'),
@@ -99,7 +101,9 @@ export default function CreateGroup() {
       emails,
       user?.uid,
       id,
-      location
+      location,
+      superlikedGroups,
+      likedGroups
     );
 
     handleNewOpen();

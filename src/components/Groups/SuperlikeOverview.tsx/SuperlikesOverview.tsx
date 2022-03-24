@@ -173,6 +173,8 @@ export default function SuperlikesOverview() {
                   users={memberGroup.users}
                   interests={memberGroup.interests}
                   admin={memberGroup.admin}
+                  superlikedGroups={memberGroup.superlikedGroups}
+                  likedGroups={memberGroup.likedGroups}
                 />
               ))}
             </Box>

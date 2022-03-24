@@ -12,4 +12,5 @@ export type Group = {
   admin: string;
   location: string;
   superlikedGroups: string[];
+  likedGroups: string[];
 };

@@ -71,7 +71,9 @@ export const createGroups = async (
   users: string[],
   admin: string | undefined,
   id: string,
-  location: string
+  location: string,
+  superlikedGroups: string[],
+  likedGroups: string[]
 ) => {
   const docRef = doc(db, 'Groups', id);
   await setDoc(docRef, {
@@ -85,6 +87,8 @@ export const createGroups = async (
     admin,
     id,
     location,
+    superlikedGroups,
+    likedGroups
   });
 };
 
@@ -182,4 +186,23 @@ export const addSuperlikes = async (groupID1: string, groupID2: string) => {
   superlikedGroupsArray.push(groupSuperliked.name);
   const docRef = doc(db, 'Groups', groupID1);
   setDoc(docRef, groupSuperliking);
+};
+
+export const addLikes = async (groupID1: string, groupID2: string) => {
+  const groupLiking: Group | undefined = await getGroupByID(groupID1);
+  const groupLiked: Group | undefined = await getGroupByID(groupID2);
+  if (groupLiking == null) {
+    return;
+  }
+  if (groupLiked == null) {
+    return;
+  }
+  const likedBy = groupLiking?.likedGroups;
+  const likedOf = groupLiked?.likedGroups;
+  likedBy.push(groupLiked.name);
+  likedOf.push(groupLiking.name);
+  const docRef1 = doc(db, 'Groups', groupID1);
+  const docRef2 = doc(db, 'Groups', groupID2);
+  setDoc(docRef1, groupLiking);
+  setDoc(docRef2, groupLiked);
 };
