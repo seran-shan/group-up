@@ -8,7 +8,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { getGroupsSuperliking, getMatches, getMemberGroups } from '../../../services/Firebase';
+import {
+  getGroupsSuperliking,
+  getMatches,
+  getMemberGroups,
+} from '../../../services/Firebase';
 
 import { Group } from '../../../types/group';
 import Navbar from '../../Navbar/Navbar';
@@ -97,12 +101,10 @@ export default function LikesOverview() {
           justifyContent: 'space-evenly',
         }}
       >
-
         <Box sx={{}}>
           <p>Groups that have superliked your group: </p>
 
           <Grid container justifyContent="center" spacing={1} sx={{ pb: 5 }}>
-
             <Button
               onClick={handleOpenSuperlike}
               variant="contained"
@@ -120,11 +122,7 @@ export default function LikesOverview() {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <Typography
-                  id="modal-modal-title"
-                  variant="h6"
-                  component="h2"
-                >
+                <Typography id="modal-modal-title" variant="h6" component="h2">
                   Which of your groups do you want to view superlikes for?
                 </Typography>
 
@@ -139,9 +137,7 @@ export default function LikesOverview() {
                       onChange={handleChange}
                     >
                       {memberGroups?.map((memberGroup: Group) => (
-                        <MenuItem
-                          value={memberGroup.id}
-                        >
+                        <MenuItem value={memberGroup.id}>
                           {memberGroup.name}
                         </MenuItem>
                       ))}
@@ -190,10 +186,9 @@ export default function LikesOverview() {
         </Box>
 
         <Box>
-          <p>Groups that have liked/ matched with your group: </p>
+          <p>Groups that have matched with your group: </p>
 
           <Grid container justifyContent="center" spacing={1} sx={{ pb: 5 }}>
-
             <Button
               onClick={handleOpenLike}
               variant="contained"
@@ -211,11 +206,7 @@ export default function LikesOverview() {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <Typography
-                  id="modal-modal-title"
-                  variant="h6"
-                  component="h2"
-                >
+                <Typography id="modal-modal-title" variant="h6" component="h2">
                   Which of your groups do you want to view likes/matches for?
                 </Typography>
 
@@ -230,9 +221,7 @@ export default function LikesOverview() {
                       onChange={handleChange}
                     >
                       {memberGroups?.map((memberGroup: Group) => (
-                        <MenuItem
-                          value={memberGroup.id}
-                        >
+                        <MenuItem value={memberGroup.id}>
                           {memberGroup.name}
                         </MenuItem>
                       ))}
@@ -280,7 +269,6 @@ export default function LikesOverview() {
             ))}
           </Box>
         </Box>
-
       </Box>
     </Box>
   );
