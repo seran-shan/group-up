@@ -81,9 +81,9 @@ export default function CreateGroup() {
 
   const getAdmin = () => {
     if (user) {
-      getUserByID(user.uid).then((user) => {
-        if (user) {
-          const mail = user.email as unknown as string;
+      getUserByID(user.uid).then((data) => {
+        if (data) {
+          const mail = data.email as unknown as string;
           setEmails((oldArray) => [...oldArray, mail]);
         }
       });
