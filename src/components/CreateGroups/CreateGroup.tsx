@@ -27,7 +27,11 @@ import {
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import { createGroups, findUserByEmail } from '../../services/Firebase';
+import {
+  createGroups,
+  findUserByEmail,
+  getUserByID,
+} from '../../services/Firebase';
 import FormTextField from '../molecules/FormTextField';
 import { User } from '../../types/user';
 import { useAuth } from '../../provider/AuthProvider';
@@ -75,6 +79,20 @@ export default function CreateGroup() {
     setNewOpen(false);
   };
 
+  const getAdmin = () => {
+    if (user) {
+      getUserByID(user.uid).then((data) => {
+        if (data) {
+          const mail = data.email as unknown as string;
+          setEmails((oldArray) => [...oldArray, mail]);
+        }
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    getAdmin();
+  }, []);
   const [age, setAge] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [membershipType, setMembershipType] = React.useState('');
@@ -462,15 +480,8 @@ export default function CreateGroup() {
                       padding: '20px',
                     }}
                   >
-                    <p>
-                      (Admin)
-                      {user?.email}
-                    </p>
                     {emails.map((person) => (
-                      <p>
-                        (Member)
-                        {person}
-                      </p>
+                      <p>{person}</p>
                     ))}
                   </Box>
                   <Button
