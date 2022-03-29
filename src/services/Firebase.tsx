@@ -88,7 +88,7 @@ export const createGroups = async (
     id,
     location,
     superlikedGroups,
-    likedGroups
+    likedGroups,
   });
 };
 
@@ -152,7 +152,10 @@ export const getGroupsSuperliking = async (groupID: string) => {
     return;
   }
   const ref = collection(db, 'Groups');
-  const qSuperliking = query(ref, where('superlikedGroups', 'array-contains', group.name));
+  const qSuperliking = query(
+    ref,
+    where('superlikedGroups', 'array-contains', group.name)
+  );
   const groups: Group[] = [];
   const groupsSuperliking = await getDocs(qSuperliking);
   groupsSuperliking.forEach((snap) => {
@@ -168,7 +171,10 @@ export const getMatches = async (groupID: string) => {
     return;
   }
   const ref = collection(db, 'Groups');
-  const qliking = query(ref, where('likedGroups', 'array-contains', group.name));
+  const qliking = query(
+    ref,
+    where('likedGroups', 'array-contains', group.name)
+  );
   const groups: Group[] = [];
   const groupsMatches = await getDocs(qliking);
   groupsMatches.forEach((snap) => {
@@ -204,15 +210,19 @@ export const addSuperlikes = async (groupID1: string, groupID2: string) => {
   setDoc(docRef, groupSuperliking);
 };
 
-export const addReport = async (userEmail: string, reporterEmail:string, reportDescription: string, id: string) => {
+export const addReport = async (
+  userEmail: string,
+  reporterEmail: string,
+  reportDescription: string,
+  id: string
+) => {
   const docRef = doc(db, 'Reports', id);
   setDoc(docRef, {
-
     reportDescription,
     userEmail,
-    reporterEmail
-  })};
-
+    reporterEmail,
+  });
+};
 
 export const addLikes = async (groupID1: string, groupID2: string) => {
   const groupLiking: Group | undefined = await getGroupByID(groupID1);
@@ -232,4 +242,3 @@ export const addLikes = async (groupID1: string, groupID2: string) => {
   setDoc(docRef1, groupLiking);
   setDoc(docRef2, groupLiked);
 };
-

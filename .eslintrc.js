@@ -37,7 +37,8 @@ module.exports = {
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
     'comma-dangle': [0, 'never'],
-
+    'react/jsx-one-expression-per-line': 0,
+    'array-callback-return': 0,
     'object-shorthand': [
       2,
       'always',

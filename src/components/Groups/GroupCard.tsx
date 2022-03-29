@@ -29,7 +29,7 @@ import {
   getUserByID,
   getMemberGroups,
   addSuperlikes,
-  addLikes
+  addLikes,
 } from '../../services/Firebase';
 
 import { useAuth } from '../../provider/AuthProvider';
@@ -71,7 +71,7 @@ const GroupCard: FC<GroupCardProps> = ({
   id,
   admin,
   superlikedGroups,
-  likedGroups
+  likedGroups,
 }) => {
   const [openJoin, setOpenJoin] = React.useState(false);
   const handleOpenJoin = () => setOpenJoin(true);
@@ -204,11 +204,15 @@ const GroupCard: FC<GroupCardProps> = ({
                   label="Age"
                   onChange={handleChange}
                 >
-                  {memberGroups?.map((memberGroup: Group) => (
-                    <MenuItem value={memberGroup.id}>
-                      {memberGroup.name}
-                    </MenuItem>
-                  ))}
+                  {memberGroups?.map((memberGroup: Group) => {
+                    if (memberGroup.membershipType === 'Gold') {
+                      return (
+                        <MenuItem value={memberGroup.id}>
+                          {memberGroup.name}
+                        </MenuItem>
+                      );
+                    }
+                  })}
                 </Select>
               </FormControl>
             </Box>
@@ -252,11 +256,7 @@ const GroupCard: FC<GroupCardProps> = ({
 
       <p>{description}</p>
 
-      <p>
-        {users.length + 1}
-        {' '}
-        members
-      </p>
+      <p>{users.length + 1} members</p>
       <p>{date}</p>
 
       <Grid container justifyContent="center" spacing={2} sx={{ pb: 3 }}>
@@ -330,11 +330,7 @@ const GroupCard: FC<GroupCardProps> = ({
                   {adminUser2}
                 </p>
               </Grid>
-              <Typography
-                id="modal-modal-title"
-                variant="h6"
-                component="h2"
-              >
+              <Typography id="modal-modal-title" variant="h6" component="h2">
                 Choose the group you want to match on behalf of:
               </Typography>
 
@@ -349,9 +345,7 @@ const GroupCard: FC<GroupCardProps> = ({
                     onChange={handleChange}
                   >
                     {memberGroups?.map((memberGroup: Group) => (
-                      <MenuItem
-                        value={memberGroup.id}
-                      >
+                      <MenuItem value={memberGroup.id}>
                         {memberGroup.name}
                       </MenuItem>
                     ))}
